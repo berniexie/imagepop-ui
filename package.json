@@ -16,6 +16,7 @@
     "url": "https://github.com/berniexie/imagepop-ui/issues"
   },
   "homepage": "https://github.com/berniexie/imagepop-ui#readme",
+  "scripts": { "start": "node app.js"},
   "dependencies": {
     "express": "^4.13.4"
   }
