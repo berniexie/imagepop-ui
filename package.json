@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npm run webpack | npm run app",
-    "webpack": "webpack --watch &",
-    "app": "node app.js"
+    "start": "npm run bundle | npm run server",
+    "bundle": "webpack --watch &",
+    "server": "node app.js"
   },
   "repository": {
     "type": "git",
