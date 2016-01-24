@@ -4,9 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "rm static/* && npm run webpack && npm run app",
-    "webpack": "webpack --watch &",
-    "app": "node app.js"
+    "start": "npm clean | npm run bundle | npm run server",
+    "clean": "rm static/*",
+    "bundle": "webpack --watch &",
+    "server": "node app.js"
   },
   "repository": {
     "type": "git",
