@@ -1,6 +1,15 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config');
+var compiler = webpack(webpackConfig);
+
+app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+}));
+
+app.use(require("webpack-hot-middleware")(compiler));
 
 app.use(express.static('public'));
 app.use('/static', express.static(__dirname + '/static'));
