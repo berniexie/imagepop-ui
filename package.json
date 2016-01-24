@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "webpack --watch & \n node app.js"
+    "start": "npm run webpack && npm run app",
+    "webpack": "webpack --watch &",
+    "app": "node app.js"
   },
   "repository": {
     "type": "git",
