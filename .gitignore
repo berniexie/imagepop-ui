@@ -5,3 +5,5 @@ node_modules
 jspm_packages
 js/*/*-bundle.js
 js/*/*-bundle.js.map
+static
+.DS_Store
