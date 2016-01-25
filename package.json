@@ -2,23 +2,23 @@
   "name": "imagepop-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "concurrent \"npm run clean\" \"npm run webpack\" \"npm run app\"",
-    "clean": "rm static/*",
+    "clean": "rm -rf static/*",
     "webpack": "webpack --watch &",
     "app": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/berniexie/imagepop-ui.git"
+    "url": "git+https://github.com/cornsuite/imagepop-ui.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/berniexie/imagepop-ui/issues"
+    "url": "https://github.com/cornsuite/imagepop-ui/issues"
   },
-  "homepage": "https://github.com/berniexie/imagepop-ui#readme",
+  "homepage": "https://github.com/cornsuite/imagepop-ui#readme",
   "dependencies": {
     "react": "^0.14.6",
     "react-dom": "^0.14.6"
