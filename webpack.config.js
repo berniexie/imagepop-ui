@@ -8,7 +8,7 @@ module.exports = {
     './src/index.js'
   ],
   output: {
-    path: __dirname + '/static/',
+    path: path.resolve(__dirname, 'static/'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -21,12 +21,12 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, 'src'),
         loader: 'react-hot'
       },
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, "src"),
+        include: path.resolve(__dirname, 'src'),
         loader: 'babel',
         query: {
           plugins: ['transform-runtime'],
