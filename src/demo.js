@@ -36,7 +36,8 @@ export default class DemoPane extends Component {
           <img style={styles.pic} src={before}/>
         </div>
         <div style={styles.picContainer}>
-          <img style={styles.pic} src={pic} onClick={this.handleClick.bind(this)}/>
+          <img style={styles.pic} src={pic} onMouseDown={this.handleClick.bind(this)} 
+              onMouseUp={this.handleClick.bind(this)}/>
         </div>
       </div>
     );
