@@ -1,24 +1,31 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Hello extends Component {
+export default class DemoPane extends Component {
   static propTypes = {
-    user: PropTypes.string
+    before: PropTypes.string,
+    after: PropTypes.string
   };
 
   static defaultProps = {
-    user: 'World'
+    before: '',
+    after: ''
   };
 
   render() {
-    const { user } = this.props;
-    return (<h1>Demo {user}</h1>);
+    const { before, after } = this.props;
+    return (
+      <div>
+        <img src={before}/>
+        <img src={after}/>
+      </div>
+    );
   }
 }
 
 
 ReactDOM.render(
-  <Hello user="World"/>,
+  <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
   document.getElementById('app')
 );
 

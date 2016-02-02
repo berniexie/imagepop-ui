@@ -13,6 +13,8 @@ app.use(require("webpack-hot-middleware")(compiler));
 
 app.use(express.static('public'));
 app.use('/static', express.static(__dirname + '/static'));
+app.use('/img', express.static(__dirname + '/img'));
+
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
