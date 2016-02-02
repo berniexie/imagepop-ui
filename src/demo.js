@@ -57,7 +57,10 @@ DemoPane.styles = {
 };
 
 ReactDOM.render(
-  <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
+  {
+    <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
+    <DemoPane before="./img/building-before.png" after="./img/building-after.png"/>
+  },
   document.getElementById('app')
 );
 
