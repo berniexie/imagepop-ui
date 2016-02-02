@@ -4,24 +4,31 @@ import ReactDOM from 'react-dom';
 export default class DemoPane extends Component {
   static propTypes = {
     before: PropTypes.string,
-    after: PropTypes.string
+    after: PropTypes.string,
+    pressed: PropTypes.bool
   };
 
   static defaultProps = {
     before: '',
-    after: ''
+    after: '',
+    pressed: false
+  };
+
+  handleClick() {
+    this.setState({pressed: !this.state.pressed});
   };
 
   render() {
-    const { before, after } = this.props;
+    var { before, after, pressed } = this.props;
     var styles = this.constructor.styles;
+    var pic = {pressed}? {before} : {after};
     return (
       <div>
         <div style={styles.picContainer}>
           <img style={styles.pic} src={before}/>
         </div>
         <div style={styles.picContainer}>
-          <img style={styles.pic} src={after}/>
+          <img style={styles.pic} src={pic} />
         </div>
       </div>
     );
