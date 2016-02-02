@@ -2,33 +2,41 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class DemoPane extends Component {
+  //props for before and after pictures
   static propTypes = {
     before: PropTypes.string,
     after: PropTypes.string,
-    pressed: PropTypes.bool
   };
 
+  //default prop values
   static defaultProps = {
     before: '',
     after: '',
-    pressed: false
   };
 
+  //state variables including whether after picture has been pressed
+  state = {pressed:false};
+
+  //when after picture has been clicked, reverse its state
   handleClick() {
     this.setState({pressed: !this.state.pressed});
   };
 
   render() {
-    var { before, after, pressed } = this.props;
+    //consts for props
+    const { before, after } = this.props;
     var styles = this.constructor.styles;
-    var pic = {pressed}? {before} : {after};
+
+    //decide which picture to render on the right based on whether
+    //or not is has been clicked
+    var pic = this.state.pressed ? before : after;
     return (
       <div>
         <div style={styles.picContainer}>
           <img style={styles.pic} src={before}/>
         </div>
         <div style={styles.picContainer}>
-          <img style={styles.pic} src={pic} />
+          <img style={styles.pic} src={pic} onClick={this.handleClick.bind(this)}/>
         </div>
       </div>
     );
