@@ -14,15 +14,31 @@ export default class DemoPane extends Component {
 
   render() {
     const { before, after } = this.props;
+    var styles = this.constructor.styles;
     return (
       <div>
-        <img src={before}/>
-        <img src={after}/>
+        <div style={styles.picContainer}>
+          <img style={styles.pic} src={before}/>
+        </div>
+        <div style={styles.picContainer}>
+          <img style={styles.pic} src={after}/>
+        </div>
       </div>
     );
   }
 }
 
+DemoPane.styles = {
+  picContainer: {
+    display: "inline-block",
+    width: "50%"
+  },
+  pic: {
+    display: "block",
+    margin: "auto",
+    width: "95%"
+  }
+};
 
 ReactDOM.render(
   <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
