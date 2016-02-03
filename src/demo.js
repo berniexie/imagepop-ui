@@ -147,10 +147,11 @@ export default class DemoPane3 extends Component {
   };
 
   //state variables including whether after picture has been pressed
-  state = {sliderPosition:393.844};
+  state = {sliderPosition:window.innerWidth*.5};
 
   //when after picture has been clicked, reverse its state
   handleClicks(e) {
+    console.log(window.innerWidth);
     this.setState({sliderPosition: e.pageX});
   };
 
@@ -162,15 +163,15 @@ export default class DemoPane3 extends Component {
     //decide which picture to render on the right based on whether
     //or not is has been clicked
     var pic = this.state.pressed ? before : after;
-    var style1 = {backgroundImage: "url(" + after + ")"};
-    var style2 = {backgroundImage: "url(" + before + ")", width: ((this.state.sliderPosition-30)/7.2788) + "%"};
-    var style3 = {left: ((this.state.sliderPosition-30)/7.2788) + "%"};
+    var style2 = {backgroundImage: "url(" + before + ")", width: ((this.state.sliderPosition*100.0)/window.innerWidth) + "%"};
+    var style3 = {left: ((this.state.sliderPosition *100.0)/window.innerWidth) + "%"};
     return (
       <div style={styles.picContainer}>
-        <div style={{...styles.pic, ...style1}} onClick={this.handleClicks.bind(this)}>
-          <div style={{...styles.divisor, ...style2}}></div>
-          <div style={{...styles.slider, ...style3}} />
-        </div>
+        <img id="picture" style={styles.pic} src={after}
+            onMouseMove={this.handleClicks.bind(this)}/>
+        <div style={{...styles.divisor, ...style2}}
+            onMouseMove={this.handleClicks.bind(this)}/>
+        <div style={{...styles.slider, ...style3}}/>
       </div>
     );
   }
@@ -181,6 +182,7 @@ DemoPane3.styles = {
   picContainer: {
     display: "inline-block",
     marginTop: "20px",
+    position: "relative",
     textAlign: "center",
     width: "100%"
   },
@@ -189,10 +191,7 @@ DemoPane3.styles = {
     backgroundSize: "cover",
     cursor: "pointer",
     display: "block",
-    height: "500px",
-    margin: "auto",
-    position: "relative",
-    width: "95%"
+    width: "100%"
   },
   divisor: {
     backgroundRepeat: "no-repeat",
@@ -201,12 +200,15 @@ DemoPane3.styles = {
     height: "100%",
     overflow: "hidden",
     position: "absolute",
+    width: "100%"
   },
   slider: {
     backgroundColor: "black",
+    bottom: "0",
     height: "100%",
+    overflow: "hidden",
     position: "absolute",
-    width: "10px"
+    width: "5px"
   }
 };
 
