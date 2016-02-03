@@ -166,12 +166,16 @@ export default class DemoPane3 extends Component {
     var style2 = {backgroundImage: "url(" + before + ")", width: ((this.state.sliderPosition*100.0)/window.innerWidth) + "%"};
     var style3 = {left: ((this.state.sliderPosition *100.0)/window.innerWidth) + "%"};
     return (
-      <div style={styles.picContainer}>
-        <img id="picture" style={styles.pic} src={after}
-            onMouseMove={this.handleClicks.bind(this)}/>
-        <div style={{...styles.divisor, ...style2}}
-            onMouseMove={this.handleClicks.bind(this)}/>
-        <div style={{...styles.slider, ...style3}}/>
+      <div>
+        <p style={styles.headerText}><span style={styles.beforeText}>Before</span> 
+            <span style={styles.afterText}>After</span></p>
+        <div style={styles.clear}/>
+        <div style={styles.picContainer} 
+            onMouseMove={this.handleClicks.bind(this)}>
+          <img id="picture" style={styles.pic} src={after}/>
+          <div style={{...styles.divisor, ...style2}}/>
+          <div style={{...styles.slider, ...style3}}/>
+        </div>
       </div>
     );
   }
@@ -179,9 +183,24 @@ export default class DemoPane3 extends Component {
 
 //styling for Demo Pane
 DemoPane3.styles = {
+  headerText: {
+    marginTop: "20px",
+    width: "100%"
+  },
+  beforeText: {
+    float: "left",
+    width: "5%"
+  },
+  afterText: {
+    float: "right",
+    width: "5%"
+  },
+  clear: {
+    clear: "both"
+  },
   picContainer: {
     display: "inline-block",
-    marginTop: "20px",
+    marginTop: "10px",
     position: "relative",
     textAlign: "center",
     width: "100%"
@@ -225,6 +244,7 @@ export default class DemoPage extends Component{
         <DemoPane2 before="./img/bears-before.png" after="./img/bears-after.png"/>
         <DemoPane2 before="./img/building-before.png" after="./img/building-after.png"/>
         <DemoPane3 before="./img/bears-before.png" after="./img/bears-after.png"/>
+        <DemoPane3 before="./img/building-before.png" after="./img/building-after.png"/>
       </div>
     );
   }
