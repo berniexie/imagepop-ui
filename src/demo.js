@@ -1,6 +1,9 @@
+//Demo page - will show the before and after effect of popping an image
+
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
+//a container for the before and after of the same picture
 export default class DemoPane extends Component {
   //props for before and after pictures
   static propTypes = {
@@ -37,13 +40,14 @@ export default class DemoPane extends Component {
         </div>
         <div style={styles.picContainer}>
           <img style={styles.pic} src={pic} onMouseDown={this.handleClick.bind(this)} 
-              onMouseUp={this.handleClick.bind(this)}/>
+              onMouseUp={this.handleClick.bind(this)}/> 
         </div>
       </div>
     );
   }
 }
 
+//styling for Demo Pane
 DemoPane.styles = {
   picContainer: {
     display: "inline-block",
@@ -56,11 +60,21 @@ DemoPane.styles = {
   }
 };
 
+//container for all of the components of the Demo page
+export default class DemoPage extends Component{
+  render(){
+    return(
+      <div>
+        <p> Check it out! </p>
+        <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
+        <DemoPane before="./img/building-before.png" after="./img/building-after.png"/>,
+      </div>
+    );
+  }
+}
+
 ReactDOM.render(
-  {
-    <DemoPane before="./img/bears-before.png" after="./img/bears-after.png"/>,
-    <DemoPane before="./img/building-before.png" after="./img/building-after.png"/>
-  },
-  document.getElementById('app')
+    <DemoPage/>,
+    document.getElementById('app')
 );
 
