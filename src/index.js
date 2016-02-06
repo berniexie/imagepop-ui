@@ -1,24 +1,77 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Hello extends Component {
+export default class ImageStatus extends Component {
   static propTypes = {
-    user: PropTypes.string
+    state: PropTypes.string
   };
 
   static defaultProps = {
-    user: 'World'
+    state: 'INITIAL'
   };
 
   render() {
-    const { user } = this.props;
-    return (<h1>Hello {user}</h1>);
+    const { state} = this.props;
+    return (
+      <h1>{state}</h1>
+    );
+  }
+}
+
+export default class ImageUpload extends Component {
+  static propTypes = {
+    state: PropTypes.string
+  };
+
+  static defaultProps = {
+    state: 'INITIAL'
+  };
+
+  render() {
+    return (
+      <div></div>
+    );
+  }
+}
+
+export default class ImageControlArea extends Component {
+  static propTypes = {
+    state: PropTypes.string
+  };
+
+  static defaultProps = {
+    state: 'INITIAL'
+  };
+
+  render() {
+    return <div></div>
+  }
+}
+
+
+export default class ImageUploadArea extends Component {
+  static propTypes = {
+    state: PropTypes.string
+  };
+
+  static defaultProps = {
+    state: 'INITIAL'
+  };
+
+  render() {
+    return (
+      <div>
+        <ImageStatus/>
+        <ImageUpload/>
+        <ImageControlArea/>
+      </div>
+    );
   }
 }
 
 
 ReactDOM.render(
-  <Hello user="World"/>,
+  <ImageUploadArea/>,
   document.getElementById('app')
 );
 
