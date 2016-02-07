@@ -2,15 +2,22 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './src/index.js'
-  ],
+  entry: {
+    index: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './src/index.js'
+    ],
+    main: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './src/main.js'
+    ] 
+  },
   output: {
     path: path.resolve(__dirname, 'static/'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),

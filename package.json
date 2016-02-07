@@ -21,7 +21,8 @@
   "homepage": "https://github.com/cornsuite/imagepop-ui#readme",
   "dependencies": {
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-dropzone-component": "^0.8.1"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
