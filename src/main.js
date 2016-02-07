@@ -9,7 +9,8 @@ var componentConfig = {
 };
 
 var djsConfig = {
-  addRmoveLinks: true,
+  addRmoveLinks: false,
+  uploadMultiple: false,
   params: {
 
   }
@@ -21,17 +22,15 @@ export default class Slider extends Component {
 };
 
 export default class ImageUploadArea extends Component {
-  static propTypes = {};
-  static defaultProps = {};
+  static propTypes = {
 
-  state = {
-    uploadState : 'INITIAL'
   };
+  static defaultProps = {};
 
   getUploadStateText = function(uploadState) {
     switch (uploadState) {
       case 'INITIAL': {
-        return 'Upload an image!';
+        return 'Upload an image to pop!';
       }
       case 'POPPING': {
         return 'Popping your image now...';
@@ -45,12 +44,27 @@ export default class ImageUploadArea extends Component {
     }
   };
 
+  state = {
+    uploadState : 'INITIAL',
+    styleMap : {
+      centered: {
+        margin: '0 auto',
+        textAlign: 'center'
+      },
+      uploadState: {
+        fontSize: '24px'
+      }
+    }
+  };
+
   render() {
+    var styles = this.state.styleMap;
     return (
       <div>
-        <div>{this.getUploadStateText(this.state.uploadState)}</div>
+        <div style={Object.assign({},
+            styles.centered, styles.uploadState)}>{this.getUploadStateText(this.state.uploadState)}</div>
         <DropzoneComponent config={componentConfig} djsConfig={djsConfig} />
-        <button>Click to Pop!</button>
+        <div style={styles.centered}><button>Click to Pop!</button></div>
       </div>
     );
   }
