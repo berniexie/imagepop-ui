@@ -9,7 +9,7 @@ var componentConfig = {
 };
 
 var djsConfig = {
-  addRmoveLinks: false,
+  addRemoveLinks: true,
   uploadMultiple: false,
   params: {
 
@@ -22,9 +22,7 @@ export default class Slider extends Component {
 };
 
 export default class ImageUploadArea extends Component {
-  static propTypes = {
-
-  };
+  static propTypes = {};
   static defaultProps = {};
 
   getUploadStateText = function(uploadState) {
@@ -64,7 +62,9 @@ export default class ImageUploadArea extends Component {
         <div style={Object.assign({},
             styles.centered, styles.uploadState)}>{this.getUploadStateText(this.state.uploadState)}</div>
         <DropzoneComponent config={componentConfig} djsConfig={djsConfig} />
-        <div style={styles.centered}><button>Click to Pop!</button></div>
+        <div style={styles.centered}>
+          <button>Click to Pop!</button>
+        </div>
       </div>
     );
   }
