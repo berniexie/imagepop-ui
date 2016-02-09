@@ -3,11 +3,11 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    index: [
+    /*index: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './src/index.js'
-    ],
+    ],*/
     main: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
