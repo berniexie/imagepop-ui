@@ -1,0 +1,23 @@
+
+
+body {
+	background-color: #EEEEEE;
+	font-family: 'Raleway';
+	text-align: center;
+}
+.subheader{
+	margin-top: 0;
+}
+h1{
+	margin-bottom: 10px;
+}
+.galleryPic{
+	width: 100%;
+}
+.row{
+	margin:30px;
+}
+.pageContent{
+	max-width: 1150px;
+	margin: 0 auto;
+}
