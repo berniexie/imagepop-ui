@@ -61,22 +61,22 @@ export default class DemoPage extends Component{
     return(
       <div className='pageContent'>
         <h1>Gallery</h1>
-        <p className='subheader'>Check out the photos below to get a better idea of how image|pop works.</p>
+        <p className='subheader'>Select an image below to see what image|pop can do.</p>
         <div className='container-fluid'>
           <div className='row'>
-            <DemoPicture popped="./img/bears-after.png"/>
-            <DemoPicture popped="./img/building-after.png"/>
-            <DemoPicture popped="./img/bears-after.png"/>
+            <DemoPicture popped="./img/basketball-small.png"/>
+            <DemoPicture popped="./img/usc-small.png"/>
+            <DemoPicture popped="./img/building-small.png"/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/bears-after.png"/>
-            <DemoPicture popped="./img/building-after.png"/>
-            <DemoPicture popped="./img/bears-after.png"/>
+            <DemoPicture popped="./img/cars-small.png"/>
+            <DemoPicture popped="./img/aquarium-small.png"/>
+            <DemoPicture popped="./img/manchu-small.png"/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/bears-after.png"/>
-            <DemoPicture popped="./img/building-after.png"/>
-            <DemoPicture popped="./img/bears-after.png"/>
+            <DemoPicture popped="./img/trump-small.png"/>
+            <DemoPicture popped="./img/dress-small.png"/>
+            <DemoPicture popped="./img/motorcycle-small.png"/>
           </div>
         </div>
       </div>
