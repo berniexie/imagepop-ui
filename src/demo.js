@@ -16,16 +16,21 @@ export default class DemoPicture extends Component {
     popped: '',
   };
 
-  state = {};
+  state = {hidden:true};
 
   handleClick() {
+    this.setState({hidden: !this.state.hidden})
   };
 
   render() {
     const {popped} = this.props;
     return (
       <div className='col-sm-4'>
-        <img className="galleryPic" src={popped}/>
+        <img className="galleryPic" onClick={this.handleClick.bind(this)}
+            src={popped}/>
+        {this.state.hidden ? null
+            : <DemoModal after ="./img/building-after.png" 
+            before ="./img/building-before.png"/>}
       </div>
     );
   }
@@ -34,24 +39,36 @@ export default class DemoPicture extends Component {
 //a component for the modal that will pop up when the picture is clicked
 export default class DemoModal extends Component {
   static propTypes = {
-    
+    after: PropTypes.string,
+    before: PropTypes.string,
   };
 
   //default prop values
   static defaultProps = {
-    
+    after: '',
+    before: '',
   };
 
-  state = {};
+  state = {pressed:true};
 
   handleClick() {
+    this.setState({pressed: !this.state.pressed})
   };
 
   render() {
-    
+    const {after, before} = this.props;
+    var imageText = this.state.pressed ? 'after' : 'before';
+    var pic = this.state.pressed ? after : before;
     return (
-      <div>
-
+      <div className='demoModalWrapper'>
+        <div className='demoModal'>
+          <div className='imageText'>{imageText}</div>
+          <img src={pic} onMouseDown={this.handleClick.bind(this)}
+              onMouseUp={this.handleClick.bind(this)}></img>
+          <div className='pressLabel'>Press and hold the image to see it before it was popped</div>
+          <h3>Level of Contrast</h3>
+          <p>Adjust the amount of edge contrast using the indicators below.</p>
+        </div>
       </div>
     );
   }
@@ -61,21 +78,23 @@ export default class DemoModal extends Component {
 export default class DemoPageContent extends Component {
   render(){
     return(
-      <div className='container-fluid'>
-        <div className='row'>
-          <DemoPicture popped="./img/basketball-small.png"/>
-          <DemoPicture popped="./img/usc-small.png"/>
-          <DemoPicture popped="./img/building-small.png"/>
-        </div>
-        <div className='row'>
-          <DemoPicture popped="./img/cars-small.png"/>
-          <DemoPicture popped="./img/aquarium-small.png"/>
-          <DemoPicture popped="./img/manchu-small.png"/>
-        </div>
-        <div className='row'>
-          <DemoPicture popped="./img/trump-small.png"/>
-          <DemoPicture popped="./img/dress-small.png"/>
-          <DemoPicture popped="./img/motorcycle-small.png"/>
+      <div>
+        <div className='container-fluid'>
+          <div className='row'>
+            <DemoPicture popped="./img/basketball-small.png"/>
+            <DemoPicture popped="./img/usc-small.png"/>
+            <DemoPicture popped="./img/building-small.png"/>
+          </div>
+          <div className='row'>
+            <DemoPicture popped="./img/cars-small.png"/>
+            <DemoPicture popped="./img/aquarium-small.png"/>
+            <DemoPicture popped="./img/manchu-small.png"/>
+          </div>
+          <div className='row'>
+            <DemoPicture popped="./img/trump-small.png"/>
+            <DemoPicture popped="./img/dress-small.png"/>
+            <DemoPicture popped="./img/motorcycle-small.png"/>
+          </div>
         </div>
       </div>
     );

@@ -18,10 +18,10 @@ export default class PageTemplate extends Component {
   render(){
     const {title, subtitle, children} = this.props;
     return(
-      <div className={styles.pageContent}>
+      <div className='pageContent'>
         <h1>{title}</h1>
-        <p className={styles.subtitle}>{subtitle}</p>
-        <div className={styles.pageContent}>{children}</div>
+        <p className='subtitle'>{subtitle}</p>
+        {children}
       </div>
     );
   }

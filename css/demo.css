@@ -11,3 +11,45 @@
 .galleryPic:hover {
   border-color: #549ACB;
 }
+
+.demoModalWrapper {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
+
+.demoModal {
+  background-color: white;
+  height: 600px;
+  margin: 100px auto;
+  max-width: 600px;
+  width: 90%;
+}
+
+.demoModal > .imageText {
+  background-color: #549ACB;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin: 10px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.demoModal > img {
+  width: 100%;
+}
+
+.demoModal > .pressLabel {
+  background-color: #549ACB;
+  color: #FFFFFF;
+  padding: 5px;
+}
+
+.demoModal > p {
+  font-size: 17px;
+}
