@@ -12,7 +12,7 @@ module.exports = {
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './src/demo.js'
-    ] 
+    ]
   },
   output: {
     path: path.resolve(__dirname, 'static/'),
@@ -30,6 +30,11 @@ module.exports = {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'src'),
         loader: 'react-hot'
+      },
+      {
+        test: /\.css?$/,
+        include: path.resolve(__dirname, 'css'),
+        loader: 'style!css'
       },
       {
         test: /\.jsx?$/,

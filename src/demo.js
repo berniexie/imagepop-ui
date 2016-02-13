@@ -2,6 +2,8 @@
 
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
+import PageTemplate from './pageTemplate.js';
+import styles from '../css/demo.css';
 
 //a container for each picture in the gallery
 export default class DemoPicture extends Component {
@@ -23,7 +25,7 @@ export default class DemoPicture extends Component {
     const {popped} = this.props;
     return (
       <div className='col-sm-4'>
-        <img className='galleryPic' src={popped}/>
+        <img className="galleryPic" src={popped}/>
       </div>
     );
   }
@@ -56,28 +58,24 @@ export default class DemoModal extends Component {
 }
 
 //container for all of the components of the Demo page
-export default class DemoPage extends Component{
+export default class DemoPageContent extends Component {
   render(){
     return(
-      <div className='pageContent'>
-        <h1>Gallery</h1>
-        <p className='subheader'>Select an image below to see what image|pop can do.</p>
-        <div className='container-fluid'>
-          <div className='row'>
-            <DemoPicture popped="./img/basketball-small.png"/>
-            <DemoPicture popped="./img/usc-small.png"/>
-            <DemoPicture popped="./img/building-small.png"/>
-          </div>
-          <div className='row'>
-            <DemoPicture popped="./img/cars-small.png"/>
-            <DemoPicture popped="./img/aquarium-small.png"/>
-            <DemoPicture popped="./img/manchu-small.png"/>
-          </div>
-          <div className='row'>
-            <DemoPicture popped="./img/trump-small.png"/>
-            <DemoPicture popped="./img/dress-small.png"/>
-            <DemoPicture popped="./img/motorcycle-small.png"/>
-          </div>
+      <div className='container-fluid'>
+        <div className='row'>
+          <DemoPicture popped="./img/basketball-small.png"/>
+          <DemoPicture popped="./img/usc-small.png"/>
+          <DemoPicture popped="./img/building-small.png"/>
+        </div>
+        <div className='row'>
+          <DemoPicture popped="./img/cars-small.png"/>
+          <DemoPicture popped="./img/aquarium-small.png"/>
+          <DemoPicture popped="./img/manchu-small.png"/>
+        </div>
+        <div className='row'>
+          <DemoPicture popped="./img/trump-small.png"/>
+          <DemoPicture popped="./img/dress-small.png"/>
+          <DemoPicture popped="./img/motorcycle-small.png"/>
         </div>
       </div>
     );
@@ -85,7 +83,10 @@ export default class DemoPage extends Component{
 }
 
 ReactDOM.render(
-    <DemoPage/>,
-    document.getElementById('app')
+    <PageTemplate title="Gallery" 
+        subtitle="Select an image below to see what image|pop can do." >
+      <DemoPageContent />
+    </PageTemplate>,
+    document.getElementById('app'),
 );
 

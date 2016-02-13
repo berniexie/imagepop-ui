@@ -2,15 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Demo</title>
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/demo.css">
+    <style>
+      @font-face {
+        font-family: "Raleway";
+        src: url("/fonts/Raleway.ttf")  format("truetype");
+      }
+
+      body {
+        background-color: #EEEEEE;
+        font-family: 'Raleway';
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
-    <div id="app">
-    </div>
-
+    <div id="app"></div>
     <script type="application/javascript" src="static/demo.bundle.js"></script>
   </body>
 </html>
