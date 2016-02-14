@@ -19,6 +19,7 @@ export default class DemoPicture extends Component {
   state = {hidden:true};
 
   handleClick() {
+    console.log("in parent" + this.state.hidden);
     this.setState({hidden: !this.state.hidden})
   };
 
@@ -29,15 +30,14 @@ export default class DemoPicture extends Component {
         <img className="galleryPic" onClick={this.handleClick.bind(this)}
             src={popped}/>
         {this.state.hidden ? null
-            : <DemoModal after ="./img/building-after.png" 
-            before ="./img/building-before.png"/>}
+            : <DemoWrapper after ="./img/building-after.png" 
+            before ="./img/building-before.png" callBackParent ={this.handleClick.bind(this)}/>}
       </div>
     );
   }
 }
 
-//a component for the modal that will pop up when the picture is clicked
-export default class DemoModal extends Component {
+export default class DemoWrapper extends DemoPicture{
   static propTypes = {
     after: PropTypes.string,
     before: PropTypes.string,
@@ -49,6 +49,22 @@ export default class DemoModal extends Component {
     before: '',
   };
 
+  handleClick(){
+    console.log("in wrapper");
+    this.props.callBackParent();
+  };
+  render(){
+    const {after, before} = this.props;
+    return (
+      <div className='demoModalWrapper' onClick={this.handleClick.bind(this)}>
+        <DemoModal after={this.props.after} before={this.props.before}/>
+      </div>
+    );
+  }
+}
+//a component for the modal that will pop up when the picture is clicked
+export default class DemoModal extends DemoWrapper{
+  
   state = {pressed:true};
 
   handleClick() {
@@ -60,7 +76,6 @@ export default class DemoModal extends Component {
     var imageText = this.state.pressed ? 'after' : 'before';
     var pic = this.state.pressed ? after : before;
     return (
-      <div className='demoModalWrapper'>
         <div className='demoModal'>
           <div className='imageText'>{imageText}</div>
           <img src={pic} onMouseDown={this.handleClick.bind(this)}
@@ -69,7 +84,6 @@ export default class DemoModal extends Component {
           <h3>Level of Contrast</h3>
           <p>Adjust the amount of edge contrast using the indicators below.</p>
         </div>
-      </div>
     );
   }
 }
