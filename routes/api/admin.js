@@ -1,7 +1,7 @@
 var express = require('express');
 router = express.Router();
 
-router.get('/admin/status', function (req, res, next) {
+router.get('/status', function (req, res, next) {
     res.send([
         {
             "name": "apiVersion",
