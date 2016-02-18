@@ -24,7 +24,7 @@ app.listen(3000, function () {
 });
 
 //This is for the mocked backend
-backend_server.use('/app/api/admin/status', require('./routes/api/backend'));
+backend_server.use('/app/api/', require('./routes/api/backend'));
 
 backend_server.listen(3001, function() {
     console.log('Backend mocked API listening on port 3001!');
