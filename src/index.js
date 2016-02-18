@@ -21,4 +21,3 @@ ReactDOM.render(
   <Hello user="World"/>,
   document.getElementById('app')
 );
-
