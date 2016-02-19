@@ -5,10 +5,10 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './src/index.js'
+    './js/index.js'
   ],
   output: {
-    path: path.resolve(__dirname, 'static/'),
+    path: path.resolve(__dirname, 'js/'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -21,12 +21,12 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'js'),
         loader: 'react-hot'
       },
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'js'),
         loader: 'babel',
         query: {
           plugins: ['transform-runtime'],
