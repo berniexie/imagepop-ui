@@ -1,23 +1,18 @@
+/**
+ * Created by BernardXie on 2/19/16.
+ */
+
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
+var Router = require('react-router').Router;
+var Route = require('react-router').Route;
 
-export default class Hello extends Component {
-  static propTypes = {
-    user: PropTypes.string
-  };
-
-  static defaultProps = {
-    user: 'World'
-  };
-
-  render() {
-    const { user } = this.props;
-    return (<h1>Hello {user}</h1>);
-  }
-}
-
+var landingPage = require('./index/components/landing_component.jsx');
 
 ReactDOM.render(
-  <Hello user="World"/>,
+  <Router>
+    <Route path="/" component={landingPage} />
+  </Router>,
   document.getElementById('app')
 );
+

@@ -7,3 +7,5 @@ js/*/*-bundle.js
 js/*/*-bundle.js.map
 static
 .DS_Store
+*.hot-update.js
+*.hot-update.json
