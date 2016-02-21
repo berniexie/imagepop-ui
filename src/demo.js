@@ -19,7 +19,7 @@ export default class DemoPicture extends Component {
   state = {hidden:true};
 
   handleClick() {
-    this.setState({hidden: !this.state.hidden})
+    this.props.callBack();
   };
 
   render() {
@@ -28,9 +28,6 @@ export default class DemoPicture extends Component {
       <div className='col-sm-4'>
         <img className="galleryPic" onClick={this.handleClick.bind(this)}
             src={popped}/>
-        {this.state.hidden ? null
-            : <DemoModal after ="./img/building-after.png" 
-            before ="./img/building-before.png" callBack ={this.handleClick.bind(this)}/>}
       </div>
     );
   }
@@ -73,7 +70,8 @@ export default class DemoModal extends Component{
           <div className='imageText'>{imageText}</div>
           <img src={pic} onMouseDown={this.handleClick.bind(this)}
               onMouseUp={this.handleClick.bind(this)}></img>
-          <div className='pressLabel'>Press and hold the image to see it before it was popped</div>
+          <div className='pressLabel'>Press and hold the image to see it before 
+              it was popped</div>
           <h3>Level of Contrast</h3>
           <p>Adjust the amount of edge contrast using the indicators below.</p>
         </div>
@@ -84,26 +82,47 @@ export default class DemoModal extends Component{
 
 //container for all of the components of the Demo page
 export default class DemoPageContent extends Component {
+  state = {hidden:true};
+
+  handleClick() {
+    document.getElementById('body').className 
+        = (!this.state.hidden) ? "" : "noScroll";
+    this.setState({hidden: !this.state.hidden});
+  };
+
   render(){
     return(
-      <div>
+      <div className={this.state.hidden ? '' : 'noScroll'}>
         <div className='container-fluid'>
           <div className='row'>
-            <DemoPicture popped="./img/basketball-small.png"/>
-            <DemoPicture popped="./img/usc-small.png"/>
-            <DemoPicture popped="./img/building-small.png"/>
+            <DemoPicture popped="./img/basketball-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/usc-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/building-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/cars-small.png"/>
-            <DemoPicture popped="./img/aquarium-small.png"/>
-            <DemoPicture popped="./img/manchu-small.png"/>
+            <DemoPicture popped="./img/cars-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/aquarium-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/manchu-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/trump-small.png"/>
-            <DemoPicture popped="./img/dress-small.png"/>
-            <DemoPicture popped="./img/motorcycle-small.png"/>
+            <DemoPicture popped="./img/trump-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/dress-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/motorcycle-small.png" 
+                callBack ={this.handleClick.bind(this)}/>
           </div>
         </div>
+        {this.state.hidden ? null
+            : <DemoModal after ="./img/building-after.png" 
+            before ="./img/building-before.png" 
+            callBack ={this.handleClick.bind(this)}/>}
       </div>
     );
   }
