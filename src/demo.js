@@ -4,6 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import PageTemplate from './pageTemplate.js';
 import styles from '../css/demo.css';
+import Slider from 'react-slider';
 
 //a container for each picture in the gallery
 export default class DemoPicture extends Component {
@@ -34,7 +35,7 @@ export default class DemoPicture extends Component {
 }
 
 //a component for the modal that will pop up when the picture is clicked
-export default class DemoModal extends Component{
+export default class DemoModal extends React.Component{
   
   static propTypes = {
     after: PropTypes.string,
@@ -47,7 +48,7 @@ export default class DemoModal extends Component{
     before: '',
   };
 
-  state = {pressed:true};
+  state = {pressed:true, value:10};
 
   //will display original when the picture in the modal is pressed down
   handleClick() {
@@ -74,6 +75,14 @@ export default class DemoModal extends Component{
               it was popped</div>
           <h3>Level of Contrast</h3>
           <p>Adjust the amount of edge contrast using the indicators below.</p>
+          <div className='sliderWrapper'>
+            <Slider  defaultValue={50} min={1} max={3} step={1} withBars>
+              <div className='handle'/>
+            </Slider>
+            <div className='label labelLeft'>low</div>
+            <div className='label'>med</div>
+            <div className='label labelRight'>high</div>
+          </div>
         </div>
       </div>
     );
