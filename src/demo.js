@@ -38,17 +38,22 @@ export default class DemoPicture extends Component {
 export default class DemoModal extends React.Component{
   
   static propTypes = {
-    after: PropTypes.string,
+    low: PropTypes.string,
+    med: PropTypes.string,
+    high: PropTypes.string,
     before: PropTypes.string,
+
   };
 
   //default prop values
   static defaultProps = {
-    after: '',
+    low: '',
+    med: '',
+    high: '',
     before: '',
   };
 
-  state = {pressed:true, value:10};
+  state = {pressed:true, value:10, after:this.props.med};
 
   //will display original when the picture in the modal is pressed down
   handleClick() {
@@ -56,15 +61,29 @@ export default class DemoModal extends React.Component{
   };
 
   //closes the modal when you click outside
-  closeModal(e){
+  closeModal(e) {
     if (e.target.className == 'demoModalWrapper')
       this.props.callBack();
   }
 
+  handleSlider(value) {
+    switch (value) {
+      case 1:
+        this.setState({after: this.props.low});
+        break;
+      case 2:
+        this.setState({after: this.props.med});
+        break;
+      default:
+        this.setState({after: this.props.high});
+        break;
+    }
+  }
+
   render() {
-    const {after, before} = this.props;
+    const {before} = this.props;
     var imageText = this.state.pressed ? 'after' : 'before';
-    var pic = this.state.pressed ? after : before;
+    var pic = this.state.pressed ? this.state.after : before;
     return (
       <div className = 'demoModalWrapper' onClick={this.closeModal.bind(this)}>
         <div className='demoModal'>
@@ -76,7 +95,8 @@ export default class DemoModal extends React.Component{
           <h3>Level of Contrast</h3>
           <p>Adjust the amount of edge contrast using the indicators below.</p>
           <div className='sliderWrapper'>
-            <Slider  defaultValue={50} min={1} max={3} step={1} withBars>
+            <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
+                onChange={this.handleSlider.bind(this)}>
               <div className='handle'/>
             </Slider>
             <div className='label labelLeft'>low</div>
@@ -91,14 +111,16 @@ export default class DemoModal extends React.Component{
 
 //container for all of the components of the Demo page
 export default class DemoPageContent extends Component {
-  state = {hidden:true, after:'', before:''};
+  state = {hidden:true, low:'', med:'', high:'', before:'', after:''};
 
-  handleClick(aft, bef) {
+  handleClick(l, m, h, bef) {
     document.getElementById('body').className 
         = (!this.state.hidden) ? "" : "noScroll";
     this.setState({
       hidden: !this.state.hidden, 
-      after: aft, 
+      low: l, 
+      med: m,
+      high: h,
       before: bef
     });
   };
@@ -109,39 +131,41 @@ export default class DemoPageContent extends Component {
           <div className='row'>
             <DemoPicture popped="./img/beach-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/beach-after.png", "./img/beach-before.png")}/>
+                    "", "./img/beach-after.png", "", "./img/beach-before.png")}/>
             <DemoPicture popped="./img/doheny-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/doheny-after.png", "./img/doheny-before.png")}/>
+                    "./img/doheny-low.png", "./img/doheny-medium.png", "./img/doheny-high.png", "./img/doheny-before.png")}/>
             <DemoPicture popped="./img/building-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/building-after.png", "./img/building-before.png")}/>
+                    "", "./img/building-after.png", "", "./img/building-before.png")}/>
           </div>
           <div className='row'>
             <DemoPicture popped="./img/jellies-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/jellies-after.png", "./img/jellies-before.png")}/>
+                    "", "./img/jellies-after.png", "", "./img/jellies-before.png")}/>
             <DemoPicture popped="./img/kelp-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/kelp-after.png", "./img/kelp-before.png")}/>
+                    "", "./img/kelp-after.png", "", "./img/kelp-before.png")}/>
             <DemoPicture popped="./img/shark-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/shark-after.png", "./img/shark-before.png")}/>
+                    "", "./img/shark-after.png", "", "./img/shark-before.png")}/>
           </div>
           <div className='row'>
             <DemoPicture popped="./img/ships-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/ships-after.png", "./img/ships-before.png")}/>
+                    "", "./img/ships-after.png", "", "./img/ships-before.png")}/>
             <DemoPicture popped="./img/tanks-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/tanks-after.png", "./img/tanks-before.png")}/>
+                    "", "./img/tanks-after.png", "", "./img/tanks-before.png")}/>
             <DemoPicture popped="./img/waves-small.png"
                 callBack ={this.handleClick.bind(this, 
-                    "./img/waves-after.png", "./img/waves-before.png")}/>
+                    "", "./img/waves-after.png", "", "./img/waves-before.png")}/>
           </div>
         </div>
         {this.state.hidden ? null
-            : <DemoModal after = {this.state.after}
+            : <DemoModal low = {this.state.low}
+            med = {this.state.med}
+            high = {this.state.high}
             before = {this.state.before}
             callBack ={this.handleClick.bind(this, "", "")}/>}
       </div>
