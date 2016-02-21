@@ -9,11 +9,15 @@ import styles from '../css/demo.css';
 export default class DemoPicture extends Component {
   static propTypes = {
     popped: PropTypes.string,
+    bef: PropTypes.string,
+    aft: PropTypes.string
   };
 
   //default prop values
   static defaultProps = {
     popped: '',
+    bef: '',
+    aft: ''
   };
 
   state = {hidden:true};
@@ -23,14 +27,13 @@ export default class DemoPicture extends Component {
   };
 
   render() {
-    const {popped} = this.props;
+    const {popped, bef, aft} = this.props;
     return (
       <div className='col-sm-4'>
         <img className="galleryPic" onClick={this.handleClick.bind(this)}
             src={popped}/>
         {this.state.hidden ? null
-            : <DemoModal after ="./img/building-after.png" 
-            before ="./img/building-before.png" callBack ={this.handleClick.bind(this)}/>}
+            : <DemoModal after = {aft} before = {bef} callBack ={this.handleClick.bind(this)}/>}
       </div>
     );
   }
@@ -89,19 +92,37 @@ export default class DemoPageContent extends Component {
       <div>
         <div className='container-fluid'>
           <div className='row'>
-            <DemoPicture popped="./img/basketball-small.png"/>
-            <DemoPicture popped="./img/usc-small.png"/>
-            <DemoPicture popped="./img/building-small.png"/>
+            <DemoPicture popped="./img/beach-small.png"
+                         aft="./img/beach-after.png"
+                         bef="./img/beach-before.png"/>
+            <DemoPicture popped="./img/doheny-small.png"
+                         aft="./img/doheny-after.png"
+                         bef="./img/doheny-before.png"/>
+            <DemoPicture popped="./img/building-small.png"
+                         aft="./img/building-after.png"
+                         bef="./img/building-before.png"/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/cars-small.png"/>
-            <DemoPicture popped="./img/aquarium-small.png"/>
-            <DemoPicture popped="./img/manchu-small.png"/>
+            <DemoPicture popped="./img/jellies-small.png"
+                         aft="./img/jellies-after.png"
+                         bef="./img/jellies-before.png"/>
+            <DemoPicture popped="./img/kelp-small.png"
+                         aft="./img/kelp-after.png"
+                         bef="./img/kelp-before.png"/>
+            <DemoPicture popped="./img/shark-small.png"
+                         aft="./img/shark-after.png"
+                         bef="./img/shark-before.png"/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/trump-small.png"/>
-            <DemoPicture popped="./img/dress-small.png"/>
-            <DemoPicture popped="./img/motorcycle-small.png"/>
+            <DemoPicture popped="./img/ships-small.png"
+                         aft="./img/ships-after.png"
+                         bef="./img/ships-before.png"/>
+            <DemoPicture popped="./img/tanks-small.png"
+                         aft="./img/tanks-after.png"
+                         bef="./img/tanks-before.png"/>
+            <DemoPicture popped="./img/waves-small.png"
+                         aft="./img/waves-after.png"
+                         bef="./img/waves-before.png"/>
           </div>
         </div>
       </div>
