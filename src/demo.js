@@ -17,8 +17,6 @@ export default class DemoPicture extends Component {
     popped: '',
   };
 
-  state = {hidden:true};
-
   handleClick() {
     this.props.callBack();
   };
@@ -53,7 +51,7 @@ export default class DemoModal extends React.Component{
     before: '',
   };
 
-  state = {pressed:true, value:10, after:this.props.med};
+  state = {pressed:true, after:this.props.med};
 
   //will display original when the picture in the modal is pressed down
   handleClick() {
@@ -111,7 +109,7 @@ export default class DemoModal extends React.Component{
 
 //container for all of the components of the Demo page
 export default class DemoPageContent extends Component {
-  state = {hidden:true, low:'', med:'', high:'', before:'', after:''};
+  state = {hidden:true, low:'', med:'', high:'', before:''};
 
   handleClick(l, m, h, bef) {
     document.getElementById('body').className 
