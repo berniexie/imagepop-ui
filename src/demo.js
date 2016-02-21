@@ -23,7 +23,7 @@ export default class DemoPicture extends Component {
   };
 
   render() {
-    const {popped} = this.props;
+    const {popped, bef, aft} = this.props;
     return (
       <div className='col-sm-4'>
         <img className="galleryPic" onClick={this.handleClick.bind(this)}
@@ -82,47 +82,59 @@ export default class DemoModal extends Component{
 
 //container for all of the components of the Demo page
 export default class DemoPageContent extends Component {
-  state = {hidden:true};
+  state = {hidden:true, after:'', before:''};
 
-  handleClick() {
+  handleClick(aft, bef) {
     document.getElementById('body').className 
         = (!this.state.hidden) ? "" : "noScroll";
-    this.setState({hidden: !this.state.hidden});
+    this.setState({
+      hidden: !this.state.hidden, 
+      after: aft, 
+      before: bef
+    });
   };
-
   render(){
     return(
       <div className={this.state.hidden ? '' : 'noScroll'}>
         <div className='container-fluid'>
           <div className='row'>
-            <DemoPicture popped="./img/basketball-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/usc-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/building-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/beach-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/beach-after.png", "./img/beach-before.png")}/>
+            <DemoPicture popped="./img/doheny-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/doheny-after.png", "./img/doheny-before.png")}/>
+            <DemoPicture popped="./img/building-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/building-after.png", "./img/building-before.png")}/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/cars-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/aquarium-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/manchu-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/jellies-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/jellies-after.png", "./img/jellies-before.png")}/>
+            <DemoPicture popped="./img/kelp-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/kelp-after.png", "./img/kelp-before.png")}/>
+            <DemoPicture popped="./img/shark-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/shark-after.png", "./img/shark-before.png")}/>
           </div>
           <div className='row'>
-            <DemoPicture popped="./img/trump-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/dress-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
-            <DemoPicture popped="./img/motorcycle-small.png" 
-                callBack ={this.handleClick.bind(this)}/>
+            <DemoPicture popped="./img/ships-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/ships-after.png", "./img/ships-before.png")}/>
+            <DemoPicture popped="./img/tanks-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/tanks-after.png", "./img/tanks-before.png")}/>
+            <DemoPicture popped="./img/waves-small.png"
+                callBack ={this.handleClick.bind(this, 
+                    "./img/waves-after.png", "./img/waves-before.png")}/>
           </div>
         </div>
         {this.state.hidden ? null
-            : <DemoModal after ="./img/building-after.png" 
-            before ="./img/building-before.png" 
-            callBack ={this.handleClick.bind(this)}/>}
+            : <DemoModal after = {this.state.after}
+            before = {this.state.before}
+            callBack ={this.handleClick.bind(this, "", "")}/>}
       </div>
     );
   }
