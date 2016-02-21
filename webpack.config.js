@@ -32,6 +32,11 @@ module.exports = {
         loader: 'react-hot'
       },
       {
+        test: /\.css?$/,
+        include: path.resolve(__dirname, 'css'),
+        loader: 'style!css'
+      },
+      {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'src'),
         loader: 'babel',

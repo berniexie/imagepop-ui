@@ -1,0 +1,14 @@
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+
+#dropzoneListArea {
+  width: 25vw;
+  height: 75vh;
+}
+
+.dropzoneArea {
+  width: 100vw;
+  height: 100vh;
+}
