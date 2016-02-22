@@ -11,7 +11,7 @@ export default class ImageControlArea extends Component {
 
   handleSlider = (value) => {
     console.log(value);
-  }
+  };
 
   render = () => {
     const {file} = this.props;
@@ -27,7 +27,7 @@ export default class ImageControlArea extends Component {
         </div>
       </div>
     );
-  }
+  };
 }
 
 export default class SelectedImageArea extends Component {
@@ -37,7 +37,7 @@ export default class SelectedImageArea extends Component {
 
   static propTypes = {
     file: PropTypes.object,
-  }
+  };
 
   defaultProps = {
     file: null,
@@ -53,7 +53,7 @@ export default class SelectedImageArea extends Component {
         }
       </div>
     );
-  }
+  };
 };
 
 export default class FileListElement extends Component {
@@ -71,7 +71,7 @@ export default class FileListElement extends Component {
     this.setState({
       selected: true
     });
-  }
+  };
 
   render = () => {
     const {file} = this.props;
@@ -90,7 +90,7 @@ export default class FileListElement extends Component {
         </div>
       </div>
     );
-  }
+  };
 };
 
 export default class ImageListArea extends Component {
@@ -119,7 +119,7 @@ export default class ImageListArea extends Component {
         </div>
       </div>
     );
-  }
+  };
 };
 
 export default class File {
@@ -152,17 +152,17 @@ export default class MainPage extends Component {
     this.setState(function(prevState, currProps) {
       return {files: prevState.files.concat(files)};
     });
-  }
+  };
 
   onListElementClick = (file) => {
     this.setState(function(prevState, currProps) {
       return {selectedFile: file};
     });
-  }
+  };
 
   onOpenClick = () => {
     this.refs.dropzone.open();
-  }
+  };
 
   render = () => {
     console.log(this.state.files);
@@ -180,7 +180,7 @@ export default class MainPage extends Component {
         <SelectedImageArea file={this.state.selectedFile}/>
       </Dropzone>
     );
-  }
+  };
 };
 
 
