@@ -4,6 +4,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
+
 var Router = require('react-router').Router;
 var Route = require('react-router').Route;
 
