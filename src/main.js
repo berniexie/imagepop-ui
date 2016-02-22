@@ -2,8 +2,35 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Dropzone from 'react-dropzone';
 import styles from '../css/main-page/mainPage.css';
+import Slider from 'react-slider';
 
-export default class ImageViewArea extends Component {
+export default class ImageControlArea extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  handleSlider = (value) => {
+    console.log(value);
+  }
+
+  render = () => {
+    const {file} = this.props;
+    return (
+      <div className='imageControlArea'>
+        <h2>{file.name}</h2>
+        <img className='fullImageView' src={file.preview} />
+        <div className='sliderWrapper'>
+          <Slider defaultValue={6} min={1} max={10} step={1} withBars 
+              onChange={this.handleSlider.bind(this)}>
+            <div className='handle'/>
+          </Slider>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default class SelectedImageArea extends Component {
   constructor(props) {
     super(props);
   }
@@ -19,10 +46,10 @@ export default class ImageViewArea extends Component {
   render = () => {
     const {file} = this.props;
     return (
-      <div className='imageViewArea'>
+      <div className='selectedImageArea centered'>
         {file == null ?
           <div>Upload images to view more options!</div> :
-          <img className='fullImageView' src={file.preview} />
+          (<ImageControlArea file={file} />)
         }
       </div>
     );
@@ -49,12 +76,18 @@ export default class FileListElement extends Component {
   render = () => {
     const {file} = this.props;
     return (
-      <div className='fileListElement' onClick={this.onListElementClick.bind(this, file)}>
-
+      <div className='fileListElement'
+           onClick={this.onListElementClick.bind(this, file)}>
+        <div className='fileListElementWrapper'>
           <div className='listElementIconWrapper'>
             <img className='listElementIcon' src={file.preview} />
           </div>
-          <div className='listElementName'>{file.name}</div>
+          <div className='listElementInfo'>
+            <div className='listElementName'>{file.name}</div>
+            <div className='listElementFilesize'>{Math.floor(file.size / 1024)} KB</div>
+          </div>
+          <div className='listElementOptions'></div>
+        </div>
       </div>
     );
   }
@@ -129,7 +162,7 @@ export default class MainPage extends Component {
         </div>
         <ImageListArea files={this.state.files} onOpenClick={this.onOpenClick}
                        onListElementClick={this.onListElementClick} />
-        <ImageViewArea file={this.state.selectedFile}/>
+        <SelectedImageArea file={this.state.selectedFile}/>
       </Dropzone>
     );
   }
