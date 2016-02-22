@@ -122,6 +122,18 @@ export default class ImageListArea extends Component {
   }
 };
 
+export default class File {
+  constructor(file, fileId) {
+    this.raw_file = file;
+    this.name = file.name;
+    this.preview = file.preview;
+    this.size = file.size;
+    this.fileId = fileId;
+    this.status = 'UPLOADING';
+    this.uploadedUrl = null;
+  }
+}
+
 export default class MainPage extends Component {
   constructor(props) {
     super(props);
@@ -130,9 +142,11 @@ export default class MainPage extends Component {
 
   fileId = 0;
 
-  onDrop = (files) => {
-    files.forEach(function(file) {
-      file.fileId = this.fileId++;
+  onDrop = (raw_files) => {
+    var files = [];
+    raw_files.forEach(function(raw_file) {
+      let file = new File(raw_file, this.fileId++);
+      files.push(file);
     }, this);
 
     this.setState(function(prevState, currProps) {
@@ -151,6 +165,7 @@ export default class MainPage extends Component {
   }
 
   render = () => {
+    console.log(this.state.files);
     return (
       <Dropzone className='dropzoneArea' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
