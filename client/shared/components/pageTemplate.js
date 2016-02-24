@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import styles from '../css/pageTemplate.css';
+import styles from '../../../public/css/pageTemplate.css';
 
 // Container for the components of a page with title, subtitle, and content.
 export default class PageTemplate extends Component {

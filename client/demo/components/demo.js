@@ -2,8 +2,8 @@
 
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import PageTemplate from './pageTemplate.js';
-import styles from '../css/demo.css';
+import PageTemplate from '../../shared/components/pageTemplate.js';
+import styles from '../../../public/css/demo.css';
 import Slider from 'react-slider';
 
 //a container for each picture in the gallery

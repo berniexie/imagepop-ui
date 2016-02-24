@@ -13,16 +13,17 @@ app.use(require("webpack-hot-middleware")(compiler));
 
 app.use(express.static('public'));
 app.use('/static', express.static(__dirname + '/static'));
-app.use('/img', express.static(__dirname + '/img'));
-app.use('/css', express.static(__dirname + '/css'));
-app.use('/fonts', express.static(__dirname + '/fonts'));
+app.use('/public', express.static(__dirname + '/public'));
+//app.use('/img', express.static(__dirname + '/public/img'));
+//app.use('/css', express.static(__dirname + '/public/css'));
+//app.use('/fonts', express.static(__dirname + '/public/fonts'));
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
+  res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
 app.get('/demo', function (req, res) {
-  res.sendFile(path.join(__dirname + '/demo.html'));
+  res.sendFile(path.join(__dirname + '/views/demo.html'));
 });
 
 app.listen(3000, function () {
