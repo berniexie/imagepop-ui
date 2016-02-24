@@ -109,3 +109,14 @@ img {
 .labelRight {
   text-align: right;
 }
+
+@font-face {
+	font-family: "Raleway";
+	src: url("/fonts/Raleway.ttf")  format("truetype");
+}
+
+body {
+	background-color: #EEEEEE;
+	font-family: 'Raleway';
+	text-align: center;
+}
