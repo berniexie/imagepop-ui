@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-//import PageTemplate from '../../shared/components/pageTemplate.js';
 import styles from '../../../public/css/index.css';
 
 var landingStyle;

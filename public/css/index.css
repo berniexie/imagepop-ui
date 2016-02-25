@@ -1,7 +1,5 @@
 html {
     height: 100%;
-    /*display: table;*/
-    /*margin: auto;*/
 }
 
 #app {
@@ -10,17 +8,10 @@ html {
 
 body {
     height: 100%;
-    /*width: 100%;*/
-    /*background-position: 30%;*/
-    /*background-image: image("../img/sea-nature-sunny-beach.jpg");*/
-    /*background-size: cover;*/
     overflow: hidden;
     font-family: 'Raleway';
     text-align: center;
-    /*align-items: center;*/
 
-    /*display: table-cell;*/
-    /*vertical-align: middle;*/
 }
 
 .galleryButton {
