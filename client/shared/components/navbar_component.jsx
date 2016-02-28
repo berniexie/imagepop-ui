@@ -10,16 +10,16 @@ export default class Navbar extends Component {
       <div className="navbar">
         <ul>
           <li>
-            <a href="/about">about</a>
-          </li>
-          <li>
-            <a href="/gallery">gallery</a>
+            <a href="/login">login</a>
           </li>
           <li>
             <a href="/upload">upload</a>
           </li>
           <li>
-            <a href="/login">login</a>
+            <a href="/demo">gallery</a>
+          </li>
+          <li>
+            <a href="/about">about</a>
           </li>
         </ul>
       </div>
