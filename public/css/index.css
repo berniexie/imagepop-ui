@@ -1,0 +1,77 @@
+html {
+    height: 100%;
+}
+
+#app {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Raleway';
+    text-align: center;
+
+}
+
+.galleryButton {
+    background-color: #549ACB;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 6px;
+    cursor: hand;
+}
+
+.galleryButton:hover {
+    background-color: transparent;
+    border: solid thin #549ACB;
+    color: #4c79ac;
+    text-shadow: 1px 1px 1px whitesmoke;
+    padding: 15px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 3px 5px;
+    cursor: hand;
+    text-decoration: none;
+}
+
+
+.uploadButton {
+    background-color: #3e3839;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 6px;
+    cursor: hand;
+}
+
+.uploadButton:hover {
+    background-color: transparent;
+    border: solid thin #3e3839;
+    color: #3e3839;
+    text-shadow: 1px 1px 1px whitesmoke;
+    padding: 15px 32px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 3px 5px;
+    cursor: hand;
+    text-decoration: none;
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("../fonts/Raleway.ttf")  format("truetype");
+}
