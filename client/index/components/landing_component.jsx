@@ -21,4 +21,7 @@ export default class Landing extends Component {
   }
 }
 
-module.exports = Landing;
+ReactDOM.render(
+  <Landing />,
+  document.getElementById('app')
+);
