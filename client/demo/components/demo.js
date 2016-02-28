@@ -62,7 +62,7 @@ export default class DemoModal extends React.Component{
   closeModal = (e) => {
     if (e.target.className == 'demoModalWrapper')
       this.props.callBack();
-  }
+  };
 
   handleSlider = (value) => {
     switch (value) {
@@ -76,7 +76,7 @@ export default class DemoModal extends React.Component{
         this.setState({after: this.props.high});
         break;
     }
-  }
+  };
 
   render() {
     const {before} = this.props;
