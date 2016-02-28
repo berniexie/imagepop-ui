@@ -3,16 +3,21 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    /*index: [
+    index: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './src/index.js'
-    ],*/
+      './client/index/components/index.js'
+    ],
+    demo: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/demo/components/demo.js'
+    ],
     main: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './src/main.js'
-    ] 
+      './client/main/components/main.js'
+    ]
   },
   output: {
     path: path.resolve(__dirname, 'static/'),
@@ -28,17 +33,22 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'client'),
         loader: 'react-hot'
       },
       {
         test: /\.css?$/,
-        include: path.resolve(__dirname, 'css'),
+        include: path.resolve(__dirname, 'public/css'),
         loader: 'style!css'
       },
       {
+        test: /\.ttf?$/,
+        include: path.resolve(__dirname, 'public/fonts'),
+        loader: 'file'
+      },
+      {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'client'),
         loader: 'babel',
         query: {
           plugins: ['transform-runtime'],

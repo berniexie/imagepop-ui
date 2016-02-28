@@ -1,0 +1,111 @@
+img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.noScroll {
+  overflow: hidden;
+}
+
+.row {
+  margin: 30px 0;
+}
+
+.galleryPic {
+  border: 3px solid transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+.galleryPic:hover {
+  border-color: #549ACB;
+}
+
+.demoModalWrapper {
+  background: rgba(0,0,0,0.6);
+  bottom: 0;
+  height:100%; 
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width:100%; 
+  z-index: 5; 
+}
+
+.demoModal {
+  background-color: white;
+  margin: 100px auto;
+  max-width: 600px;
+  width: 90%;
+  z-index: 10;
+}
+
+.demoModal > .imageText {
+  background-color: #549ACB;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin: 10px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.demoModal > img {
+  width: 100%;
+}
+
+.demoModal > .pressLabel {
+  background-color: #549ACB;
+  color: #FFFFFF;
+  padding: 5px;
+}
+
+.demoModal > p {
+  font-size: 17px;
+}
+
+.sliderWrapper {
+  margin: 25px auto;
+  width: 70%;
+}
+
+.bar-0 {
+  background-color: #549ACB;
+  height: 3px;
+}
+
+.bar-1 {
+  background-color: #818181;
+  height: 3px;
+}
+
+.handle {
+  background-color: #818181;
+  border-radius: 15px;
+  height: 20px;
+  top: -10px;
+  width: 20px;
+}
+
+.label {
+  color: black;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 33%;
+}
+
+.labelLeft {
+  text-align: left;
+}
+
+.labelRight {
+  text-align: right;
+}
