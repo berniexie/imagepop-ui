@@ -17,7 +17,7 @@ export default class DemoPicture extends Component {
     popped: '',
   };
 
-  handleClick() {
+  handleClick = () => {
     this.props.callBack();
   };
 
@@ -25,7 +25,7 @@ export default class DemoPicture extends Component {
     const {popped, bef, aft} = this.props;
     return (
       <div className='col-sm-4'>
-        <img className="galleryPic" onClick={this.handleClick.bind(this)}
+        <img className="galleryPic" onClick={this.handleClick}
             src={popped}/>
       </div>
     );
@@ -54,17 +54,17 @@ export default class DemoModal extends React.Component{
   state = {pressed:true, after:this.props.med};
 
   //will display original when the picture in the modal is pressed down
-  handleClick() {
+  handleClick = () => {
     this.setState({pressed: !this.state.pressed})
   };
 
   //closes the modal when you click outside
-  closeModal(e) {
+  closeModal = (e) => {
     if (e.target.className == 'demoModalWrapper')
       this.props.callBack();
   }
 
-  handleSlider(value) {
+  handleSlider = (value) => {
     switch (value) {
       case 1:
         this.setState({after: this.props.low});
@@ -83,18 +83,18 @@ export default class DemoModal extends React.Component{
     var imageText = this.state.pressed ? 'after' : 'before';
     var pic = this.state.pressed ? this.state.after : before;
     return (
-      <div className = 'demoModalWrapper' onClick={this.closeModal.bind(this)}>
+      <div className = 'demoModalWrapper' onClick={this.closeModal}>
         <div className='demoModal'>
           <div className='imageText'>{imageText}</div>
-          <img src={pic} onMouseDown={this.handleClick.bind(this)}
-              onMouseUp={this.handleClick.bind(this)}></img>
+          <img src={pic} onMouseDown={this.handleClick}
+              onMouseUp={this.handleClick}></img>
           <div className='pressLabel'>Press and hold the image to see it before 
               it was popped</div>
           <h3>Level of Contrast</h3>
           <p>Adjust the amount of edge contrast using the indicators below.</p>
           <div className='sliderWrapper'>
             <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
-                onChange={this.handleSlider.bind(this)}>
+                onChange={this.handleSlider}>
               <div className='handle'/>
             </Slider>
             <div className='label labelLeft'>low</div>
@@ -111,7 +111,7 @@ export default class DemoModal extends React.Component{
 export default class DemoPageContent extends Component {
   state = {hidden:true, low:'', med:'', high:'', before:''};
 
-  handleClick(l, m, h, bef) {
+  handleClick(l, m, h, bef){
     document.getElementById('body').className 
         = (!this.state.hidden) ? "" : "noScroll";
     this.setState({
@@ -128,35 +128,35 @@ export default class DemoPageContent extends Component {
         <div className='container-fluid'>
           <div className='row'>
             <DemoPicture popped="./img/beach-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick( 
                     "", "./img/beach-after.png", "", "./img/beach-before.png")}/>
             <DemoPicture popped="./img/doheny-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "./img/doheny-low.png", "./img/doheny-medium.png", "./img/doheny-high.png", "./img/doheny-before.png")}/>
             <DemoPicture popped="./img/building-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/building-after.png", "", "./img/building-before.png")}/>
           </div>
           <div className='row'>
             <DemoPicture popped="./img/jellies-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/jellies-after.png", "", "./img/jellies-before.png")}/>
             <DemoPicture popped="./img/kelp-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick( 
                     "", "./img/kelp-after.png", "", "./img/kelp-before.png")}/>
             <DemoPicture popped="./img/shark-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/shark-after.png", "", "./img/shark-before.png")}/>
           </div>
           <div className='row'>
             <DemoPicture popped="./img/ships-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/ships-after.png", "", "./img/ships-before.png")}/>
             <DemoPicture popped="./img/tanks-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/tanks-after.png", "", "./img/tanks-before.png")}/>
             <DemoPicture popped="./img/waves-small.png"
-                callBack ={this.handleClick.bind(this, 
+                callBack ={() => this.handleClick(
                     "", "./img/waves-after.png", "", "./img/waves-before.png")}/>
           </div>
         </div>
@@ -165,7 +165,7 @@ export default class DemoPageContent extends Component {
             med = {this.state.med}
             high = {this.state.high}
             before = {this.state.before}
-            callBack ={this.handleClick.bind(this, "", "")}/>}
+            callBack ={() => this.handleClick("", "")}/>}
       </div>
     );
   }
