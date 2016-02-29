@@ -1,0 +1,85 @@
+html {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.index {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  background-color: #000000;
+  font-family: 'Raleway';
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
+.landing {
+  align-items: flex-end;
+  background-image: url(../img/sea-nature-sunny-beach.png);
+  background-size: cover;
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.landing > .content {
+  color: #ffffff;
+  padding-bottom: 150px;
+  text-shadow: 2px 4px 4px gray;
+  width: 100%;
+}
+
+.landing > .content > h1 {
+  font-size: 48px;
+}
+
+.landing > .content > p {
+  font-size: 36px;
+}
+
+.landingButton {
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 6px;
+  padding: 15px 32px;
+  text-align: center;  
+  text-shadow: none;
+}
+
+.landingButton:hover {
+  background-color: transparent;
+  color: white;
+  padding: 12px 29px;
+  text-decoration: none;
+}
+
+.galleryButton {
+  background-color: #549ACB;
+}
+
+.galleryButton:hover {
+  border: solid 3px #549ACB;
+}
+
+.uploadButton {
+  background-color: #434343;
+}
+
+.uploadButton:hover {
+  border: solid 3px #434343;
+}
+
+@font-face {
+  font-family: "Raleway";
+  src: url("../fonts/Raleway.ttf")  format("truetype");
+}

@@ -9,3 +9,5 @@ static/*
 !static/css
 .DS_Store
 *.swp
+*.hot-update.js
+*.hot-update.json

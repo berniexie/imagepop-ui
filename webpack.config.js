@@ -6,7 +6,7 @@ module.exports = {
     index: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/index/components/index.js'
+      './client/index/components/landing_component.jsx'
     ],
     demo: [
       'babel-polyfill',
@@ -45,6 +45,10 @@ module.exports = {
         test: /\.ttf?$/,
         include: path.resolve(__dirname, 'public/fonts'),
         loader: 'file'
+      },
+      { 
+        test: /\.png$/,
+        loader: "url-loader?limit=10000&minetype=image/png" 
       },
       {
         test: /\.jsx?$/,
