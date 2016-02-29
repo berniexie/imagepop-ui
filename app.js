@@ -8,6 +8,7 @@ var compiler = webpack(webpackConfig);
 var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
+var passport = require('passport');
 
 app.use(require("webpack-dev-middleware")(compiler, {
   noInfo: true, publicPath: webpackConfig.output.publicPath
