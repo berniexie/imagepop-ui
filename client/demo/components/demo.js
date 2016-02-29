@@ -6,32 +6,6 @@ import PageTemplate from '../../shared/components/pageTemplate.js';
 import styles from '../../../public/css/demo.css';
 import Slider from 'react-slider';
 
-//a container for each picture in the gallery
-export default class DemoPicture extends Component {
-  static propTypes = {
-    popped: PropTypes.string,
-  };
-
-  //default prop values
-  static defaultProps = {
-    popped: '',
-  };
-
-  handleClick = () => {
-    this.props.callBack();
-  };
-
-  render() {
-    const {popped, bef, aft} = this.props;
-    return (
-      <div className='col-sm-4'>
-        <img className="galleryPic" onClick={this.handleClick}
-            src={popped}/>
-      </div>
-    );
-  }
-}
-
 //a component for the modal that will pop up when the picture is clicked
 export default class DemoModal extends React.Component{
   
@@ -109,6 +83,14 @@ export default class DemoModal extends React.Component{
 
 //container for all of the components of the Demo page
 export default class DemoPageContent extends Component {
+
+  static propTypes = {
+    demoImages: PropTypes.array,
+  };
+
+  defaultProps = {
+    demoImages: [],
+  };
   state = {hidden:true, low:'', med:'', high:'', before:''};
 
   handleClick(l, m, h, bef){
@@ -123,42 +105,24 @@ export default class DemoPageContent extends Component {
     });
   };
   render(){
+    const {demoImages} = this.props;
+    var rows = this.props.demoImages.map( (item, i) =>{
+      var entry = item.map( (element, j) =>{
+        return ( 
+          <div key = {j} className='col-sm-4'>
+            <img className="galleryPic" onClick={() => this.handleClick(element.lowImgSrc, element.medImgSrc, element.highImgSrc, element.befImgSrc)}
+                src={element.smallImgSrc}/>
+          </div>
+          );
+        });
+      return (
+        <div className='row' key={i}> {entry} </div>
+      );
+    });
     return(
       <div className={this.state.hidden ? '' : 'noScroll'}>
         <div className='container-fluid'>
-          <div className='row'>
-            <DemoPicture popped="./img/beach-small.png"
-                callBack ={() => this.handleClick( 
-                    "", "./img/beach-after.png", "", "./img/beach-before.png")}/>
-            <DemoPicture popped="./img/doheny-small.png"
-                callBack ={() => this.handleClick(
-                    "./img/doheny-low.png", "./img/doheny-medium.png", "./img/doheny-high.png", "./img/doheny-before.png")}/>
-            <DemoPicture popped="./img/building-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/building-after.png", "", "./img/building-before.png")}/>
-          </div>
-          <div className='row'>
-            <DemoPicture popped="./img/jellies-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/jellies-after.png", "", "./img/jellies-before.png")}/>
-            <DemoPicture popped="./img/kelp-small.png"
-                callBack ={() => this.handleClick( 
-                    "", "./img/kelp-after.png", "", "./img/kelp-before.png")}/>
-            <DemoPicture popped="./img/shark-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/shark-after.png", "", "./img/shark-before.png")}/>
-          </div>
-          <div className='row'>
-            <DemoPicture popped="./img/ships-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/ships-after.png", "", "./img/ships-before.png")}/>
-            <DemoPicture popped="./img/tanks-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/tanks-after.png", "", "./img/tanks-before.png")}/>
-            <DemoPicture popped="./img/waves-small.png"
-                callBack ={() => this.handleClick(
-                    "", "./img/waves-after.png", "", "./img/waves-before.png")}/>
-          </div>
+              {rows}
         </div>
         {this.state.hidden ? null
             : <DemoModal low = {this.state.low}
@@ -166,15 +130,60 @@ export default class DemoPageContent extends Component {
             high = {this.state.high}
             before = {this.state.before}
             callBack ={() => this.handleClick("", "")}/>}
-      </div>
+        </div>
     );
   }
 }
 
+var images = [[{smallImgSrc: "./img/beach-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/beach-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/beach-before.png"},
+                {smallImgSrc: "./img/doheny-small.png",
+                lowImgSrc: "./img/doheny-low.png",
+                medImgSrc: "./img/doheny-medium.png",
+                highImgSrc: "./img/doheny-high.png",
+                befImgSrc: "./img/doheny-before.png"},
+                {smallImgSrc: "./img/building-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/building-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/building-before.png"}],
+                [{smallImgSrc: "./img/jellies-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/jellies-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/jellies-before.png"},
+                {smallImgSrc: "./img/kelp-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/kelp-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/kelp-before.png"},
+                {smallImgSrc: "./img/shark-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/shark-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/shark-before.png"}],
+                [{smallImgSrc: "./img/ships-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/ships-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/ships-before.png"},
+                {smallImgSrc: "./img/tanks-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/tanks-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/tanks-before.png"},
+                {smallImgSrc: "./img/waves-small.png",
+                lowImgSrc: "",
+                medImgSrc: "./img/waves-after.png",
+                highImgSrc: "",
+                befImgSrc: "./img/waves-before.png"}]];
 ReactDOM.render(
     <PageTemplate title="Gallery" 
         subtitle="Select an image below to see what image|pop can do." >
-      <DemoPageContent />
+      <DemoPageContent demoImages={images}/>
     </PageTemplate>,
     document.getElementById('app'),
 );
