@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "concurrent \"npm run clean\" \"npm run webpack\" \"npm run app\"",
-    "clean": "rm -rf static/*",
+    "clean": "rm -rf js/static/*",
     "webpack": "webpack --watch &",
     "app": "node app.js"
   },
@@ -20,8 +20,10 @@
   },
   "homepage": "https://github.com/cornsuite/imagepop-ui#readme",
   "dependencies": {
+    "flux": "^2.1.1",
     "react": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-router": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",
