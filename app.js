@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var backend_server = express();
 var path = require('path');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
@@ -26,6 +27,15 @@ app.get('/', function (req, res) {
 app.get('/demo', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/demo.html'));
 });
+
+//This is for the mocked backend
+backend_server.use('/app/api/admin', require('./routes/api/admin'));
+
+backend_server.listen(3001, function() {
+    console.log('Backend mocked API listening on port 3001!');
+});
+
+app.use('/app/api/user', require('./routes/api/user'));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
