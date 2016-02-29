@@ -6,18 +6,11 @@ export default class Navbar extends Component {
     return (
       <div className="navbar">
         <ul>
-          <li>
-            <a href="/login">login</a>
-          </li>
-          <li>
-            <a href="/upload">upload</a>
-          </li>
-          <li>
-            <a href="/demo">gallery</a>
-          </li>
-          <li>
-            <a href="/about">about</a>
-          </li>
+          <li><a href="/login">login</a></li>
+          <li><a href="/main">upload</a></li>
+          <li><a href="/demo">gallery</a></li>
+          <li><a href="/about">about</a></li>
+          <li className="logo"><a href="/">image | pop</a></li>
         </ul>
       </div>
     );
