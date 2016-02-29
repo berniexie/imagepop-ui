@@ -2,7 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import PageTemplate from '../../shared/components/pageTemplate.js';
-import DemoPageContent from './components/DemoPageContent.js';
+import DemoPageContent from './DemoPageContent.js';
 
 var images = [[{smallImgSrc: "./img/beach-small.png",
                 lowImgSrc: "",
