@@ -41,6 +41,10 @@ module.exports = {
         include: path.resolve(__dirname, 'public/fonts'),
         loader: 'file'
       },
+      { 
+        test: /\.png$/,
+        loader: "url-loader?limit=10000&minetype=image/png" 
+      },
       {
         test: /\.jsx?$/,
         include: path.resolve(__dirname, 'client'),

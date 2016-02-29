@@ -1,8 +1,5 @@
-/**
- * Created by BernardXie on 2/20/16.
- */
-
 import React, { PropTypes, Component } from 'react';
+import styles from '../../../public/css/navbar.css';
 
 export default class Navbar extends Component {
   render() {

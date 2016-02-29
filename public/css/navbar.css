@@ -1,0 +1,36 @@
+.navbar {
+  border: 0;
+  border-radius: 0;
+  font-size: 18px;
+  margin: 0;
+  min-height: 0;
+  padding: 0;
+  position: relative;
+}
+
+ul {
+  background-color: #5E5E5E;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  float: right;
+}
+
+li a {
+  color: white;
+  display: block;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #434343;
+  color: white;
+  text-decoration: none;
+}

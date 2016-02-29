@@ -1,123 +1,85 @@
 html {
-    height: 100%;
+  height: 100%;
 }
 
 #app {
-    height: 100%;
+  height: 100%;
 }
 
 .index {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 body {
-    height: 100%;
-    overflow: hidden;
-    font-family: 'Raleway';
-    text-align: center;
+  background-color: #000000;
+  font-family: 'Raleway';
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
 
+.landing {
+  align-items: flex-end;
+  background-image: url(../img/sea-nature-sunny-beach.png);
+  background-size: cover;
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.landing > .content {
+  color: #ffffff;
+  padding-bottom: 150px;
+  text-shadow: 2px 4px 4px gray;
+  width: 100%;
+}
+
+.landing > .content > h1 {
+  font-size: 48px;
+}
+
+.landing > .content > p {
+  font-size: 36px;
+}
+
+.landingButton {
+  color: white;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 6px;
+  padding: 15px 32px;
+  text-align: center;  
+  text-shadow: none;
+}
+
+.landingButton:hover {
+  background-color: transparent;
+  color: white;
+  padding: 12px 29px;
+  text-decoration: none;
 }
 
 .galleryButton {
-    background-color: #549ACB;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    border-radius: 4px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 6px;
-    cursor: hand;
+  background-color: #549ACB;
 }
 
 .galleryButton:hover {
-    background-color: transparent;
-    border: solid thin #549ACB;
-    color: #4c79ac;
-    text-shadow: 1px 1px 1px whitesmoke;
-    padding: 15px 32px;
-    border-radius: 4px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 3px 5px;
-    cursor: hand;
-    text-decoration: none;
+  border: solid 3px #549ACB;
 }
 
-
 .uploadButton {
-    background-color: #3e3839;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    border-radius: 4px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 6px;
-    cursor: hand;
+  background-color: #434343;
 }
 
 .uploadButton:hover {
-    background-color: transparent;
-    border: solid thin #3e3839;
-    color: #3e3839;
-    text-shadow: 1px 1px 1px whitesmoke;
-    padding: 15px 32px;
-    border-radius: 4px;
-    text-align: center;
-    display: inline-block;
-    font-size: 16px;
-    margin: 3px 5px;
-    cursor: hand;
-    text-decoration: none;
+  border: solid 3px #434343;
 }
 
 @font-face {
-    font-family: "Raleway";
-    src: url("../fonts/Raleway.ttf")  format("truetype");
-}
-
-/* This is for the navbar */
-
-.navbar {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 0;
-    min-height: 0;
-    position: relative;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    width: 100%;
-}
-
-li {
-    float: right;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-    background-color: #111;
-    color: white;
-    text-decoration: none;
+  font-family: "Raleway";
+  src: url("../fonts/Raleway.ttf")  format("truetype");
 }
