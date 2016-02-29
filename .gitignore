@@ -8,3 +8,4 @@ js/*/*-bundle.js.map
 static/*
 !static/css
 .DS_Store
+*.swp

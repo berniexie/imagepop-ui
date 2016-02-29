@@ -16,16 +16,21 @@ export default class ImageControlArea extends Component {
 
   render = () => {
     const {file} = this.props;
-    return (
+    return file == null ? (
       <div className='imageControlArea'>
-        <h2>{file.name}</h2>
-        <img className='fullImageView' src={file.preview} />
-        <div className='sliderWrapper'>
-          <Slider defaultValue={6} min={1} max={10} step={1} withBars 
-              onChange={this.handleSlider.bind(this)}>
-            <div className='handle'/>
-          </Slider>
-        </div>
+      </div>
+    ) : (
+      <div className='imageControlArea'>
+          <img className='fullImageView' src={file.preview} />
+          <div className='sliderWrapper'>
+            <Slider defaultValue={2} min={1} max={3} step={1} withBars
+                onChange={this.handleSlider}>
+              <div className='handle'/>
+            </Slider>
+            <div className='label labelLeft'>low</div>
+            <div className='label'>med</div>
+            <div className='label labelRight'>high</div>
+          </div> 
       </div>
     );
   };
@@ -47,11 +52,14 @@ export default class SelectedImageArea extends Component {
   render = () => {
     const {file} = this.props;
     return (
-      <div className='selectedImageArea centered'>
+      <div className='selectedImageArea'>
+        <div className='centered selectedImageAreaHeader'>
         {file == null ?
           <div>Upload images to view more options!</div> :
-          (<ImageControlArea file={file} />)
+          <h2>{file.name}</h2>
         }
+        </div>
+        <ImageControlArea file={file}/>
       </div>
     );
   };
@@ -75,19 +83,22 @@ export default class FileListElement extends Component {
   };
 
   render = () => {
-    const {file} = this.props;
+    const {file, selected} = this.props;
+    var className = 'fileListElement';
+    if (selected) {
+      className += ' selected';
+    }
     return (
-      <div className='fileListElement'
-           onClick={this.onListElementClick.bind(this, file)}>
-        <div className='fileListElementWrapper'>
-          <div className='listElementIconWrapper'>
+      <div className='row'>
+        <div className='col-sm-12'>
+          <div className={className}
+               onClick={this.onListElementClick.bind(this, file)}>
             <img className='listElementIcon' src={file.preview} />
+            <div className='listElementInfo'>
+              <div className='listElementName'>{file.name}</div>
+            </div>
+            <div className='listElementOptions'></div>
           </div>
-          <div className='listElementInfo'>
-            <div className='listElementName'>{file.name}</div>
-            <div className='listElementFilesize'>{Math.floor(file.size / 1024)} KB</div>
-          </div>
-          <div className='listElementOptions'></div>
         </div>
       </div>
     );
@@ -115,7 +126,9 @@ export default class ImageListArea extends Component {
         <div className='imageList'>
           {files.map((file) =>
               <FileListElement file={file} key={file.fileId}
-                               onListElementClick={onListElementClick} />)
+                  selected={this.props.selectedFile != null &&
+                    this.props.selectedFile.fileId == file.fileId}
+                    onListElementClick={onListElementClick} />)
           }
         </div>
       </div>
@@ -168,17 +181,23 @@ export default class MainPageContent extends Component {
   render = () => {
     console.log(this.state.files);
     return (
-      <Dropzone className='dropzoneArea' activeClassName='dropzoneArea dropzoneAreaActive'
+      <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
                 accept={"image/gif,image/jpeg,image/png"}>
-        <div className='dropzoneOverlay'>
-          <h1 className='dropzoneOverlayText'>
-            Drop File to Upload!
-          </h1>
+        <div className='row'>
+          <div className='dropzoneOverlay'>
+            <h1 className='dropzoneOverlayText'>
+              Drop File to Upload!
+            </h1>
+          </div>
+          <div className='col-sm-4'>
+            <ImageListArea selectedFile={this.state.selectedFile} files={this.state.files}
+                onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
+          </div>
+          <div className='col-sm-8'>
+            <SelectedImageArea file={this.state.selectedFile}/>
+          </div>
         </div>
-        <ImageListArea files={this.state.files} onOpenClick={this.onOpenClick}
-                       onListElementClick={this.onListElementClick} />
-        <SelectedImageArea file={this.state.selectedFile}/>
       </Dropzone>
     );
   };
