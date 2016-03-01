@@ -1,7 +1,6 @@
 //component for landing page
 
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
 import Navbar from '../../shared/components/Navbar.js';
 import styles from '../../../public/css/index.css';
 
