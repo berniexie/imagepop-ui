@@ -1,3 +1,5 @@
+//Reusable component for navbar on all pages
+
 import React, { PropTypes, Component } from 'react';
 import styles from '../../../public/css/navbar.css';
 
@@ -16,5 +18,3 @@ export default class Navbar extends Component {
     );
   }
 }
-
-module.exports = Navbar;

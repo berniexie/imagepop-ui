@@ -27,6 +27,8 @@ export default class DemoPageContent extends Component {
   };
   render(){
     const {demoImages} = this.props;
+
+    //iterates over 2D (3x3) array containing the image files and prepares them to be rendered
     var rows = this.props.demoImages.map( (item, i) =>{
       var entry = item.map( (element, j) =>{
         return ( 

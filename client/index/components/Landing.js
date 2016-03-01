@@ -1,6 +1,8 @@
+//component for landing page
+
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from '../../shared/components/navbar_component.jsx';
+import Navbar from '../../shared/components/Navbar.js';
 import styles from '../../../public/css/index.css';
 
 export default class Landing extends Component {
@@ -28,5 +30,3 @@ export default class Landing extends Component {
     );
   }
 }
-
-ReactDOM.render(<Landing/>, document.getElementById('app') );

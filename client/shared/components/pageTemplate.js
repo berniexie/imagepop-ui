@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from '../../shared/components/navbar_component.jsx';
+import Navbar from '../../shared/components/Navbar.js';
 import styles from '../../../public/css/pageTemplate.css';
 
 // Container for the components of a page with title, subtitle, and content.
