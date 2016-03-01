@@ -28,12 +28,6 @@ export default class DemoModal extends React.Component{
     this.setState({pressed: !this.state.pressed})
   };
 
-  //closes the modal when you click outside
-  closeModal = (e) => {
-    if (e.target.className == 'demoModalWrapper')
-      this.props.callBack();
-  };
-
   handleSlider = (value) => {
     switch (value) {
       case 1:
@@ -53,24 +47,22 @@ export default class DemoModal extends React.Component{
     var imageText = this.state.pressed ? 'after' : 'before';
     var pic = this.state.pressed ? this.state.after : beforeImageSrc;
     return (
-      <div className = 'demoModalWrapper' onClick={this.closeModal}>
-        <div className='demoModal'>
-          <div className='imageText'>{imageText}</div>
-          <img src={pic} onMouseDown={this.handleClick}
-              onMouseUp={this.handleClick}></img>
-          <div className='pressLabel'>Press and hold the image to see it before 
-              it was popped</div>
-          <h3>Level of Contrast</h3>
-          <p>Adjust the amount of edge contrast using the indicators below.</p>
-          <div className='sliderWrapper'>
-            <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
-                onChange={this.handleSlider}>
-              <div className='handle'/>
-            </Slider>
-            <div className='label labelLeft'>low</div>
-            <div className='label'>med</div>
-            <div className='label labelRight'>high</div>
-          </div>
+      <div className='demoModal'>
+        <div className='imageText'>{imageText}</div>
+        <img src={pic} onMouseDown={this.handleClick}
+            onMouseUp={this.handleClick}></img>
+        <div className='pressLabel'>Press and hold the image to see it before 
+            it was popped</div>
+        <h3>Level of Contrast</h3>
+        <p>Adjust the amount of edge contrast using the indicators below.</p>
+        <div className='sliderWrapper'>
+          <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
+              onChange={this.handleSlider}>
+            <div className='handle'/>
+          </Slider>
+          <div className='label labelLeft'>low</div>
+          <div className='label'>med</div>
+          <div className='label labelRight'>high</div>
         </div>
       </div>
     );

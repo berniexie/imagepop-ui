@@ -2,6 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import styles from '../../../public/css/demo.css';
 import DemoModal from './DemoModal.js';
+import { Modal } from 'react-bootstrap';
 
 export default class DemoPageContent extends Component {
 
@@ -12,19 +13,22 @@ export default class DemoPageContent extends Component {
   defaultProps = {
     demoImages: [],
   };
-  state = {hidden:true, low:'', med:'', high:'', before:''};
+  state = {hidden:true, low:'', med:'', high:'', before:'', showModal:false};
 
   handleClick(l, m, h, bef){
-    document.getElementById('body').className 
-        = (!this.state.hidden) ? "" : "noScroll";
     this.setState({
-      hidden: !this.state.hidden, 
       low: l, 
       med: m,
       high: h,
-      before: bef
+      before: bef,
+      showModal: true 
     });
   };
+  
+  close = () =>  {
+    this.setState({ showModal: false });
+  };
+
   render(){
     const {demoImages} = this.props;
 
@@ -43,17 +47,20 @@ export default class DemoPageContent extends Component {
       );
     });
     return(
-      <div className={this.state.hidden ? '' : 'noScroll'}>
+      <div>
         <div className='container-fluid'>
               {rows}
         </div>
-        {this.state.hidden ? null
-            : <DemoModal lowImageSrc = {this.state.low}
-            medImageSrc = {this.state.med}
-            highImageSrc = {this.state.high}
-            beforeImageSrc = {this.state.before}
-            callBack ={() => this.handleClick("", "")}/>}
-        </div>
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Body>
+            <DemoModal lowImageSrc = {this.state.low}
+              medImageSrc = {this.state.med}
+              highImageSrc = {this.state.high}
+              beforeImageSrc = {this.state.before}
+              callBack ={() => this.handleClick("", "")}/>
+          </Modal.Body>
+        </Modal>
+      </div>
     );
   }
 }
