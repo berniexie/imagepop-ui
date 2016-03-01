@@ -1,8 +1,8 @@
 //Demo page - will show the before and after effect of popping an image
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import PageTemplate from '../../shared/components/pageTemplate.js';
-import DemoPageContent from './DemoPageContent.js';
+import PageTemplate from '../shared/components/pageTemplate.js';
+import DemoPageContent from './components/DemoPageContent.js';
 
 var images = [[{smallImgSrc: "./img/beach-small.png",
                 lowImgSrc: "",
