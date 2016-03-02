@@ -2,7 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import styles from '../../../public/css/demo.css';
 import DemoModal from './DemoModal.js';
-import { Modal } from 'react-bootstrap';
+import { Modal, Grid, Row, Col } from 'react-bootstrap';
 
 export default class DemoPageContent extends Component {
 
@@ -36,21 +36,21 @@ export default class DemoPageContent extends Component {
     var rows = this.props.demoImages.map( (item, i) =>{
       var entry = item.map( (element, j) =>{
         return ( 
-          <div key = {j} className='col-sm-4'>
+          <Col key = {j} sm={4}>
             <img className="galleryPic" onClick={() => this.handleClick(element.lowImgSrc, element.medImgSrc, element.highImgSrc, element.befImgSrc)}
                 src={element.smallImgSrc}/>
-          </div>
+          </Col>
           );
         });
       return (
-        <div className='row' key={i}> {entry} </div>
+        <Row key={i}> {entry} </Row>
       );
     });
     return(
       <div>
-        <div className='container-fluid'>
+        <Grid fluid={true}>
               {rows}
-        </div>
+        </Grid>
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Body>
             <DemoModal lowImageSrc = {this.state.low}
