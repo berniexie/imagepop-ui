@@ -1,5 +1,6 @@
 var express = require('express');
-router = express.Router();
+var router = express.Router();
+var user_helper = require('../../utils/user_helper');
 
 //Creating user accounts
 router.post('/', function(req, res, next) {
