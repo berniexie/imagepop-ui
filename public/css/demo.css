@@ -1,0 +1,98 @@
+img {
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.noScroll {
+  overflow: hidden;
+}
+
+.row {
+  margin: 30px 0;
+}
+
+.galleryPic {
+  border: 3px solid transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+.galleryPic:hover {
+  border-color: #549ACB;
+}
+
+.modal-dialog {
+  margin-top: 100px;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.demoModal > .imageText {
+  background-color: #549ACB;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin: 10px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.demoModal > img {
+  width: 100%;
+}
+
+.demoModal > .pressLabel {
+  background-color: #549ACB;
+  color: #FFFFFF;
+  padding: 5px;
+}
+
+.demoModal > p {
+  font-size: 17px;
+}
+
+.sliderWrapper {
+  margin: 25px auto;
+  width: 70%;
+}
+
+.bar-0 {
+  background-color: #549ACB;
+  height: 3px;
+}
+
+.bar-1 {
+  background-color: #818181;
+  height: 3px;
+}
+
+.handle {
+  background-color: #818181;
+  border-radius: 15px;
+  height: 20px;
+  top: -10px;
+  width: 20px;
+}
+
+.label {
+  color: black;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 33%;
+}
+
+.labelLeft {
+  text-align: left;
+}
+
+.labelRight {
+  text-align: right;
+}

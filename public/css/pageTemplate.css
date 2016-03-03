@@ -1,0 +1,26 @@
+body {
+	background-color: #EEEEEE;
+	font-family: 'Raleway';
+	text-align: center;
+}
+
+.pageContent {
+  max-width: 1150px;
+  margin: 0 auto;
+  width: 95%;
+}
+
+h1 {
+  margin-bottom: 12px;
+  margin-top: 30px;
+}
+
+.subtitle {
+  font-size: 22px;
+	margin-top: 0;
+}
+
+@font-face {
+	font-family: "Raleway";
+	src: url("../fonts/Raleway.ttf")  format("truetype");
+}

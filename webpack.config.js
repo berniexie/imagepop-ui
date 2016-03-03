@@ -2,15 +2,22 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    './src/index.js'
-  ],
+  entry: {
+    index: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/index/index.js'
+    ],
+    demo: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/demo/demo.js'
+    ]
+  },
   output: {
     path: path.resolve(__dirname, 'static/'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
@@ -21,12 +28,26 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'client'),
         loader: 'react-hot'
       },
       {
+        test: /\.css?$/,
+        include: path.resolve(__dirname, 'public/css'),
+        loader: 'style!css'
+      },
+      {
+        test: /\.ttf?$/,
+        include: path.resolve(__dirname, 'public/fonts'),
+        loader: 'file'
+      },
+      { 
+        test: /\.png$/,
+        loader: "url-loader?limit=10000&minetype=image/png" 
+      },
+      {
         test: /\.jsx?$/,
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'client'),
         loader: 'babel',
         query: {
           plugins: ['transform-runtime'],
