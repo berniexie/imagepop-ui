@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Dropzone from 'react-dropzone';
 import styles from '../../../public/css/main.css';
 import Slider from 'react-slider';
-import PageTemplate from '../../shared/components/pageTemplate.js';
+import PageTemplate from '../../shared/components/PageTemplate.js';
 
 export default class ImageControlArea extends Component {
   constructor(props) {

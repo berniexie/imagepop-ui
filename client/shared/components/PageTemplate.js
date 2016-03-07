@@ -1,6 +1,6 @@
+
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
-import Navbar from '../../shared/components/navbar_component.jsx';
+import CustomNavbar from '../../shared/components/CustomNavbar.js';
 import styles from '../../../public/css/pageTemplate.css';
 
 // Container for the components of a page with title, subtitle, and content.
@@ -20,7 +20,7 @@ export default class PageTemplate extends Component {
     const {title, subtitle, children} = this.props;
     return(
       <div>
-        <Navbar/>
+        <CustomNavbar/>
         <div className='pageContent'>
           <h1>{title}</h1>
           <p className='subtitle'>{subtitle}</p>

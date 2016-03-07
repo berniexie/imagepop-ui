@@ -1,7 +1,9 @@
+//component for landing page
+
 import React, { PropTypes, Component } from 'react';
-import ReactDOM from 'react-dom';
-import Navbar from '../../shared/components/navbar_component.jsx';
+import CustomNavbar from '../../shared/components/CustomNavbar.js';
 import styles from '../../../public/css/index.css';
+import { Button } from 'react-bootstrap';
 
 export default class Landing extends Component {
   static propTypes = {
@@ -11,7 +13,7 @@ export default class Landing extends Component {
   render () {
     return (
       <div className="index">
-        <Navbar />
+        <CustomNavbar />
         <div className="landing">
             <div className="content">
                 <h1>image | pop</h1>
@@ -19,8 +21,8 @@ export default class Landing extends Component {
                   A photo enhancer that will make your images pop! 
                 </p>
                 <div>
-                  <a href="/demo" className="landingButton galleryButton">VIEW OUR GALLERY</a>
-                  <a href="/main" className="landingButton uploadButton">UPLOAD NOW</a>
+                  <Button href="/demo" bsStyle="primary">VIEW OUR GALLERY</Button>
+                  <Button href="/main">UPLOAD NOW</Button>
                 </div>
             </div>
         </div>
@@ -28,5 +30,3 @@ export default class Landing extends Component {
     );
   }
 }
-
-ReactDOM.render(<Landing/>, document.getElementById('app') );

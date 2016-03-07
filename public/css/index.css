@@ -45,38 +45,27 @@ body {
   font-size: 36px;
 }
 
-.landingButton {
-  color: white;
-  border-radius: 4px;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 6px;
-  padding: 15px 32px;
-  text-align: center;  
-  text-shadow: none;
-}
-
-.landingButton:hover {
-  background-color: transparent;
-  color: white;
-  padding: 12px 29px;
-  text-decoration: none;
-}
-
-.galleryButton {
+.btn-primary {
   background-color: #549ACB;
+  border-color: #549ACB;
+  font-size: 16px;
+  margin: 10px;
+  padding: 14px 30px;
 }
 
-.galleryButton:hover {
-  border: solid 3px #549ACB;
-}
-
-.uploadButton {
+.btn-default {
   background-color: #434343;
+  border-color: #434343;
+  color: #ffffff;
+  font-size: 16px;
+  margin: 10px;
+  padding: 14px 30px;
 }
 
-.uploadButton:hover {
-  border: solid 3px #434343;
+.btn-default:hover {
+  background-color: #232323;
+  border-color: #434343;
+  color: #ffffff;
 }
 
 @font-face {
