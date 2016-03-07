@@ -15,7 +15,7 @@
   display: none;
 }
 
-.dropzoneAreaActive > .dropzoneOverlay {
+.dropzoneAreaActive .dropzoneOverlay {
   display: block;
   position: absolute;
   top: 0;

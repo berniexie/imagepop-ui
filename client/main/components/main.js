@@ -55,8 +55,8 @@ export default class SelectedImageArea extends Component {
       <div className='selectedImageArea'>
         <div className='centered selectedImageAreaHeader'>
         {file == null ?
-          <div>Upload images to view more options!</div> :
-          <h2>{file.name}</h2>
+          <h3>Upload images to view more options!</h3> :
+          <h3>{file.name}</h3>
         }
         </div>
         <ImageControlArea file={file}/>
