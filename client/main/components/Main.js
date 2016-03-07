@@ -179,7 +179,6 @@ export default class MainPageContent extends Component {
   };
 
   render = () => {
-    console.log(this.state.files);
     return (
       <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
@@ -203,10 +202,12 @@ export default class MainPageContent extends Component {
   };
 };
 
-
-ReactDOM.render(
-  <PageTemplate title="Main" subtitle="Upload an image for popping.">
-    <MainPageContent/>
-  </PageTemplate>,
-  document.getElementById('app'),
-);
+export default class Main extends Component {
+  render = () => {
+    return (
+      <PageTemplate title="Main" subtitle="Upload an image for popping.">
+        <MainPageContent/>
+      </PageTemplate>
+    );
+  };
+}
