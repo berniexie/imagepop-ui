@@ -12,6 +12,11 @@ module.exports = {
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './client/demo/demo.js'
+    ],
+    main: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/main/main.js'
     ]
   },
   output: {

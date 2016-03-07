@@ -1,0 +1,142 @@
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+
+.dropzoneArea {
+  top: 0;
+  left: 0;
+  width: 95vw;
+  height: 95vh;
+  margin: auto;
+}
+
+.dropzoneOverlay {
+  display: none;
+}
+
+.dropzoneAreaActive .dropzoneOverlay {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 235, 250, 0.85);
+  border: 1px dashed gray;
+}
+
+.dropzoneOverlayText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.imageListArea {
+}
+
+.imageListAreaHeader {
+  height: 90px;
+  padding-bottom: 10px;
+}
+
+.selectedImageAreaHeader {
+  height: 90px;
+}
+
+.imageControlArea {
+  height: 420px;
+}
+
+.imageList {
+  width: 100%;
+  height: 420px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.fileListElement {
+  border: 3px solid transparent;
+  cursor: pointer;
+  width: 100%;
+  height: 100px;
+  white-space: nowrap;
+  text-align: left;
+  overflow: hidden;
+}
+
+.fileListElement.selected {
+  background-color: #818181;
+  color: white;
+}
+
+.fileListElement:hover {
+  border-color: #549ACB;
+}
+
+.listElementIcon {
+  width: 100px;
+  height: 100px;
+  float: left;
+}
+
+.listElementInfo {
+  text-align: center;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+
+.listElementName {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+}
+
+.sliderWrapper {
+  margin: 25px auto;
+  height: 55px;
+  width: 70%;
+}
+
+.fullImageView {
+  max-height: 365px;
+  max-width: 100%;
+}
+
+.bar-0 {
+  background-color: #549ACB;
+  height: 3px;
+}
+
+.bar-1 {
+  background-color: #818181;
+  height: 3px;
+}
+
+.handle {
+  background-color: #818181;
+  border-radius: 15px;
+  height: 20px;
+  top: -10px;
+  width: 20px;
+}
+
+.label {
+  color: black;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  width: 33%;
+}
+
+.labelLeft {
+  text-align: left;
+}
+
+.labelRight {
+  text-align: right;
+}

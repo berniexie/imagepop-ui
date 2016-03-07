@@ -23,6 +23,15 @@ app.get('/demo', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/demo.html'));
 });
 
+app.get('/main', function(req, res) {
+  res.sendFile(path.join(__dirname + '/views/main.html'));
+});
+
+app.post('/api/upload_image', function(req, res) {
+  // Just return spurious success for uploading the image
+  return res.status(200).send(req.file);
+});
+
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
