@@ -4,49 +4,43 @@ import Dropzone from 'react-dropzone';
 import styles from '../../../public/css/main.css';
 import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
+import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 
-export default class ImageControlArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export class ImageControlArea extends Component {
   handleSlider = (value) => {
     console.log(value);
   };
 
+  handleSubmit = () => {
+
+  }
+
   render = () => {
     const {file} = this.props;
-    return file == null ? (
+    return file == undefined ? (
       <div className='imageControlArea'>
       </div>
     ) : (
       <div className='imageControlArea'>
-          <img className='fullImageView' src={file.preview} />
-          <div className='sliderWrapper'>
-            <Slider defaultValue={2} min={1} max={3} step={1} withBars
-                onChange={this.handleSlider}>
-              <div className='handle'/>
-            </Slider>
-            <div className='label labelLeft'>low</div>
-            <div className='label'>med</div>
-            <div className='label labelRight'>high</div>
-          </div> 
+        <img className='fullImageView' src={file.preview} />
+        <div className='sliderWrapper'>
+          <Slider defaultValue={2} min={1} max={3} step={1} withBars
+              onChange={this.handleSlider}>
+            <div className='handle'/>
+          </Slider>
+          <div className='label labelLeft'>low</div>
+          <div className='label'>med</div>
+          <div className='label labelRight'>high</div>
+        </div>
+        <Button onClick={handleSubmit}>Submit</Button>
       </div>
     );
   };
 }
 
-export default class SelectedImageArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export class SelectedImageArea extends Component {
   static propTypes = {
     file: PropTypes.object,
-  };
-
-  defaultProps = {
-    file: null,
   };
 
   render = () => {
@@ -54,7 +48,7 @@ export default class SelectedImageArea extends Component {
     return (
       <div className='selectedImageArea'>
         <div className='centered selectedImageAreaHeader'>
-        {file == null ?
+        {file == undefined ?
           <h3>Upload images to view more options!</h3> :
           <h3>{file.name}</h3>
         }
@@ -65,7 +59,7 @@ export default class SelectedImageArea extends Component {
   };
 };
 
-export default class FileListElement extends Component {
+export class FileListElement extends Component {
   constructor(props) {
     super(props);
     this.state = {selected: false};
@@ -73,6 +67,7 @@ export default class FileListElement extends Component {
 
   static propTypes = {
     file: PropTypes.object,
+    selected: PropTypes.bool,
   };
 
   onListElementClick = (file) => {
@@ -105,11 +100,15 @@ export default class FileListElement extends Component {
   };
 };
 
-export default class ImageListArea extends Component {
+export class ImageListArea extends Component {
   constructor(props) {
     super(props);
     this.state = {fileId: 0}
   }
+
+  static propTypes = {
+    fileId: PropTypes.number,
+  };
 
   render = () => {
     const {files, onOpenClick, onListElementClick} = this.props;
@@ -119,9 +118,9 @@ export default class ImageListArea extends Component {
         <div className='centered imageListAreaHeader'>
           <h1 className='centered'>My Images</h1>
           Drag and drop images anywhere to upload or <br />
-          <button type='button' onClick={onOpenClick}>
+          <Button onClick={onOpenClick}>
             Click Here!
-          </button>
+          </Button>
         </div>
         <div className='imageList'>
           {files.map((file) =>
@@ -136,7 +135,7 @@ export default class ImageListArea extends Component {
   };
 };
 
-export default class File {
+export class File {
   constructor(file, fileId) {
     this.raw_file = file;
     this.name = file.name;
@@ -148,7 +147,7 @@ export default class File {
   }
 }
 
-export default class MainPageContent extends Component {
+export class MainPageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {files: [], selectedFile: null}
@@ -166,6 +165,8 @@ export default class MainPageContent extends Component {
     this.setState(function(prevState, currProps) {
       return {files: prevState.files.concat(files)};
     });
+
+
   };
 
   onListElementClick = (file) => {
