@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/cornsuite/imagepop-ui#readme",
   "dependencies": {
+    "bluebird": "^3.3.4",
     "react": "^0.14.6",
     "react-bootstrap": "^0.28.3",
     "react-dom": "^0.14.6",
-    "react-dropzone": "^3.3.2"
+    "react-dropzone": "^3.3.2",
+    "superagent": "^1.8.0",
+    "superagent-bluebird-promise": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.4.5",

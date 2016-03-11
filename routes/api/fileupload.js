@@ -1,6 +1,8 @@
 var express = require('express');
 router = express.Router();
 
+
+var UPLOAD_DIR = './tmp/uploads/'
 var fileId = 0; // This will have to come from a database eventually
 
 router.post('/start', function(req, res, next) {
@@ -8,8 +10,12 @@ router.post('/start', function(req, res, next) {
 });
 
 router.post('/upload', function(req, res, next) {
-  console.log(req);
-  res.send({success: true});
+  if (req.body.fileId === undefined) {
+    res.send({success: false});
+  } else {
+    console.log(req);
+    res.send({success: true});
+  }
 });
 
 module.exports = router;

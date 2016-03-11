@@ -5,6 +5,7 @@ import styles from '../../../public/css/main.css';
 import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
+import request from 'superagent-bluebird-promise';
 
 export class ImageControlArea extends Component {
   handleSlider = (value) => {
@@ -32,7 +33,7 @@ export class ImageControlArea extends Component {
           <div className='label'>med</div>
           <div className='label labelRight'>high</div>
         </div>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={this.handleSubmit}>Submit</Button>
       </div>
     );
   };
@@ -153,20 +154,38 @@ export class MainPageContent extends Component {
     this.state = {files: [], selectedFile: null}
   }
 
-  fileId = 0;
-
   onDrop = (raw_files) => {
+    var self = this;
     var files = [];
+    console.log(raw_files);
     raw_files.forEach(function(raw_file) {
-      let file = new File(raw_file, this.fileId++);
-      files.push(file);
+      var promise = request
+        .post('/api/fileupload/start')
+        .set('Accept', 'application/json')
+        .promise()
+        .then(function(res) {
+          let resJson = JSON.parse(res.text);
+          let file = new File(raw_file, resJson.fileId);
+          files.push(file);
+
+          self.setState(function(prevState, currProps) {
+            return {files: prevState.files.concat(files)};
+          });
+
+          var promise = request
+            .post('/api/fileupload/upload')
+            .set('Accept', 'application/json')
+            .field('fileId', file.fileId)
+            .attach('image', raw_file)
+            .on('progress', function (p) {
+              console.log(p);
+            })
+            .promise()
+            .then(function(res) {
+              console.log(res);
+            });
+        });
     }, this);
-
-    this.setState(function(prevState, currProps) {
-      return {files: prevState.files.concat(files)};
-    });
-
-
   };
 
   onListElementClick = (file) => {
