@@ -1,8 +1,6 @@
 var express = require('express');
 router = express.Router();
 
-
-var UPLOAD_DIR = './tmp/uploads/'
 var fileId = 0; // This will have to come from a database eventually
 
 router.post('/start', function(req, res, next) {

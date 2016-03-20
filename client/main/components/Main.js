@@ -12,7 +12,7 @@ export class ImageControlArea extends Component {
     console.log(value);
   };
 
-  handleSubmit = () => {
+  handleDownload = () => {
 
   }
 
@@ -33,7 +33,7 @@ export class ImageControlArea extends Component {
           <div className='label'>med</div>
           <div className='label labelRight'>high</div>
         </div>
-        <Button onClick={this.handleSubmit}>Submit</Button>
+        <Button onClick={this.handleDownload}>Download</Button>
       </div>
     );
   };
@@ -85,8 +85,8 @@ export class FileListElement extends Component {
       className += ' selected';
     }
     return (
-      <div className='row'>
-        <div className='col-sm-12'>
+      <Row>
+        <Col sm={12}>
           <div className={className}
                onClick={this.onListElementClick.bind(this, file)}>
             <img className='listElementIcon' src={file.preview} />
@@ -95,8 +95,8 @@ export class FileListElement extends Component {
             </div>
             <div className='listElementOptions'></div>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   };
 };
@@ -203,20 +203,20 @@ export class MainPageContent extends Component {
       <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
                 accept={"image/gif,image/jpeg,image/png"}>
-        <div className='row'>
+        <Row>
           <div className='dropzoneOverlay'>
             <h1 className='dropzoneOverlayText'>
               Drop File to Upload!
             </h1>
           </div>
-          <div className='col-sm-4'>
+          <Col sm-={4}>
             <ImageListArea selectedFile={this.state.selectedFile} files={this.state.files}
                 onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
-          </div>
-          <div className='col-sm-8'>
+          </Col>
+          <Col sm={8}>
             <SelectedImageArea file={this.state.selectedFile}/>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </Dropzone>
     );
   };
