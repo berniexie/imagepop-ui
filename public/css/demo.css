@@ -33,15 +33,15 @@ img {
   padding: 0;
 }
 
-.demoModal > .imageText {
-  background-color: #549ACB;
+.demoModal > .notAvailable {
+  background-color: #CB5454;
   border-radius: 3px;
   color: #FFFFFF;
   font-size: 18px;
   margin: 10px;
   padding: 5px;
   position: absolute;
-  width: 100px;
+  width: 300px;
 }
 
 .demoModal > img {

@@ -21,7 +21,7 @@ export default class DemoModal extends React.Component{
     beforeImageSrc: '',
   };
 
-  state = {pressed:true, after:this.props.medImageSrc};
+  state = {pressed:true, after:this.props.medImageSrc, available:true};
 
   //will display original when the picture in the modal is pressed down
   handleClick = () => {
@@ -31,13 +31,25 @@ export default class DemoModal extends React.Component{
   handleSlider = (value) => {
     switch (value) {
       case 1:
-        this.setState({after: this.props.lowImageSrc});
+        if (this.props.lowImageSrc == '') { 
+          this.setState({available: false}); 
+        } else {
+          this.setState({after: this.props.lowImageSrc, available: true}); 
+        }
         break;
       case 2:
-        this.setState({after: this.props.medImageSrc});
+        if (this.props.medImageSrc == '') {
+          this.setState({available: false}); 
+        } else {
+          this.setState({after: this.props.medImageSrc, available: true});
+        }
         break;
       default:
-        this.setState({after: this.props.highImageSrc});
+        if (this.props.highImageSrc == '') {
+          this.setState({available: false}); 
+        } else {
+          this.setState({after: this.props.highImageSrc, available: true});
+        }
         break;
     }
   };
@@ -48,9 +60,9 @@ export default class DemoModal extends React.Component{
     var pic = this.state.pressed ? this.state.after : beforeImageSrc;
     return (
       <div className='demoModal'>
-        <div className='imageText'>{imageText}</div>
+        {this.state.available ? '' : <div className='notAvailable'>Image Not Available</div>}
         <img src={pic} onMouseDown={this.handleClick}
-            onMouseUp={this.handleClick}></img>
+            onMouseUp={this.handleClick}/>
         <div className='pressLabel'>Press and hold the image to see it before 
             it was popped</div>
         <h3>Level of Contrast</h3>
