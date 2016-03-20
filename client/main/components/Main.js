@@ -178,11 +178,11 @@ export class MainPageContent extends Component {
             .field('fileId', file.fileId)
             .attach('image', raw_file)
             .on('progress', function (p) {
-              console.log(p);
+              // TODO(amohan95): Get progress update from backend
             })
             .promise()
             .then(function(res) {
-              console.log(res);
+              // TODO(amohan95): Fill this in once API is finalized
             });
         });
     }, this);
