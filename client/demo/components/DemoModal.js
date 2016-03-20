@@ -2,6 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import styles from '../../../public/css/demo.css';
 import Slider from 'react-slider';
+import {ButtonGroup, Button} from 'react-bootstrap';
 
 export default class DemoModal extends React.Component{
   
@@ -23,36 +24,34 @@ export default class DemoModal extends React.Component{
 
   state = {pressed:true, after:this.props.medImageSrc};
 
-  //will display original when the picture in the modal is pressed down
-  handleClick = () => {
-    this.setState({pressed: !this.state.pressed})
-  };
-
   handleSlider = (value) => {
     switch (value) {
       case 1:
-        this.setState({after: this.props.lowImageSrc});
+        this.setState({after: this.props.lowImageSrc, pressed:true});
         break;
       case 2:
-        this.setState({after: this.props.medImageSrc});
+        this.setState({after: this.props.medImageSrc, pressed:true});
         break;
       default:
-        this.setState({after: this.props.highImageSrc});
+        this.setState({after: this.props.highImageSrc, pressed:true});
         break;
     }
   };
 
+  showOriginal = () => {
+    this.setState({pressed: false});
+  };
+
+  showPopped = () => {
+    this.setState({pressed: true});
+  };
+
   render() {
     const {beforeImageSrc} = this.props;
-    var imageText = this.state.pressed ? 'after' : 'before';
     var pic = this.state.pressed ? this.state.after : beforeImageSrc;
     return (
       <div className='demoModal'>
-        <div className='imageText'>{imageText}</div>
-        <img src={pic} onMouseDown={this.handleClick}
-            onMouseUp={this.handleClick}></img>
-        <div className='pressLabel'>Press and hold the image to see it before 
-            it was popped</div>
+        <img src={pic}></img>
         <h3>Level of Contrast</h3>
         <p>Adjust the amount of edge contrast using the indicators below.</p>
         <div className='sliderWrapper'>
@@ -64,6 +63,10 @@ export default class DemoModal extends React.Component{
           <div className='label'>med</div>
           <div className='label labelRight'>high</div>
         </div>
+        <ButtonGroup>
+          <Button className={this.state.pressed ? 'toggleButton' : 'toggleButtonClicked'} onClick={this.showOriginal} bsSize='large'>Original</Button>
+          <Button className={this.state.pressed ? 'toggleButtonClicked' : 'toggleButton'} onClick={this.showPopped} bsSize='large'>Popped</Button>
+        </ButtonGroup>
       </div>
     );
   }
