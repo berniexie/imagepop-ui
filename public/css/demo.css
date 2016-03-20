@@ -33,6 +33,10 @@ img {
   padding: 0;
 }
 
+.btn-group>.btn:first-child {
+    margin-left: 20px;
+}
+
 .toggleButton{
   border-radius: 3px;
   font-size: 18px;
@@ -57,13 +61,31 @@ img {
   width: 100px;
 }
 
-.btn-group>.btn:first-child {
-    margin-left: 20px;
-}
-
-.toggleButtonClicked:focus{
+.toggleButtonClicked:focus {
     background-color: #549ACB;
     color: #FFFFFF;
+}
+
+.disabled{
+  border-radius: 3px;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.demoModal > .notAvailable {
+  background-color: #CB5454;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin: 10px;
+  padding: 5px;
+  position: absolute;
+  width: 300px;
 }
 
 .demoModal > img {
