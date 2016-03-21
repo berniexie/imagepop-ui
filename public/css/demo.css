@@ -51,6 +51,50 @@ img {
   top: 200px;
 }
 
+.btn-group>.btn:first-child {
+    margin-left: 20px;
+}
+
+.toggleButton{
+  border-radius: 3px;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.toggleButtonClicked{
+  background-color: #549ACB;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.toggleButtonClicked:focus {
+    background-color: #549ACB;
+    color: #FFFFFF;
+}
+
+.disabled{
+  border-radius: 3px;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
 .demoModal > .notAvailable {
   background-color: #CB5454;
   border-radius: 3px;
@@ -64,12 +108,6 @@ img {
 
 .demoModal > img {
   width: 100%;
-}
-
-.demoModal > .pressLabel {
-  background-color: #549ACB;
-  color: #FFFFFF;
-  padding: 5px;
 }
 
 .demoModal > p {
@@ -103,14 +141,17 @@ img {
   color: black;
   display: inline-block;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   width: 33%;
+  font-size: 14px;
 }
 
 .labelLeft {
   text-align: left;
+  font-size: 14px;
 }
 
 .labelRight {
   text-align: right;
+  font-size: 14px;
 }
