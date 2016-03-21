@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var fs = require('fs');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
@@ -35,10 +36,7 @@ app.get('/logout', function(req, res) {
   res.sendFile(path.join(__dirname + '/views/logout.html'));
 });
 
-app.post('/api/upload_image', function(req, res) {
-  // Just return spurious success for uploading the image
-  return res.status(200).send(req.file);
-});
+app.use('/api/login', require('./routes/api/login'));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
