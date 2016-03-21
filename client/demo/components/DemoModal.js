@@ -22,11 +22,12 @@ export default class DemoModal extends React.Component{
     beforeImageSrc: '',
   };
 
-  state = {pressed:true, after:this.props.medImageSrc, available:true};
+  state = {pressed:true, after:this.props.medImageSrc, available:true, value:2};
 
   componentWillReceiveProps = (nextProps) => {
     this.setState({
-      after: nextProps.medImageSrc
+      after: nextProps.medImageSrc,
+      value: 2
     });
   }
 
@@ -34,23 +35,26 @@ export default class DemoModal extends React.Component{
     switch (value) {
       case 1:
         if (this.props.lowImageSrc == '') { 
-          this.setState({available: false, pressed:true}); 
+          this.setState({available: false, pressed:true, value: 1}); 
         } else {
-          this.setState({after: this.props.lowImageSrc, available: true, pressed:true}); 
+          this.setState({after: this.props.lowImageSrc, available: true, 
+            pressed:true, value: 1}); 
         }
         break;
       case 2:
         if (this.props.medImageSrc == '') {
           this.setState({available: false, pressed:true}); 
         } else {
-          this.setState({after: this.props.medImageSrc, available: true, pressed:true});
+          this.setState({after: this.props.medImageSrc, available: true, 
+            pressed:true, value: 2});
         }
         break;
       default:
         if (this.props.highImageSrc == '') {
           this.setState({available: false, pressed:true}); 
         } else {
-          this.setState({after: this.props.highImageSrc, available: true, pressed:true});
+          this.setState({after: this.props.highImageSrc, available: true, 
+            pressed:true, value: 3});
         }
         break;
     }
@@ -74,7 +78,7 @@ export default class DemoModal extends React.Component{
         <h3>Level of Contrast</h3>
         <p>Adjust the amount of edge contrast using the indicators below.</p>
         <div className='sliderWrapper'>
-          <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
+          <Slider value={this.state.value} defaultValue={2} min={1} max={3} step={1} withBars 
               onChange={this.handleSlider}>
             <div className='handle'/>
           </Slider>
