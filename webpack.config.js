@@ -27,6 +27,11 @@ module.exports = {
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './client/register/register.js'
+    ],
+    logout: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/logout/logout.js'
     ]
   },
   output: {

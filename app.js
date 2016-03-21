@@ -31,6 +31,10 @@ app.get('/login', function(req, res) {
   res.sendFile(path.join(__dirname + '/views/login.html'));
 });
 
+app.get('/logout', function(req, res) {
+  res.sendFile(path.join(__dirname + '/views/logout.html'));
+});
+
 app.post('/api/upload_image', function(req, res) {
   // Just return spurious success for uploading the image
   return res.status(200).send(req.file);
