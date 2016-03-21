@@ -18,7 +18,7 @@ export default class RegisterContent extends Component {
           console.log(res);
           let resJson = JSON.parse(res.text);
           //TODO (ellenemerson): if user successfully registered or not
-        });
+        })
   }
 
   setEmail = () => {
