@@ -1,15 +1,19 @@
-//container for all of the components of the login page
+//container for all of the components of the register page
 import React, { PropTypes, Component } from 'react';
 import { Input, Button } from 'react-bootstrap';
 import PageTemplate from '../../shared/components/PageTemplate.js';
-import styles from '../../../public/css/login.css';
+import styles from '../../../public/css/register.css';
 
 export default class LoginContent extends Component {
 
   render(){
     return(
-      <PageTemplate title="Login" subtitle="Login to your account.">
-        <div className="loginWrapper">
+      <PageTemplate title="Register" subtitle="Register for an account.">
+        <div className="registerWrapper">
+          <p>Name:</p>
+          <Input
+            type="text"
+            placeholder="Enter name"/>
           <p>Email:</p>
           <Input
             type="text"
@@ -19,9 +23,12 @@ export default class LoginContent extends Component {
           <Input
             type="text"
             placeholder="Enter password"/>
+          <p>Verify Password:</p>
+          <Input
+            type="text"
+            placeholder="Re-enter password"/>
           <div className="clear"/>
-          <Button className="loginBtn" bsStyle="primary">LOGIN</Button>
-          <Button href="/register" className="registerBtn">REGISTER</Button>
+          <Button bsStyle="primary" className="registerBtn">REGISTER</Button>
         </div>
       </PageTemplate>
     );
