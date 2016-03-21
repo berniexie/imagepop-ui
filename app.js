@@ -43,6 +43,10 @@ app.get('/register', function(req, res) {
   res.sendFile(path.join(__dirname + '/views/register.html'));
 });
 
+app.get('/about', function(req, res) {
+  res.sendFile(path.join(__dirname + '/views/about.html'));
+});
+
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/register', require('./routes/api/register'));
 
