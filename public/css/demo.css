@@ -33,6 +33,24 @@ img {
   padding: 0;
 }
 
+.arrow {
+  color: #ffffff;
+  font-size: 40px;
+  position: absolute;
+  width: 100px;
+  z-index: 1;
+}
+
+.leftArrow {
+  left: -100px;
+  top: 200px;
+}
+
+.rightArrow {
+  right: -100px;
+  top: 200px;
+}
+
 .demoModal > .notAvailable {
   background-color: #CB5454;
   border-radius: 3px;

@@ -29,6 +29,47 @@ export default class DemoPageContent extends Component {
     this.setState({ showModal: false });
   };
 
+  prevImage = (demoImages) =>  {
+    for (var r = 0; r < demoImages.length; r++) {
+      for (var c = 0; c < demoImages[r].length; c++) {
+        if (demoImages[r][c].medImgSrc === this.state.med) {
+          var row = (c == 0 ? 
+            (r == 0 ? demoImages.length-1 : r-1) : r);
+          var col = (c == 0 ? 
+            (r == 0 ? demoImages[demoImages.length-1].length - 1 : demoImages[r-1].length - 1) : c-1);
+          this.setState({
+            low: demoImages[row][col].lowImgSrc, 
+            med: demoImages[row][col].medImgSrc,
+            high: demoImages[row][col].highImgSrc,
+            before: demoImages[row][col].befImgSrc,
+            showModal: true 
+          });
+          break;
+        }
+      }
+    }
+  };
+
+  nextImage = (demoImages) =>  {
+    for (var r = 0; r < demoImages.length; r++) {
+      for (var c = 0; c < demoImages[r].length; c++) {
+        if (demoImages[r][c].medImgSrc === this.state.med) {
+          var row = (c == demoImages[r].length - 1 ? 
+            (r+1 == demoImages.length ? 0 : r+1) : r);
+          var col = (c == demoImages[r].length - 1 ? 0 : c+1);
+          this.setState({
+            low: demoImages[row][col].lowImgSrc, 
+            med: demoImages[row][col].medImgSrc,
+            high: demoImages[row][col].highImgSrc,
+            before: demoImages[row][col].befImgSrc,
+            showModal: true 
+          });
+          break;
+        }
+      }
+    }
+  };
+
   render(){
     const {demoImages} = this.props;
 
@@ -52,6 +93,7 @@ export default class DemoPageContent extends Component {
               {rows}
         </Grid>
         <Modal show={this.state.showModal} onHide={this.close}>
+          <div className="arrow leftArrow" onClick={() => this.prevImage(demoImages)}>&#60;</div>
           <Modal.Body>
             <DemoModal lowImageSrc = {this.state.low}
               medImageSrc = {this.state.med}
@@ -59,6 +101,7 @@ export default class DemoPageContent extends Component {
               beforeImageSrc = {this.state.before}
               callBack ={() => this.handleClick("", "")}/>
           </Modal.Body>
+          <div className="arrow rightArrow" onClick={() => this.nextImage(demoImages)}>&#62;</div>
         </Modal>
       </div>
     );
