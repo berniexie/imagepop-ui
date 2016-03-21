@@ -24,6 +24,12 @@ export default class DemoModal extends React.Component{
 
   state = {pressed:true, after:this.props.medImageSrc, available:true};
 
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      after: nextProps.medImageSrc
+    });
+  }
+
   handleSlider = (value) => {
     switch (value) {
       case 1:

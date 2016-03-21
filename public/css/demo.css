@@ -35,10 +35,17 @@ img {
 
 .arrow {
   color: #ffffff;
+  border-radius: 50px;
   font-size: 40px;
+  height: 60px;
   position: absolute;
-  width: 100px;
+  width: 60px;
   z-index: 1;
+}
+
+.arrow:hover {
+  background-color: #5E5E5E;
+  opacity: transparent;
 }
 
 .leftArrow {
