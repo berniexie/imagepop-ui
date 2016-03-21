@@ -1,0 +1,29 @@
+.registerWrapper {
+  font-size: 20px;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.registerWrapper > p {
+  float: left;
+  margin: 5px;
+}
+
+.registerWrapper > div > input {
+  float: right;
+  margin-bottom: 20px;
+  width: 60%;
+}
+
+.clear {
+  clear: both;
+}
+
+.registerBtn {
+  background-color: #549ACB;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px;
+  width: 150px;
+}

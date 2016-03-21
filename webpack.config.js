@@ -23,6 +23,11 @@ module.exports = {
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './client/login/login.js'
     ],
+    register: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/register/register.js'
+    ],
     logout: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',

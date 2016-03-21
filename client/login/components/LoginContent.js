@@ -1,4 +1,4 @@
-//container for all of the components of the Demo page
+//container for all of the components of the login page
 import React, { PropTypes, Component } from 'react';
 import { Input, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
