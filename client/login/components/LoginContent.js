@@ -11,14 +11,14 @@ export default class LoginContent extends Component {
   onLogin = () => {
     console.log("sending request");
     var promise = request
-      .post('/api/login/')
+      .post('/api/login')
       .set('Accept', 'application/json')
       .field('email', this.state.email)
       .field('password', this.state.password)
       .promise()
       .then(function(res) {
         console.log(res);
-        //let resJson = JSON.parse(res.text);
+        let resJson = JSON.parse(res.text);
         // TODO(rwillard): Parse response and account for valid/invalid authentication.
         console.log("response");
       });
