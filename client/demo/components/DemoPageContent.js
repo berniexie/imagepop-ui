@@ -92,9 +92,9 @@ export default class DemoPageContent extends Component {
         <Grid fluid={true}>
               {rows}
         </Grid>
-        <Modal show={this.state.showModal} onHide={this.close}>
+        <Modal className="demoModalWrapper" show={this.state.showModal} onHide={this.close}>
           <div className="arrow leftArrow" onClick={() => this.prevImage(demoImages)}>&#60;</div>
-          <Modal.Body>
+          <Modal.Body className="demoModalBody">
             <DemoModal lowImageSrc = {this.state.low}
               medImageSrc = {this.state.med}
               highImageSrc = {this.state.high}

@@ -1,0 +1,44 @@
+.loginWrapper {
+  font-size: 20px;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.loginWrapper > p {
+  float: left;
+  margin: 5px;
+}
+
+.loginWrapper > div > input {
+  float: right;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.clear {
+  clear: both;
+}
+
+.loginBtn {
+  background-color: #549ACB;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px;
+  width: 150px;
+}
+
+.registerBtn {
+  background-color: #434343;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px;
+  width: 150px;
+}
+
+.registerBtn:hover {
+  background-color: #232323;
+  border-color: #434343;
+  color: #ffffff;
+}

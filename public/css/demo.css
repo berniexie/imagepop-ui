@@ -1,3 +1,5 @@
+@import './bootstrap.min.css';
+
 img {
   user-drag: none; 
   user-select: none;
@@ -25,11 +27,11 @@ img {
   border-color: #549ACB;
 }
 
-.modal-dialog {
+.demoModalWrapper {
   margin-top: 100px;
 }
 
-.modal-body {
+.demoModalBody {
   padding: 0;
 }
 
