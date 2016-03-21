@@ -14,6 +14,7 @@ export default class LoginContent extends Component {
           <Input
             type="text"
             placeholder="Enter name"/>
+          <div className="clear"/>
           <p>Email:</p>
           <Input
             type="text"
@@ -23,6 +24,7 @@ export default class LoginContent extends Component {
           <Input
             type="text"
             placeholder="Enter password"/>
+          <div className="clear"/>
           <p>Verify Password:</p>
           <Input
             type="text"
