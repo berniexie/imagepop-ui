@@ -6,12 +6,12 @@ import styles from '../../../public/css/register.css';
 import request from 'superagent-bluebird-promise';
 
 export default class RegisterContent extends Component {
+  state = {email: '', password: ''};
 
   handleClick = () => {
     var promise = request
         .post('/api/register/')
-        .field('email', this.refs.email.getInputDOMNode().value)
-        .field('password', this.refs.password.getInputDOMNode().value)
+        .send({email: this.state.email, password: this.state.password})
         .set('Accept', 'application/json')
         .promise()
         .then(function(res) {
@@ -19,6 +19,14 @@ export default class RegisterContent extends Component {
           let resJson = JSON.parse(res.text);
           //TODO (ellenemerson): if user successfully registered or not
         });
+  }
+
+  setEmail = () => {
+    this.setState({email:this.refs.email.getValue()});
+  }
+
+  setPassword = () => {
+    this.setState({password:this.refs.password.getValue()});
   }
 
   render(){
@@ -34,13 +42,15 @@ export default class RegisterContent extends Component {
           <Input
             type="text"
             placeholder="Enter email"
-            ref="email"/>
+            ref="email"
+            onChange={this.setEmail}/>
           <div className="clear"/>
           <p>Password:</p>
           <Input
             type="text"
             placeholder="Enter password"
-            ref="password"/>
+            ref="password"
+            onChange={this.setPassword}/>
           <div className="clear"/>
           <p>Verify Password:</p>
           <Input
