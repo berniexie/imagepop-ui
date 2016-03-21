@@ -9,7 +9,7 @@ export default class RegisterContent extends Component {
 
   handleClick = () => {
     var promise = request
-        .post('/api/register')
+        .post('/api/register/')
         .field('email', this.refs.email.getInputDOMNode().value)
         .field('password', this.refs.password.getInputDOMNode().value)
         .set('Accept', 'application/json')
@@ -17,8 +17,7 @@ export default class RegisterContent extends Component {
         .then(function(res) {
           console.log(res);
           let resJson = JSON.parse(res.text);
-          let success = resJson.success;
-          console.log(success);
+          //TODO (ellenemerson): if user successfully registered or not
         });
   }
 
