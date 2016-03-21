@@ -25,10 +25,19 @@ export default class DemoModal extends React.Component{
   state = {pressed:true, after:this.props.medImageSrc, available:true, value:2};
 
   componentWillReceiveProps = (nextProps) => {
-    this.setState({
-      after: nextProps.medImageSrc,
-      value: 2
-    });
+    if (nextProps.medImageSrc == '') {
+      this.setState({
+        after: nextProps.medImageSrc,
+        value: 2,
+        available: false
+      });
+    } else {
+      this.setState({
+        after: nextProps.medImageSrc,
+        value: 2,
+        available: true
+      });
+    }
   }
 
   handleSlider = (value) => {
@@ -43,7 +52,7 @@ export default class DemoModal extends React.Component{
         break;
       case 2:
         if (this.props.medImageSrc == '') {
-          this.setState({available: false, pressed:true}); 
+          this.setState({available: false, pressed:true, value: 2}); 
         } else {
           this.setState({after: this.props.medImageSrc, available: true, 
             pressed:true, value: 2});
@@ -51,7 +60,7 @@ export default class DemoModal extends React.Component{
         break;
       default:
         if (this.props.highImageSrc == '') {
-          this.setState({available: false, pressed:true}); 
+          this.setState({available: false, pressed:true, value: 3}); 
         } else {
           this.setState({after: this.props.highImageSrc, available: true, 
             pressed:true, value: 3});
