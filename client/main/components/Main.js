@@ -157,7 +157,6 @@ export class MainPageContent extends Component {
   onDrop = (raw_files) => {
     var self = this;
     var files = [];
-    console.log(raw_files);
     raw_files.forEach(function(raw_file) {
       var promise = request
         .post('/api/fileupload/start')
@@ -209,7 +208,7 @@ export class MainPageContent extends Component {
               Drop File to Upload!
             </h1>
           </div>
-          <Col sm-={4}>
+          <Col sm={4}>
             <ImageListArea selectedFile={this.state.selectedFile} files={this.state.files}
                 onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
           </Col>

@@ -5,6 +5,7 @@ var fs = require('fs');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
+var bodyParser = require('body-parser')
 
 app.use(require("webpack-dev-middleware")(compiler, {
   noInfo: true, publicPath: webpackConfig.output.publicPath
@@ -15,6 +16,8 @@ app.use(require("webpack-hot-middleware")(compiler));
 app.use(express.static('public'));
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/public', express.static(__dirname + '/public'));
+
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/index.html'));
