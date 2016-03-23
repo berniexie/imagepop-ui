@@ -14,7 +14,11 @@ export class ImageControlArea extends Component {
 
   handleDownload = () => {
 
-  }
+  };
+
+  static propTypes = {
+    file: PropTypes.object
+  };
 
   render = () => {
     const {file} = this.props;
@@ -108,7 +112,9 @@ export class ImageListArea extends Component {
   }
 
   static propTypes = {
-    fileId: PropTypes.number,
+    files: React.PropTypes.array,
+    onOpenClick: React.PropTypes.func,
+    onListElementClick: React.PropTypes.func
   };
 
   render = () => {
