@@ -3,8 +3,22 @@
 import React, { PropTypes, Component } from 'react';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import styles from '../../../public/css/navbar.css';
+import PubSub from 'pubsub-js';
 
 export default class CustomNavbar extends Component {
+  state = {loggedIn: false, pubsubtoken: ''};
+
+  componentDidMount = () =>{
+    this.setState({pubsubtoken: PubSub.subscribe('LOGIN', (topic, status) => {
+      console.log("in component did mount" + status);
+      this.setState({loggedIn: status});
+    })});
+  }
+
+  componentWillUnmount = () =>{
+    PubSub.unsubscribe(this.state.pubsubtoken);
+  }
+
   render() {
     return (
       <Navbar inverse>
@@ -19,7 +33,7 @@ export default class CustomNavbar extends Component {
             <NavItem eventKey={1} href="/about">about</NavItem>
             <NavItem eventKey={2} href="/demo">gallery</NavItem>
             <NavItem eventKey={3} href="/main">upload</NavItem>
-            <NavItem eventKey={4} href="/login">login</NavItem>
+            { !this.state.loggedIn ? <NavItem eventKey={4} href="/login">login</NavItem> : <NavItem eventKey={5} href="/logout">logout</NavItem> }
           </Nav>
         </Navbar.Collapse>
       </Navbar>

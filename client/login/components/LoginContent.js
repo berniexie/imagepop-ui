@@ -4,6 +4,7 @@ import { Input, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/login.css';
+import PubSub from 'pubsub-js';
 
 export default class LoginContent extends Component {
   state = {email: '', password: ''};
@@ -13,13 +14,21 @@ export default class LoginContent extends Component {
     var promise = request
       .post('/api/login')
       .set('Accept', 'application/json')
-      .field('email', this.state.email)
-      .field('password', this.state.password)
+      .send({email: this.state.email, password: this.state.password})
       .promise()
       .then(function(res) {
         console.log(res);
         let resJson = JSON.parse(res.text);
         // TODO(rwillard): Parse response and account for valid/invalid authentication.
+
+        if (resJson.status === "error"){
+          console.log("login error");
+        }
+        else{
+          console.log("login successful");
+          PubSub.publish('LOGIN', true);
+        }
+
         console.log("response");
       });
   }

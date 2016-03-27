@@ -17,7 +17,7 @@ export default class RegisterContent extends Component {
         .then(function(res) {
           console.log(res);
           let resJson = JSON.parse(res.text);
-          //TODO (ellenemerson): if user successfully registered or not
+          //TODO (ellenemerson): parse response and handle valid/invalid registration
         })
   }
 
