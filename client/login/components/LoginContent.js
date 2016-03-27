@@ -17,19 +17,14 @@ export default class LoginContent extends Component {
       .send({email: this.state.email, password: this.state.password})
       .promise()
       .then(function(res) {
-        console.log(res);
         let resJson = JSON.parse(res.text);
         // TODO(rwillard): Parse response and account for valid/invalid authentication.
-
-        if (resJson.status === "error"){
-          console.log("login error");
-        }
-        else{
-          console.log("login successful");
-          PubSub.publish('LOGIN', true);
-        }
-
-        console.log("response");
+        console.log("login successful");
+        PubSub.publish('LOGIN', true);
+      })
+      .catch(function(error) {
+        let resJson = JSON.parse(error.res.text);
+        console.log(resJson.message);
       });
   }
 

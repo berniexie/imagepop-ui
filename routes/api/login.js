@@ -8,10 +8,10 @@ router.post('/', function(req, res, next) {
     	token: "MiOiJqb3VybmFsdGVjaCIsImF1ZCI6ImpvdXJuYW"
     });
   } else {
+    res.status(401);
     res.send({
     	status: "error",
     	message: "Bad credentials"
-
     });
   }
 });
