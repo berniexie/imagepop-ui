@@ -49,11 +49,7 @@ app.get('/about', function(req, res) {
 
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/register', require('./routes/api/register'));
-
-app.post('/api/upload_image', function(req, res) {
-  // Just return spurious success for uploading the image
-  return res.status(200).send(req.file);
-});
+app.use('/api/fileupload', require('./routes/api/fileupload'));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
