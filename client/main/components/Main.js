@@ -4,49 +4,48 @@ import Dropzone from 'react-dropzone';
 import styles from '../../../public/css/main.css';
 import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
+import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
+import request from 'superagent-bluebird-promise';
 
-export default class ImageControlArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export class ImageControlArea extends Component {
   handleSlider = (value) => {
     console.log(value);
   };
 
+  handleDownload = () => {
+
+  };
+
+  static propTypes = {
+    file: PropTypes.object
+  };
+
   render = () => {
     const {file} = this.props;
-    return file == null ? (
+    return file == undefined ? (
       <div className='imageControlArea'>
       </div>
     ) : (
       <div className='imageControlArea'>
-          <img className='fullImageView' src={file.preview} />
-          <div className='sliderWrapper'>
-            <Slider defaultValue={2} min={1} max={3} step={1} withBars
-                onChange={this.handleSlider}>
-              <div className='handle'/>
-            </Slider>
-            <div className='label labelLeft'>low</div>
-            <div className='label'>med</div>
-            <div className='label labelRight'>high</div>
-          </div> 
+        <img className='fullImageView' src={file.preview} />
+        <div className='sliderWrapper'>
+          <Slider defaultValue={2} min={1} max={3} step={1} withBars
+              onChange={this.handleSlider}>
+            <div className='handle'/>
+          </Slider>
+          <div className='label labelLeft'>low</div>
+          <div className='label'>med</div>
+          <div className='label labelRight'>high</div>
+        </div>
+        <Button onClick={this.handleDownload}>Download</Button>
       </div>
     );
   };
 }
 
-export default class SelectedImageArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export class SelectedImageArea extends Component {
   static propTypes = {
     file: PropTypes.object,
-  };
-
-  defaultProps = {
-    file: null,
   };
 
   render = () => {
@@ -54,7 +53,7 @@ export default class SelectedImageArea extends Component {
     return (
       <div className='selectedImageArea'>
         <div className='centered selectedImageAreaHeader'>
-        {file == null ?
+        {file == undefined ?
           <h3>Upload images to view more options!</h3> :
           <h3>{file.name}</h3>
         }
@@ -65,7 +64,7 @@ export default class SelectedImageArea extends Component {
   };
 };
 
-export default class FileListElement extends Component {
+export class FileListElement extends Component {
   constructor(props) {
     super(props);
     this.state = {selected: false};
@@ -73,6 +72,7 @@ export default class FileListElement extends Component {
 
   static propTypes = {
     file: PropTypes.object,
+    selected: PropTypes.bool,
   };
 
   onListElementClick = (file) => {
@@ -89,8 +89,8 @@ export default class FileListElement extends Component {
       className += ' selected';
     }
     return (
-      <div className='row'>
-        <div className='col-sm-12'>
+      <Row>
+        <Col sm={12}>
           <div className={className}
                onClick={this.onListElementClick.bind(this, file)}>
             <img className='listElementIcon' src={file.preview} />
@@ -99,17 +99,23 @@ export default class FileListElement extends Component {
             </div>
             <div className='listElementOptions'></div>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   };
 };
 
-export default class ImageListArea extends Component {
+export class ImageListArea extends Component {
   constructor(props) {
     super(props);
     this.state = {fileId: 0}
   }
+
+  static propTypes = {
+    files: React.PropTypes.array,
+    onOpenClick: React.PropTypes.func,
+    onListElementClick: React.PropTypes.func
+  };
 
   render = () => {
     const {files, onOpenClick, onListElementClick} = this.props;
@@ -119,9 +125,9 @@ export default class ImageListArea extends Component {
         <div className='centered imageListAreaHeader'>
           <h1 className='centered'>My Images</h1>
           Drag and drop images anywhere to upload or <br />
-          <button type='button' onClick={onOpenClick}>
+          <Button onClick={onOpenClick}>
             Click Here!
-          </button>
+          </Button>
         </div>
         <div className='imageList'>
           {files.map((file) =>
@@ -136,7 +142,7 @@ export default class ImageListArea extends Component {
   };
 };
 
-export default class File {
+export class File {
   constructor(file, fileId) {
     this.raw_file = file;
     this.name = file.name;
@@ -148,24 +154,43 @@ export default class File {
   }
 }
 
-export default class MainPageContent extends Component {
+export class MainPageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {files: [], selectedFile: null}
   }
 
-  fileId = 0;
-
   onDrop = (raw_files) => {
+    var self = this;
     var files = [];
     raw_files.forEach(function(raw_file) {
-      let file = new File(raw_file, this.fileId++);
-      files.push(file);
-    }, this);
+      var promise = request
+        .post('/api/fileupload/start')
+        .set('Accept', 'application/json')
+        .promise()
+        .then(function(res) {
+          let resJson = JSON.parse(res.text);
+          let file = new File(raw_file, resJson.fileId);
+          files.push(file);
 
-    this.setState(function(prevState, currProps) {
-      return {files: prevState.files.concat(files)};
-    });
+          self.setState(function(prevState, currProps) {
+            return {files: prevState.files.concat(files)};
+          });
+
+          var promise = request
+            .post('/api/fileupload/upload')
+            .set('Accept', 'application/json')
+            .field('fileId', file.fileId)
+            .attach('image', raw_file)
+            .on('progress', function (p) {
+              // TODO(amohan95): Get progress update from backend
+            })
+            .promise()
+            .then(function(res) {
+              // TODO(amohan95): Fill this in once API is finalized
+            });
+        });
+    }, this);
   };
 
   onListElementClick = (file) => {
@@ -183,20 +208,20 @@ export default class MainPageContent extends Component {
       <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
                 accept={"image/gif,image/jpeg,image/png"}>
-        <div className='row'>
+        <Row>
           <div className='dropzoneOverlay'>
             <h1 className='dropzoneOverlayText'>
               Drop File to Upload!
             </h1>
           </div>
-          <div className='col-sm-4'>
+          <Col sm={4}>
             <ImageListArea selectedFile={this.state.selectedFile} files={this.state.files}
                 onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
-          </div>
-          <div className='col-sm-8'>
+          </Col>
+          <Col sm={8}>
             <SelectedImageArea file={this.state.selectedFile}/>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </Dropzone>
     );
   };
