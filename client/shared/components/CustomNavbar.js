@@ -10,7 +10,6 @@ export default class CustomNavbar extends Component {
 
   componentDidMount = () =>{
     this.setState({pubsubtoken: PubSub.subscribe('LOGIN', (topic, status) => {
-      console.log("in component did mount" + status);
       this.setState({loggedIn: status});
     })});
   }

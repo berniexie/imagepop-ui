@@ -7,29 +7,27 @@ import styles from '../../../public/css/login.css';
 import PubSub from 'pubsub-js';
 
 export default class LoginContent extends Component {
-  state = {email: '', password: ''};
+  state = {email: '', password: '', failedAttempt: false};
 
   onLogin = () => {
-    console.log("sending request");
     var promise = request
       .post('/api/login')
       .set('Accept', 'application/json')
       .send({email: this.state.email, password: this.state.password})
       .promise()
-      .then(function(res) {
+      .then((res) => {
         console.log(res);
         let resJson = JSON.parse(res.text);
-        // TODO(rwillard): Parse response and account for valid/invalid authentication.
 
         if (resJson.status === "error"){
-          console.log("login error");
+          this.setState({failedAttempt: true});
+          //TODO: display error message to user
         }
         else{
-          console.log("login successful");
           PubSub.publish('LOGIN', true);
+          this.setState({failedAttempt: false});
+          //TODO: redirect to upload page
         }
-
-        console.log("response");
       });
   }
 
@@ -43,7 +41,7 @@ export default class LoginContent extends Component {
 
   render(){
     return(
-      <PageTemplate title="Login" subtitle="Login to your account.">
+      <PageTemplate title="Login" subtitle= "Login to your account.">
         <div className="loginWrapper">
           <p>Email:</p>
           <Input
@@ -61,6 +59,9 @@ export default class LoginContent extends Component {
           <div className="clear"/>
           <Button className="loginBtn" bsStyle="primary" onClick={this.onLogin}>LOGIN</Button>
           <Button href="/register" className="registerBtn">REGISTER</Button>
+          <div className="failLabel">
+            {this.state.failedAttempt ? <p> Login Failed </p> : null}
+          </div>
         </div>
       </PageTemplate>
     );
