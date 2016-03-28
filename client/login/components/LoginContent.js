@@ -15,14 +15,13 @@ export default class LoginContent extends Component {
       .set('Accept', 'application/json')
       .send({email: this.state.email, password: this.state.password})
       .promise()
-      .then(function(res) {
+      .then((res) =>{
         let resJson = JSON.parse(res.text);
-        console.log("login successful");
         PubSub.publish('LOGIN', true);
         this.setState({failedAttempt: false});
         //TODO: redirect to upload page
       })
-      .catch(function(error) {
+      .catch((error) =>{
         let resJson = JSON.parse(error.res.text);
         console.log(resJson.message);
         this.setState({failedAttempt: true});
