@@ -70,8 +70,8 @@ export default class RegisterContent extends Component {
             placeholder="Re-enter password"/>
           <div className="clear"/>
           <Button bsStyle="primary" className="registerBtn" onClick={this.handleClick}>REGISTER</Button>
+          <div className="failLabel"> {this.state.failedText}</div>
         </div>
-        <div className="failLabel"> {this.state.failedText}</div>
       </PageTemplate>
     );
   }
