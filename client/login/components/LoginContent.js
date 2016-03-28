@@ -1,6 +1,7 @@
 //container for all of the components of the login page
 import React, { PropTypes, Component } from 'react';
 import { Input, Button } from 'react-bootstrap';
+import { Link } from 'react-router';
 import request from 'superagent-bluebird-promise';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/login.css';
@@ -56,7 +57,7 @@ export default class LoginContent extends Component {
             onChange={this.setPassword}/>
           <div className="clear"/>
           <Button className="loginBtn" bsStyle="primary" onClick={this.onLogin}>LOGIN</Button>
-          <Button href="/register" className="registerBtn">REGISTER</Button>
+          <Link to="/register"><Button className="registerBtn">REGISTER</Button></Link>
           {this.state.failedAttempt ? <div className="failLabel"> Sorry, either your email or password was incorrect. 
               Please try again. </div> : null}
         </div>

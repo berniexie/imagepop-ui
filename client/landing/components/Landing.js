@@ -4,7 +4,7 @@ import React, { PropTypes, Component } from 'react';
 import CustomNavbar from '../../shared/components/CustomNavbar.js';
 import styles from '../../../public/css/landing.css';
 import { Button } from 'react-bootstrap';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 
 export default class Landing extends Component {
   static propTypes = {
@@ -21,10 +21,8 @@ export default class Landing extends Component {
                 <p> Make your photos standout with ImagePop. <br/>
                   A photo enhancer that will make your images pop! 
                 </p>
-                <div>
-                  <Button href="/demo" bsStyle="primary">VIEW OUR GALLERY</Button>
-                  <Button href="/main">UPLOAD NOW</Button>
-                </div>
+                <Link to="/demo"><Button bsStyle="primary">VIEW OUR GALLERY</Button></Link>
+                <Link to="/main"><Button>UPLOAD NOW</Button></Link>
             </div>
         </div>
       </div>

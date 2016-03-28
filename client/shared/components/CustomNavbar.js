@@ -24,7 +24,7 @@ export default class CustomNavbar extends Component {
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">image | pop</a>
+            <Link to="/">image | pop</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

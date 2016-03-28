@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  background-color: #000000;
+  background-color: #EEEEEE;
   font-family: 'Raleway';
   height: 100%;
   overflow: hidden;
@@ -25,6 +25,7 @@ body {
 
 .landing {
   align-items: flex-end;
+  background-color: #000000;
   background-image: url(../img/sea-nature-sunny-beach.png);
   background-size: cover;
   display: flex;
@@ -47,27 +48,36 @@ body {
   font-size: 36px;
 }
 
-.btn-primary {
+.landing > .content > a > .btn-primary {
   background-color: #549ACB;
   border-color: #549ACB;
+  color: #ffffff;
   font-size: 16px;
   margin: 10px;
   padding: 14px 30px;
 }
 
-.btn-default {
+.landing > .content > a > .btn-primary:hover {
+  background-color: #2e6da4;
+  text-decoration: none;
+}
+
+.landing > .content > a > .btn-default {
   background-color: #434343;
   border-color: #434343;
-  color: #ffffff;
   font-size: 16px;
   margin: 10px;
   padding: 14px 30px;
 }
 
-.btn-default:hover {
+.landing > .content > a > .btn-default {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.landing > .content > a > .btn-default:hover {
   background-color: #232323;
   border-color: #434343;
-  color: #ffffff;
 }
 
 @font-face {
