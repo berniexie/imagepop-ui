@@ -26,6 +26,7 @@
     "react-bootstrap": "^0.28.3",
     "react-dom": "^0.14.6",
     "react-dropzone": "^3.3.2",
+    "react-router": "^2.0.1",
     "superagent": "^1.8.0",
     "superagent-bluebird-promise": "^3.0.0"
   },

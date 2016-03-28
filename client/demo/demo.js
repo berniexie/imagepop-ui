@@ -51,11 +51,15 @@ var images = [[{smallImgSrc: "./img/beach-small.png",
                 highImgSrc: "",
                 befImgSrc: "./img/waves-before.png"}]];
 
-ReactDOM.render(
-    <PageTemplate title="Gallery" 
-        subtitle="Select an image below to see what image|pop can do." >
-      <DemoPageContent demoImages={images}/>
-    </PageTemplate>,
-    document.getElementById('app'),
-);
+export default class Demo extends Component {
+  render () {
+    console.log("in demo render");
+    return (
+        <PageTemplate title="Gallery" 
+            subtitle="Select an image below to see what image|pop can do." >
+          <DemoPageContent demoImages={images}/>
+        </PageTemplate>,
+    );
+  }
+}
 

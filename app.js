@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
-app.get('/demo', function (req, res) {
+/*app.get('/demo', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/demo.html'));
 });
 
@@ -45,7 +45,7 @@ app.get('/register', function(req, res) {
 
 app.get('/about', function(req, res) {
   res.sendFile(path.join(__dirname + '/views/about.html'));
-});
+});*/
 
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/register', require('./routes/api/register'));

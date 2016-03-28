@@ -11,6 +11,7 @@ export default class Landing extends Component {
   };
 
   render () {
+    console.log("in landing render");
     return (
       <div className="index">
         <CustomNavbar />
