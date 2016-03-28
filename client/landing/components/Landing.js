@@ -2,7 +2,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import CustomNavbar from '../../shared/components/CustomNavbar.js';
-import styles from '../../../public/css/index.css';
+import styles from '../../../public/css/landing.css';
 import { Button } from 'react-bootstrap';
 import {Link} from 'react-router';
 
@@ -12,7 +12,6 @@ export default class Landing extends Component {
   };
 
   render () {
-    console.log("in landing render");
     return (
       <div className="index">
         <CustomNavbar />

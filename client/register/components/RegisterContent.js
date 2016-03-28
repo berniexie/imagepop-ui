@@ -4,6 +4,7 @@ import { Input, Button } from 'react-bootstrap';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/register.css';
 import request from 'superagent-bluebird-promise';
+import {browserHistory} from 'react-router';
 
 export default class RegisterContent extends Component {
   state = {email: '', password: '', failedText: ''};
@@ -18,7 +19,7 @@ export default class RegisterContent extends Component {
           console.log(res);
           let resJson = JSON.parse(res.text);
           this.setState({failedText: ''});
-          //TODO (ellenemerson): parse response and handle valid registration
+          browserHistory.push('/main');
         })
         .catch((error) => {
           let resJson = JSON.parse(error.res.text);

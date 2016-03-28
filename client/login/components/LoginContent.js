@@ -5,6 +5,7 @@ import request from 'superagent-bluebird-promise';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/login.css';
 import PubSub from 'pubsub-js';
+import {browserHistory} from 'react-router';
 
 export default class LoginContent extends Component {
   state = {email: '', password: '', failedAttempt: false};
@@ -19,7 +20,7 @@ export default class LoginContent extends Component {
         let resJson = JSON.parse(res.text);
         PubSub.publish('LOGIN', true);
         this.setState({failedAttempt: false});
-        //TODO: redirect to upload page
+        browserHistory.push('/main');
       })
       .catch((error) =>{
         let resJson = JSON.parse(error.res.text);

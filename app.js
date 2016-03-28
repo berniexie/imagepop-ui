@@ -26,6 +26,7 @@ app.get('/*', function (req, res) {
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/register', require('./routes/api/register'));
 app.use('/api/fileupload', require('./routes/api/fileupload'));
+app.use('/api/logout', require('./routes/api/logout'));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
