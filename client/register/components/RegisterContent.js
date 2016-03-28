@@ -14,11 +14,22 @@ export default class RegisterContent extends Component {
         .send({email: this.state.email, password: this.state.password})
         .set('Accept', 'application/json')
         .promise()
-        .then(function(res) {
+        .then((res) => {
           console.log(res);
           let resJson = JSON.parse(res.text);
-          //TODO (ellenemerson): parse response and handle valid/invalid registration
+          //TODO (ellenemerson): parse response and handle valid registration
         })
+        .catch((error) => {
+          let resJson = JSON.parse(error.res.text);
+          switch (error.status) {
+            case 400: // Email or password blank
+              console.log("Email or password blank");
+              break;
+            case 406: // Email already has account
+              console.log("Email already has account");
+              break;
+          }
+        });
   }
 
   setEmail = () => {
