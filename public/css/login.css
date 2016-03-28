@@ -28,8 +28,9 @@
   width: 150px;
 }
 
-.registerBtn {
+a > .registerBtn {
   background-color: #434343;
+  border-color: #434343;
   color: #ffffff;
   font-size: 16px;
   padding: 10px;
@@ -37,9 +38,13 @@
   width: 150px;
 }
 
-.registerBtn:hover {
+a > .registerBtn:hover {
   background-color: #232323;
-  border-color: #434343;
+  color: #ffffff;
+}
+
+a > .registerBtn:active:focus{
+  background-color: #232323;
   color: #ffffff;
 }
 
