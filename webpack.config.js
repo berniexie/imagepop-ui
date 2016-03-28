@@ -61,5 +61,13 @@ module.exports = {
       }
     ]
   },
-  debug: true
+  debug: true,
+  externals: {
+    Config: JSON.stringify(process.env.ENV === 'production' ?
+            {
+              apiHost: "https://imagepop.io"
+            } : {
+              apiHost: "http://localhost:8080"
+            }),
+  },
 };

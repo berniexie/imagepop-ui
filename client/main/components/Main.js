@@ -6,6 +6,7 @@ import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
+import Config from 'Config';
 
 export class ImageControlArea extends Component {
   handleSlider = (value) => {
@@ -165,7 +166,7 @@ export class MainPageContent extends Component {
     var files = [];
     raw_files.forEach(function(raw_file) {
       var promise = request
-        .post('/api/fileupload/start')
+        .post(Config.apiHost + '/api/fileupload/start')
         .set('Accept', 'application/json')
         .promise()
         .then(function(res) {
@@ -178,7 +179,7 @@ export class MainPageContent extends Component {
           });
 
           var promise = request
-            .post('/api/fileupload/upload')
+            .post(Config.apiHost + '/api/fileupload/upload')
             .set('Accept', 'application/json')
             .field('fileId', file.fileId)
             .attach('image', raw_file)
