@@ -16,7 +16,6 @@ export default class RegisterContent extends Component {
         .set('Accept', 'application/json')
         .promise()
         .then((res) => {
-          console.log(res);
           let resJson = JSON.parse(res.text);
           this.setState({failedText: ''});
           browserHistory.push('/main');
