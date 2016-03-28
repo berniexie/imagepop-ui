@@ -57,7 +57,8 @@ export default class LoginContent extends Component {
           <Button className="loginBtn" bsStyle="primary" onClick={this.onLogin}>LOGIN</Button>
           <Button href="/register" className="registerBtn">REGISTER</Button>
           <div className="failLabel">
-            {this.state.failedAttempt ? <p> Login Failed </p> : null}
+            {this.state.failedAttempt ? <p> Sorry, either your email or password was incorrect. 
+                Please try again. </p> : null}
           </div>
         </div>
       </PageTemplate>
