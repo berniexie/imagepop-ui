@@ -51,7 +51,7 @@ export default class LoginContent extends Component {
           <div className="clear"/>
           <p>Password:</p>
           <Input
-            type="text"
+            type="password"
             ref="password"
             placeholder="Enter password"
             onChange={this.setPassword}/>

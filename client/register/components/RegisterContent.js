@@ -59,14 +59,14 @@ export default class RegisterContent extends Component {
           <div className="clear"/>
           <p>Password:</p>
           <Input
-            type="text"
+            type="password"
             placeholder="Enter password"
             ref="password"
             onChange={this.setPassword}/>
           <div className="clear"/>
           <p>Verify Password:</p>
           <Input
-            type="text"
+            type="password"
             placeholder="Re-enter password"/>
           <div className="clear"/>
           <Button bsStyle="primary" className="registerBtn" onClick={this.handleClick}>REGISTER</Button>
