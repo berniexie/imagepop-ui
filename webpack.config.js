@@ -7,36 +7,6 @@ module.exports = {
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './client/index/index.js'
-    ],
-    demo: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/demo/demo.js'
-    ],
-    main: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/main/main.js'
-    ],
-    login: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/login/login.js'
-    ],
-    register: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/register/register.js'
-    ],
-    logout: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/logout/logout.js'
-    ],
-    about: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/about/about.js'
     ]
   },
   output: {
@@ -81,5 +51,8 @@ module.exports = {
       }
     ]
   },
-  debug: true
+  debug: true,
+  devServer: {
+      historyApiFallback: true
+  }
 };

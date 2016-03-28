@@ -19,33 +19,9 @@ app.use('/public', express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/index.html'));
 });
-
-/*app.get('/demo', function (req, res) {
-  res.sendFile(path.join(__dirname + '/views/demo.html'));
-});
-
-app.get('/main', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/main.html'));
-});
-
-app.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/login.html'));
-});
-
-app.get('/logout', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/logout.html'));
-});
-
-app.get('/register', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/register.html'));
-});
-
-app.get('/about', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/about.html'));
-});*/
 
 app.use('/api/login', require('./routes/api/login'));
 app.use('/api/register', require('./routes/api/register'));
