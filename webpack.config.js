@@ -6,17 +6,7 @@ module.exports = {
     index: [
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/index/index.js'
-    ],
-    demo: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/demo/demo.js'
-    ],
-    main: [
-      'babel-polyfill',
-      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-      './client/main/main.js'
+      './client/index.js'
     ]
   },
   output: {

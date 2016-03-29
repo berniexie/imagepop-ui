@@ -1,3 +1,5 @@
+@import './bootstrap.min.css';
+
 img {
   user-drag: none; 
   user-select: none;
@@ -25,33 +27,96 @@ img {
   border-color: #549ACB;
 }
 
-.modal-dialog {
+.demoModalWrapper {
   margin-top: 100px;
 }
 
-.modal-body {
+.demoModalBody {
   padding: 0;
 }
 
-.demoModal > .imageText {
+.arrow {
+  color: #ffffff;
+  border-radius: 50px;
+  font-size: 40px;
+  height: 60px;
+  position: absolute;
+  width: 60px;
+  z-index: 1;
+}
+
+.arrow:hover {
+  background-color: #5E5E5E;
+  opacity: transparent;
+}
+
+.leftArrow {
+  left: -100px;
+  top: 200px;
+}
+
+.rightArrow {
+  right: -100px;
+  top: 200px;
+}
+
+.btn-group>.btn:first-child {
+    margin-left: 20px;
+}
+
+.toggleButton{
+  border-radius: 3px;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.toggleButtonClicked{
   background-color: #549ACB;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.toggleButtonClicked:focus {
+    background-color: #549ACB;
+    color: #FFFFFF;
+}
+
+.disabled{
+  border-radius: 3px;
+  font-size: 18px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  position: absolute;
+  width: 100px;
+}
+
+.demoModal > .notAvailable {
+  background-color: #CB5454;
   border-radius: 3px;
   color: #FFFFFF;
   font-size: 18px;
   margin: 10px;
   padding: 5px;
   position: absolute;
-  width: 100px;
+  width: 300px;
 }
 
 .demoModal > img {
   width: 100%;
-}
-
-.demoModal > .pressLabel {
-  background-color: #549ACB;
-  color: #FFFFFF;
-  padding: 5px;
 }
 
 .demoModal > p {
@@ -85,14 +150,17 @@ img {
   color: black;
   display: inline-block;
   margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   width: 33%;
+  font-size: 14px;
 }
 
 .labelLeft {
   text-align: left;
+  font-size: 14px;
 }
 
 .labelRight {
   text-align: right;
+  font-size: 14px;
 }

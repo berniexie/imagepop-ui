@@ -2,6 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import styles from '../../../public/css/demo.css';
 import Slider from 'react-slider';
+import {ButtonGroup, Button} from 'react-bootstrap';
 
 export default class DemoModal extends React.Component{
   
@@ -21,42 +22,72 @@ export default class DemoModal extends React.Component{
     beforeImageSrc: '',
   };
 
-  state = {pressed:true, after:this.props.medImageSrc};
+  state = {pressed:true, after:this.props.medImageSrc, available:true, value:2};
 
-  //will display original when the picture in the modal is pressed down
-  handleClick = () => {
-    this.setState({pressed: !this.state.pressed})
-  };
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.medImageSrc == '') {
+      this.setState({
+        after: nextProps.medImageSrc,
+        value: 2,
+        available: false
+      });
+    } else {
+      this.setState({
+        after: nextProps.medImageSrc,
+        value: 2,
+        available: true
+      });
+    }
+  }
 
   handleSlider = (value) => {
     switch (value) {
       case 1:
-        this.setState({after: this.props.lowImageSrc});
+        if (this.props.lowImageSrc == '') { 
+          this.setState({available: false, pressed:true, value: 1}); 
+        } else {
+          this.setState({after: this.props.lowImageSrc, available: true, 
+            pressed:true, value: 1}); 
+        }
         break;
       case 2:
-        this.setState({after: this.props.medImageSrc});
+        if (this.props.medImageSrc == '') {
+          this.setState({available: false, pressed:true, value: 2}); 
+        } else {
+          this.setState({after: this.props.medImageSrc, available: true, 
+            pressed:true, value: 2});
+        }
         break;
       default:
-        this.setState({after: this.props.highImageSrc});
+        if (this.props.highImageSrc == '') {
+          this.setState({available: false, pressed:true, value: 3}); 
+        } else {
+          this.setState({after: this.props.highImageSrc, available: true, 
+            pressed:true, value: 3});
+        }
         break;
     }
   };
 
+  showOriginal = () => {
+    this.setState({pressed: false});
+  };
+
+  showPopped = () => {
+    this.setState({pressed: true});
+  };
+
   render() {
     const {beforeImageSrc} = this.props;
-    var imageText = this.state.pressed ? 'after' : 'before';
     var pic = this.state.pressed ? this.state.after : beforeImageSrc;
     return (
       <div className='demoModal'>
-        <div className='imageText'>{imageText}</div>
-        <img src={pic} onMouseDown={this.handleClick}
-            onMouseUp={this.handleClick}></img>
-        <div className='pressLabel'>Press and hold the image to see it before 
-            it was popped</div>
+        {this.state.available ? '' : <div className='notAvailable'>Image Not Available</div>}
+        <img src={pic}></img>
         <h3>Level of Contrast</h3>
         <p>Adjust the amount of edge contrast using the indicators below.</p>
         <div className='sliderWrapper'>
-          <Slider  defaultValue={2} min={1} max={3} step={1} withBars 
+          <Slider value={this.state.value} defaultValue={2} min={1} max={3} step={1} withBars 
               onChange={this.handleSlider}>
             <div className='handle'/>
           </Slider>
@@ -64,6 +95,10 @@ export default class DemoModal extends React.Component{
           <div className='label'>med</div>
           <div className='label labelRight'>high</div>
         </div>
+        <ButtonGroup>
+          <Button className={this.state.available ? (this.state.pressed ? 'toggleButton' : 'toggleButtonClicked') : 'disabled'} onClick={this.showOriginal} bsSize='large'>Original</Button>
+          <Button className={this.state.available ? (this.state.pressed ? 'toggleButtonClicked' : 'toggleButton') : 'disabled'} onClick={this.showPopped} bsSize='large'>Popped</Button>
+        </ButtonGroup>
       </div>
     );
   }

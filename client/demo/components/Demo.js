@@ -1,8 +1,8 @@
 //Demo page - will show the before and after effect of popping an image
 import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
-import PageTemplate from '../shared/components/PageTemplate.js';
-import DemoPageContent from './components/DemoPageContent.js';
+import PageTemplate from '../../shared/components/PageTemplate.js';
+import DemoPageContent from './DemoPageContent.js';
 
 //images to be loaded on demo page
 var images = [[{smallImgSrc: "./img/beach-small.png",
@@ -51,11 +51,14 @@ var images = [[{smallImgSrc: "./img/beach-small.png",
                 highImgSrc: "",
                 befImgSrc: "./img/waves-before.png"}]];
 
-ReactDOM.render(
-    <PageTemplate title="Gallery" 
-        subtitle="Select an image below to see what image|pop can do." >
-      <DemoPageContent demoImages={images}/>
-    </PageTemplate>,
-    document.getElementById('app'),
-);
+export default class Demo extends Component {
+  render () {
+    return (
+        <PageTemplate title="Gallery" 
+            subtitle="Select an image below to see what image|pop can do." >
+          <DemoPageContent demoImages={images}/>
+        </PageTemplate>,
+    );
+  }
+}
 

@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var fs = require('fs');
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config');
 var compiler = webpack(webpackConfig);
@@ -18,19 +19,14 @@ app.use('/public', express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
+app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
-app.get('/demo', function (req, res) {
-  res.sendFile(path.join(__dirname + '/views/demo.html'));
-});
-
-app.get('/main', function(req, res) {
-  res.sendFile(path.join(__dirname + '/views/main.html'));
-});
-
+app.use('/api/login', require('./routes/api/login'));
+app.use('/api/register', require('./routes/api/register'));
 app.use('/api/fileupload', require('./routes/api/fileupload'));
+app.use('/api/logout', require('./routes/api/logout'));
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
