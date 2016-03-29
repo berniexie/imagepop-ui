@@ -6,6 +6,7 @@ import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
+import Config from 'Config';
 
 export class ImageControlArea extends Component {
   handleSlider = (value) => {
@@ -67,19 +68,26 @@ export class SelectedImageArea extends Component {
 export class FileListElement extends Component {
   constructor(props) {
     super(props);
-    this.state = {selected: false};
+    this.state = {
+      selected: false,
+    };
   }
 
   static propTypes = {
     file: PropTypes.object,
     selected: PropTypes.bool,
+    uploaded: PropTypes.bool,
+    progress: PropTypes.number,
   };
 
+
   onListElementClick = (file) => {
-    this.props.onListElementClick(file);
-    this.setState({
-      selected: true
-    });
+    if (this.props.uploaded) {
+      this.props.onListElementClick(file);
+      this.setState({
+        selected: true
+      });
+    }
   };
 
   render = () => {
@@ -88,11 +96,17 @@ export class FileListElement extends Component {
     if (selected) {
       className += ' selected';
     }
+    if (!this.props.uploaded) {
+      className += ' uploading';
+    }
     return (
       <Row>
         <Col sm={12}>
           <div className={className}
                onClick={this.onListElementClick.bind(this, file)}>
+            {!this.props.uploaded ?
+            <div className='uploadingOverlay' style={{opacity: 0.5 * (1 - this.props.progress)}}>
+            </div> : null }
             <img className='listElementIcon' src={file.preview} />
             <div className='listElementInfo'>
               <div className='listElementName'>{file.name}</div>
@@ -134,7 +148,9 @@ export class ImageListArea extends Component {
               <FileListElement file={file} key={file.fileId}
                   selected={this.props.selectedFile != null &&
                     this.props.selectedFile.fileId == file.fileId}
-                    onListElementClick={onListElementClick} />)
+                    onListElementClick={onListElementClick}
+                    uploaded={file.progress == 1}
+                    progress={file.progress} />)
           }
         </div>
       </div>
@@ -151,6 +167,7 @@ export class File {
     this.fileId = fileId;
     this.status = 'UPLOADING';
     this.uploadedUrl = null;
+    this.progress = 0;
   }
 }
 
@@ -165,7 +182,7 @@ export class MainPageContent extends Component {
     var files = [];
     raw_files.forEach(function(raw_file) {
       var promise = request
-        .post('/api/fileupload/start')
+        .post(Config.apiHost + '/com/imagepop/fileupload/start')
         .set('Accept', 'application/json')
         .promise()
         .then(function(res) {
@@ -178,16 +195,20 @@ export class MainPageContent extends Component {
           });
 
           var promise = request
-            .post('/api/fileupload/upload')
+            .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
             .field('fileId', file.fileId)
             .attach('image', raw_file)
             .on('progress', function (p) {
-              // TODO(amohan95): Get progress update from backend
+                file.progress = p.loaded / p.total;
+                self.setState(function(prevState, currProps) {
+                  return {files: prevState.files};
+                });
             })
             .promise()
             .then(function(res) {
               // TODO(amohan95): Fill this in once API is finalized
+
             });
         });
     }, this);
