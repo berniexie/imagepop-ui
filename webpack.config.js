@@ -12,6 +12,11 @@ module.exports = {
       'babel-polyfill',
       'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       './client/demo/demo.js'
+    ],
+    main: [
+      'babel-polyfill',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
+      './client/main/main.js'
     ]
   },
   output: {
@@ -56,5 +61,13 @@ module.exports = {
       }
     ]
   },
-  debug: true
+  debug: true,
+  externals: {
+    Config: JSON.stringify(process.env.ENV === 'production' ?
+            {
+              apiHost: "https://imagepop.io"
+            } : {
+              apiHost: "http://localhost:8080"
+            }),
+  },
 };
