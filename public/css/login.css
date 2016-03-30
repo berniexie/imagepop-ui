@@ -4,13 +4,14 @@
   max-width: 600px;
 }
 
-.loginWrapper > p {
+.loginWrapper > .form-group > label {
   float: left;
-  margin: 5px;
+  margin: 5px 0;
+  text-align: left;
+  width: 20%;
 }
 
 .loginWrapper > div > input {
-  float: right;
   margin-bottom: 20px;
   width: 80%;
 }
