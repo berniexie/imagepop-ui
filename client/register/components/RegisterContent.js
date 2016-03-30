@@ -33,42 +33,36 @@ export default class RegisterContent extends Component {
         });
   }
 
-  setEmail = () => {
-    this.setState({email:this.refs.email.getValue()});
+  setEmail = (e) => {
+    this.setState({email:e.target.value});
   }
 
-  setPassword = () => {
-    this.setState({password:this.refs.password.getValue()});
+  setPassword = (e) => {
+    this.setState({password:e.target.value});
   }
 
   render(){
     return(
       <PageTemplate title="Register" subtitle="Register for an account.">
         <div className="registerWrapper">
-          <p>Name:</p>
           <Input
             type="text"
+            label="Name:"
             placeholder="Enter name"/>
-          <div className="clear"/>
-          <p>Email:</p>
           <Input
             type="text"
+            label="Email:"
             placeholder="Enter email"
-            ref="email"
             onChange={this.setEmail}/>
-          <div className="clear"/>
-          <p>Password:</p>
           <Input
             type="password"
+            label="Password:"
             placeholder="Enter password"
-            ref="password"
             onChange={this.setPassword}/>
-          <div className="clear"/>
-          <p>Verify Password:</p>
           <Input
             type="password"
+            label="Verify Password:"
             placeholder="Re-enter password"/>
-          <div className="clear"/>
           <Button bsStyle="primary" className="registerBtn" onClick={this.handleClick}>REGISTER</Button>
           <div className="failLabel"> {this.state.failedText}</div>
         </div>
