@@ -1,6 +1,9 @@
+@import './bootstrap.min.css';
+
 .navbar {
   background-color: #5E5E5E;
   border: 0;
+  border-radius: 0;
   color: #ffffff;
   font-size: 18px;
   margin: 0;

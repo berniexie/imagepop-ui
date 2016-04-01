@@ -1,0 +1,35 @@
+.registerWrapper {
+  font-size: 20px;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.registerWrapper > .form-group > label {
+  float: left;
+  margin: 5px 0;
+  text-align: left;
+  width: 30%;
+}
+
+.registerWrapper > div > input {
+  margin-bottom: 20px;
+  width: 70%;
+}
+
+.clear {
+  clear: both;
+}
+
+.registerBtn {
+  background-color: #549ACB;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px 40px 10px;
+  width: 150px;
+}
+
+.failLabel {
+  color: #F70521;
+  font-size: 20px;
+}

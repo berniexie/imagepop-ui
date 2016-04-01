@@ -1,0 +1,54 @@
+.loginWrapper {
+  font-size: 20px;
+  margin: 50px auto;
+  max-width: 600px;
+}
+
+.loginWrapper > .form-group > label {
+  float: left;
+  margin: 5px 0;
+  text-align: left;
+  width: 20%;
+}
+
+.loginWrapper > div > input {
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.clear {
+  clear: both;
+}
+
+.loginBtn {
+  background-color: #549ACB;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px;
+  width: 150px;
+}
+
+a > .registerBtn {
+  background-color: #434343;
+  border-color: #434343;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px;
+  margin: 50px 10px;
+  width: 150px;
+}
+
+a > .registerBtn:hover {
+  background-color: #232323;
+  color: #ffffff;
+}
+
+a > .registerBtn:active:focus{
+  background-color: #232323;
+  color: #ffffff;
+}
+
+.failLabel {
+  color: #F70521;
+}

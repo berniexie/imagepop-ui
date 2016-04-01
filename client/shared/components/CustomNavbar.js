@@ -1,25 +1,40 @@
 //Reusable component for navbar on all pages
 
 import React, { PropTypes, Component } from 'react';
+import { Link } from 'react-router'
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import styles from '../../../public/css/navbar.css';
+import PubSub from 'pubsub-js';
 
 export default class CustomNavbar extends Component {
+  state = {loggedIn: false, pubsubtoken: ''};
+
+  componentDidMount = () =>{
+    this.setState({pubsubtoken: PubSub.subscribe('LOGIN', (topic, status) => {
+      this.setState({loggedIn: status});
+    })});
+  }
+
+  componentWillUnmount = () =>{
+    PubSub.unsubscribe(this.state.pubsubtoken);
+  }
+
   render() {
     return (
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">image | pop</a>
+            <Link to="/">image | pop</Link>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullRight>
-            <NavItem eventKey={1} href="/about">about</NavItem>
-            <NavItem eventKey={2} href="/demo">gallery</NavItem>
-            <NavItem eventKey={3} href="/main">upload</NavItem>
-            <NavItem eventKey={4} href="/login">login</NavItem>
+            <li><Link to="/about">about</Link></li>
+            <li><Link to="/demo">gallery</Link></li>
+            <li><Link to="/main">upload</Link></li>
+            { !this.state.loggedIn ? <li><Link to="/login">login</Link></li> : 
+                <li><Link to="/logout">logout</Link></li> }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
