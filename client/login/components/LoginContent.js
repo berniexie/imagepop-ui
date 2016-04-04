@@ -8,6 +8,7 @@ import styles from '../../../public/css/login.css';
 import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 export default class LoginContent extends Component {
   state = {email: '', password: '', failedAttempt: false};
@@ -42,6 +43,10 @@ export default class LoginContent extends Component {
   responseFacebook = (response) => {
     console.log(response);
   }
+  
+  responseGoogle = (response) => {
+    console.log(response);
+  }
 
   render(){
     return(
@@ -68,6 +73,10 @@ export default class LoginContent extends Component {
             autoLoad={true}
             callback={this.responseFacebook}
             icon="fa-facebook" />
+          <GoogleLogin
+            clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
+            callback={this.responseGoogle}
+            offline={false} />
         </div>
       </PageTemplate>
     );
