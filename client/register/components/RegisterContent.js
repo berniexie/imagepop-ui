@@ -5,6 +5,8 @@ import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/register.css';
 import request from 'superagent-bluebird-promise';
 import {browserHistory} from 'react-router';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 export default class RegisterContent extends Component {
   state = {email: '', password: '', failedText: ''};
@@ -41,6 +43,14 @@ export default class RegisterContent extends Component {
     this.setState({password:e.target.value});
   }
 
+  responseFacebook = (response) => {
+    console.log(response);
+  }
+  
+  responseGoogle = (response) => {
+    console.log(response);
+  }
+
   render(){
     return(
       <PageTemplate title="Register" subtitle="Register for an account.">
@@ -65,6 +75,16 @@ export default class RegisterContent extends Component {
             placeholder="Re-enter password"/>
           <Button bsStyle="primary" className="registerBtn" onClick={this.handleClick}>REGISTER</Button>
           <div className="failLabel"> {this.state.failedText}</div>
+          <FacebookLogin
+            appId="1118444891540927"
+            autoLoad={true}
+            callback={this.responseFacebook}
+            cssClass="login-btn fb-btn" />
+          <GoogleLogin
+            clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
+            callback={this.responseGoogle}
+            offline={false}
+            cssClass="login-btn google-btn" />
         </div>
       </PageTemplate>
     );

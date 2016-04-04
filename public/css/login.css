@@ -1,6 +1,6 @@
 .loginWrapper {
   font-size: 20px;
-  margin: 50px auto;
+  margin: 50px auto 10px auto;
   max-width: 600px;
 }
 
@@ -25,7 +25,7 @@
   color: #ffffff;
   font-size: 16px;
   padding: 10px;
-  margin: 50px 10px;
+  margin: 30px 10px;
   width: 150px;
 }
 
@@ -35,7 +35,7 @@ a > .registerBtn {
   color: #ffffff;
   font-size: 16px;
   padding: 10px;
-  margin: 50px 10px;
+  margin: 30px 10px;
   width: 150px;
 }
 
@@ -51,4 +51,21 @@ a > .registerBtn:active:focus{
 
 .failLabel {
   color: #F70521;
+}
+
+.login-btn {
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  margin: 10px;
+  padding: 12px;
+  width: 320px;
+}
+
+.fb-btn {
+  background-color: #3B5998;
+}
+
+.google-btn {
+  background-color: #dd4b39;
 }

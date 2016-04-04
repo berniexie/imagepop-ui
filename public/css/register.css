@@ -20,16 +20,16 @@
   clear: both;
 }
 
-.registerBtn {
+.registerWrapper > .registerBtn {
   background-color: #549ACB;
   color: #ffffff;
   font-size: 16px;
   padding: 10px;
-  margin: 50px 10px 40px 10px;
+  margin: 20px 10px;
   width: 150px;
 }
 
-.failLabel {
+.registerWrapper > .failLabel {
   color: #F70521;
   font-size: 20px;
 }

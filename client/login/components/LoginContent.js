@@ -51,32 +51,31 @@ export default class LoginContent extends Component {
   render(){
     return(
       <PageTemplate title="Login" subtitle= "Login to your account.">
-        <div>
-          <div className="loginWrapper">
-            <Input 
-              type="text"
-              placeholder="Enter email"
-              label="Email:"
-              onChange={this.setEmail}/>
-            <Input
-              type="password"
-              placeholder="Enter password"
-              label="Password:"
-              onChange={this.setPassword}/>
-            <Button className="loginBtn" bsStyle="primary" onClick={this.onLogin}>LOGIN</Button>
-            <Link to="/register"><Button className="registerBtn">REGISTER</Button></Link>
-            {this.state.failedAttempt ? <div className="failLabel"> Sorry, either your email or password was incorrect. 
-                Please try again. </div> : null}
-          </div>
-           <FacebookLogin
-            appId="1118444891540927"
-            autoLoad={true}
-            callback={this.responseFacebook}
-            icon="fa-facebook" />
-          <GoogleLogin
-            clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
-            callback={this.responseGoogle}
-            offline={false} />
+        <div className="loginWrapper">
+          <Input 
+            type="text"
+            placeholder="Enter email"
+            label="Email:"
+            onChange={this.setEmail}/>
+          <Input
+            type="password"
+            placeholder="Enter password"
+            label="Password:"
+            onChange={this.setPassword}/>
+          <Button className="loginBtn" bsStyle="primary" onClick={this.onLogin}>LOGIN</Button>
+          <Link to="/register"><Button className="registerBtn">REGISTER</Button></Link>
+          {this.state.failedAttempt ? <div className="failLabel"> Sorry, either your email or password was incorrect. 
+              Please try again. </div> : null}
+         <FacebookLogin
+          appId="1118444891540927"
+          autoLoad={true}
+          callback={this.responseFacebook}
+          cssClass="login-btn fb-btn" />
+        <GoogleLogin
+          clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
+          callback={this.responseGoogle}
+          offline={false}
+          cssClass="login-btn google-btn" />
         </div>
       </PageTemplate>
     );
