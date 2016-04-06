@@ -2,18 +2,13 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Dropzone from 'react-dropzone';
 import styles from '../../../public/css/main.css';
+import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
 import Config from 'Config';
-import Slick from 'react-slick';
-import Slider from 'react-slider';
 
 export class ImageControlArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleSlider = (value) => {
     console.log(value);
   };
@@ -33,6 +28,7 @@ export class ImageControlArea extends Component {
       </div>
     ) : (
       <div className='imageControlArea'>
+        <img className='fullImageView' src={file.preview} />
         <div className='sliderWrapper'>
           <Slider defaultValue={2} min={1} max={3} step={1} withBars
               onChange={this.handleSlider}>
@@ -173,72 +169,17 @@ export class File {
     this.uploadedUrl = null;
     this.progress = 0;
   }
-};
-
-export class FileSliderElement extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  static propTypes = {
-    file: React.PropTypes.object
-  }
-
-  render = () => {
-    return (
-        <div {...this.props}>
-          <img src={this.props.file.preview}/>
-        </div>
-      );
-  }
-
-};
-
-export class ImageSliderArea extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  static propTypes = {
-    files: React.PropTypes.array,
-    onSliderCenterChange: React.PropTypes.func,
-  }
-
-  onSliderCenterChange = (i) => {
-   this.props.onSliderCenterChange(this.props.files[i]);
-  }
-
-  render = () => {
-    var settings = {
-      infinite: false,
-      variableWidth: true,
-      className: 'imageSlider',
-      slidesToShow: 1,
-      draggable: false,
-      centerMode: true,
-      afterChange: this.onSliderCenterChange,
-    };
-    return this.props.files.length > 0 ? (
-      <Slick {...settings}>
-        {
-          this.props.files.map(
-            (f) =>
-              (<FileSliderElement file={f} key={f.fileId}/>)
-          )
-        }
-      </Slick>
-      ) : (<div></div>);
-  }
-};
+}
 
 export class MainPageContent extends Component {
   constructor(props) {
     super(props);
-    this.state = {files: [], selectedFile: null, uploadProgress: [], totalProgress: [0, 0]}
+    this.state = {files: [], selectedFile: null}
   }
 
   onDrop = (raw_files) => {
     var self = this;
+    var files = [];
     raw_files.forEach(function(raw_file) {
       var promise = request
         .post(Config.apiHost + '/com/imagepop/fileupload/start')
@@ -247,6 +188,11 @@ export class MainPageContent extends Component {
         .then(function(res) {
           let resJson = JSON.parse(res.text);
           let file = new File(raw_file, resJson.fileId);
+          files.push(file);
+
+          self.setState(function(prevState, currProps) {
+            return {files: prevState.files.concat(files)};
+          });
 
           var promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
@@ -254,43 +200,19 @@ export class MainPageContent extends Component {
             .field('fileId', file.fileId)
             .attach('image', raw_file)
             .on('progress', function (p) {
-                console.log(p);
-                if (p.target instanceof XMLHttpRequestUpload) {
-                  var uploadProgress = self.state.uploadProgress.slice();
-                  var totalProgress = self.state.totalProgress.slice();
-                  if (!self.state.uploadProgress[file.fileId]) {
-                    var uploadProgress = self.state.uploadProgress.slice();
-                    var totalProgress = self.state.totalProgress.slice();
-                    uploadProgress[file.fileId] = [p.loaded, p.total];
-                    totalProgress[0] += p.loaded;
-                    totalProgress[1] += p.total;
-                  } else {
-                    totalProgress[0] = totalProgress[0] - uploadProgress[file.fileId][0] + p.loaded;
-                    uploadProgress[file.fileId][0] = p.loaded;
-                  }
-                  self.setState({
-                    uploadProgress: uploadProgress,
-                    totalProgress: totalProgress,
-                  });
-                }
+                file.progress = p.loaded / p.total;
+                self.setState(function(prevState, currProps) {
+                  return {files: prevState.files};
+                });
             })
             .promise()
             .then(function(res) {
-                var files = self.state.files.slice();
-                var filesLen = files.length;
-                files.push(file);
-                self.setState({files: files});
-                if (filesLen == 0) {
-                  self.onSliderCenterChange(0);
-                }
+              // TODO(amohan95): Fill this in once API is finalized
+
             });
         });
     }, this);
   };
-
-  onSliderCenterChange = (file) => {
-    this.setState({selectedFile: file});
-  }
 
   onListElementClick = (file) => {
     this.setState(function(prevState, currProps) {
@@ -303,41 +225,24 @@ export class MainPageContent extends Component {
   };
 
   render = () => {
-    var progress = this.state.totalProgress[0] / this.state.totalProgress[1] * 100;
     return (
       <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
                 accept={"image/gif,image/jpeg,image/png"}>
-        <div className='dropzoneOverlay'>
-          <h1 className='dropzoneOverlayText'>
-            Drop File to Upload!
-          </h1>
-        </div>
         <Row>
-          <Col sm={12}>
-            <Button className='uploadButton' onClick={this.onOpenClick}>
-              Upload
-            </Button>
-            <br/>
-            {isNaN(progress) || progress == 100 ? <div style={{height: '32px'}}></div> :
-              (<div className='progressContainer'>
-                <div className='progressBar' style={{width: progress + '%'}}>
-                  <strong>{Math.round(progress)}%</strong>
-                </div>
-              </div>)}
+          <div className='dropzoneOverlay'>
+            <h1 className='dropzoneOverlayText'>
+              Drop File to Upload!
+            </h1>
+          </div>
+          <Col sm={4}>
+            <ImageListArea selectedFile={this.state.selectedFile} files={this.state.files}
+                onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
+          </Col>
+          <Col sm={8}>
+            <SelectedImageArea file={this.state.selectedFile}/>
           </Col>
         </Row>
-        <Row>
-          <Col sm={12}>
-            <ImageSliderArea files={this.state.files} onSliderCenterChange={this.onSliderCenterChange}/>
-          </Col>
-        </Row>
-        {this.state.selectedFile != null ?
-        (<Row>
-          <Col sm={12}>
-            <ImageControlArea file={this.state.selectedFile}/>
-          </Col>
-        </Row>) : null}
       </Dropzone>
     );
   };
