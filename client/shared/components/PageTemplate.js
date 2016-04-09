@@ -22,8 +22,8 @@ export default class PageTemplate extends Component {
       <div>
         <CustomNavbar/>
         <div className='pageContent'>
-          <h1>{title}</h1>
-          <p className='subtitle'>{subtitle}</p>
+          {title != '' ? (<h1>{title}</h1>) : null}
+          {subtitle != '' ? (<p className='subtitle'>{subtitle}</p>) : null}
           {children}
         </div>
       </div>
