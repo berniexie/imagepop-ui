@@ -39,14 +39,6 @@ export default class LoginContent extends Component {
     this.setState({password:e.target.value});
   }
 
-  responseFacebook = (response) => {
-    console.log(response);
-  }
-  
-  responseGoogle = (response) => {
-    console.log(response);
-  }
-
   render(){
     return(
       <PageTemplate title="Login" subtitle= "Login to your account.">

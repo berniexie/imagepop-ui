@@ -42,14 +42,6 @@ export default class RegisterContent extends Component {
     this.setState({password:e.target.value});
   }
 
-  responseFacebook = (response) => {
-    console.log(response);
-  }
-  
-  responseGoogle = (response) => {
-    console.log(response);
-  }
-
   render(){
     return(
       <PageTemplate title="Register" subtitle="Register for an account.">
