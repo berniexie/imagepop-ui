@@ -4,6 +4,7 @@ import { Input, Button } from 'react-bootstrap';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/logout.css';
 import request from 'superagent-bluebird-promise';
+import Config from 'Config';
 
 export default class LogoutContent extends Component {
 
@@ -11,17 +12,16 @@ export default class LogoutContent extends Component {
 
   componentDidMount = () =>{
     var promise = request
-      .post('/api/logout')
+      .post(Config.apiHost + '/api/users/logout')
       .set('Accept', 'application/json')
       .promise()
       .then((res) =>{
-        let resJson = JSON.parse(res.text);
+        console.log(res);
         PubSub.publish('LOGIN', false);
         this.setState({failedAttempt: false});
       })
       .catch((error) =>{
-        let resJson = JSON.parse(error.res.text);
-        console.log(resJson.message);
+        console.log(error);
         this.setState({failedAttempt: true});
       });
   }

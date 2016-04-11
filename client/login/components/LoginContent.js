@@ -8,25 +8,25 @@ import styles from '../../../public/css/login.css';
 import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 import SocialLogins from '../../shared/components/SocialLogins.js';
+import Config from 'Config';
 
 export default class LoginContent extends Component {
   state = {email: '', password: '', failedAttempt: false};
 
   onLogin = () => {
     var promise = request
-      .post('/api/login')
+      .post(Config.apiHost + '/api/users/login')
       .set('Accept', 'application/json')
       .send({email: this.state.email, password: this.state.password})
       .promise()
       .then((res) =>{
-        let resJson = JSON.parse(res.text);
+        console.log(res);
         PubSub.publish('LOGIN', true);
         this.setState({failedAttempt: false});
         browserHistory.push('/main');
       })
       .catch((error) =>{
-        let resJson = JSON.parse(error.res.text);
-        console.log(resJson.message);
+        console.log(res);
         this.setState({failedAttempt: true});
       });
   }
@@ -37,14 +37,6 @@ export default class LoginContent extends Component {
 
   setPassword = (e) => {
     this.setState({password:e.target.value});
-  }
-
-  responseFacebook = (response) => {
-    console.log(response);
-  }
-  
-  responseGoogle = (response) => {
-    console.log(response);
   }
 
   render(){

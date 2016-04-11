@@ -6,23 +6,26 @@ import styles from '../../../public/css/register.css';
 import request from 'superagent-bluebird-promise';
 import {browserHistory} from 'react-router';
 import SocialLogins from '../../shared/components/SocialLogins.js';
+import Config from 'Config';
 
 export default class RegisterContent extends Component {
-  state = {email: '', password: '', failedText: ''};
+  state = {email: '', password: '', failedText: '', firstName:'', lastName:''};
 
   handleClick = () => {
+    console.log(Config.apiHost + '/api/users/register');
     var promise = request
-        .post('/api/register/')
-        .send({email: this.state.email, password: this.state.password})
+        .post(Config.apiHost + '/api/users/register')
+        .send({email: this.state.email, password: this.state.password,
+              firstName: this.state.firstName, lastName: this.state.lastName})
         .set('Accept', 'application/json')
         .promise()
         .then((res) => {
-          let resJson = JSON.parse(res.text);
+          console.log(res);
           this.setState({failedText: ''});
           browserHistory.push('/main');
         })
         .catch((error) => {
-          let resJson = JSON.parse(error.res.text);
+          console.log(error);
           switch (error.status) {
             case 400: // Email or password blank
               this.setState({failedText: "Please make sure to complete all fields."});
@@ -38,16 +41,16 @@ export default class RegisterContent extends Component {
     this.setState({email:e.target.value});
   }
 
-  setPassword = (e) => {
-    this.setState({password:e.target.value});
+  setPassword = (p) => {
+    this.setState({password:p.target.value});
   }
 
-  responseFacebook = (response) => {
-    console.log(response);
+  setFirstName = (n) => {
+    this.setState({firstName:n.target.value});
   }
-  
-  responseGoogle = (response) => {
-    console.log(response);
+
+  setLastName = (n) => {
+    this.setState({lastName:n.target.value});
   }
 
   render(){
@@ -56,8 +59,14 @@ export default class RegisterContent extends Component {
         <div className="registerWrapper">
           <Input
             type="text"
-            label="Name:"
-            placeholder="Enter name"/>
+            label="First Name:"
+            placeholder="Enter first name"
+            onChange={this.setFirstName}/>
+          <Input
+            type="text"
+            label="Last Name:"
+            placeholder="Enter last name"
+            onChange={this.setLastName}/>
           <Input
             type="text"
             label="Email:"

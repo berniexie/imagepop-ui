@@ -5,7 +5,14 @@ import GoogleLogin from 'react-google-login';
 import styles from '../../../public/css/socialLogins.css';
 
 export default class SocialLogins extends Component {
-
+  responseFacebook = (response) => {
+    console.log(response);
+  }
+  
+  responseGoogle = (response) => {
+    console.log(response);
+  }
+  
   render() {
     return (
       <div>
