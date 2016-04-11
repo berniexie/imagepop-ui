@@ -7,8 +7,7 @@ import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/login.css';
 import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
-import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
+import SocialLogins from '../../shared/components/SocialLogins.js';
 
 export default class LoginContent extends Component {
   state = {email: '', password: '', failedAttempt: false};
@@ -66,16 +65,7 @@ export default class LoginContent extends Component {
           <Link to="/register"><Button className="registerBtn">REGISTER</Button></Link>
           {this.state.failedAttempt ? <div className="failLabel"> Sorry, either your email or password was incorrect. 
               Please try again. </div> : null}
-         <FacebookLogin
-          appId="1118444891540927"
-          autoLoad={true}
-          callback={this.responseFacebook}
-          cssClass="login-btn fb-btn" />
-        <GoogleLogin
-          clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
-          callback={this.responseGoogle}
-          offline={false}
-          cssClass="login-btn google-btn" />
+          <SocialLogins />
         </div>
       </PageTemplate>
     );

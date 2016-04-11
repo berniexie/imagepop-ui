@@ -52,20 +52,3 @@ a > .registerBtn:active:focus{
 .failLabel {
   color: #F70521;
 }
-
-.login-btn {
-  border: none;
-  border-radius: 5px;
-  color: #ffffff;
-  margin: 10px;
-  padding: 12px;
-  width: 320px;
-}
-
-.fb-btn {
-  background-color: #3B5998;
-}
-
-.google-btn {
-  background-color: #dd4b39;
-}
