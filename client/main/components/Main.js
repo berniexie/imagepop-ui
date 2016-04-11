@@ -105,7 +105,7 @@ export class FileListElement extends Component {
       <Row>
         <Col sm={12}>
           <div className={className}
-               onClick={this.onListElementClick.bind(this, file)}>
+               onClick={() => this.onListElementClick(file)}>
             {!this.props.uploaded ?
             <div className='uploadingOverlay' style={{opacity: 0.5 * (1 - this.props.progress)}}>
             </div> : null }
@@ -341,32 +341,31 @@ export class MainPageContent extends Component {
   }
 
   onDrop = (raw_files) => {
-    var self = this;
-    var files = [];
-    raw_files.forEach(function(raw_file) {
-      var promise = request
+    let files = [];
+    raw_files.forEach((raw_file) => {
+      let promise = request
         .post(Config.apiHost + '/com/imagepop/fileupload/start')
         .set('Accept', 'application/json')
         .promise()
-        .then(function(res) {
+        .then((res) => {
           let resJson = JSON.parse(res.text);
           let file = new File(raw_file, resJson.fileId);
           file.progress = 1;
-          self.setState({files: self.state.files.concat([file])});
+          this.setState({files: this.state.files.concat([file])});
 
-          var promise = request
+          let promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
             .field('fileId', file.fileId)
             .attach('image', raw_file)
-            .on('progress', function (p) {
+            .on('progress', (p) => {
                 /*file.progress = p.loaded / p.total;
                 self.setState(function(prevState, currProps) {
                   return {files: prevState.files};
                 });*/
             })
             .promise()
-            .then(function(res) {
+            .then((res) => {
               // TODO(amohan95): Fill this in once API is finalized
 
             });
