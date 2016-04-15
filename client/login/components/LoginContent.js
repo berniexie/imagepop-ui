@@ -17,6 +17,7 @@ export default class LoginContent extends Component {
     var promise = request
       .post(Config.apiHost + '/api/users/login')
       .set('Accept', 'application/json')
+      .set('Content-Type', 'application/x-www-form-urlencoded')
       .send({email: this.state.email, password: this.state.password})
       .promise()
       .then((res) =>{
@@ -26,7 +27,7 @@ export default class LoginContent extends Component {
         browserHistory.push('/main');
       })
       .catch((error) =>{
-        console.log(res);
+        console.log(error);
         this.setState({failedAttempt: true});
       });
   }
