@@ -5,7 +5,6 @@ import { Link } from 'react-router';
 import request from 'superagent-bluebird-promise';
 import PageTemplate from '../../shared/components/PageTemplate.js';
 import styles from '../../../public/css/login.css';
-import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 import SocialLogins from '../../shared/components/SocialLogins.js';
 import Config from 'Config';
@@ -25,7 +24,6 @@ export default class LoginContent extends Component {
         console.log(res);
         let resJson = JSON.parse(res.text);
         Auth.setToken(resJson.token);
-        PubSub.publish('LOGIN', true);
         this.setState({failedAttempt: false});
         browserHistory.push('/main');
       })

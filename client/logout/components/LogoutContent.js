@@ -22,7 +22,6 @@ export default class LogoutContent extends Component {
       .promise()
       .then((res) =>{
         console.log(res);
-        PubSub.publish('LOGIN', false);
         this.setState({failedAttempt: false});
       })
       .catch((error) =>{

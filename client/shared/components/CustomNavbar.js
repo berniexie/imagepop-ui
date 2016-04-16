@@ -4,21 +4,10 @@ import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router'
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import styles from '../../../public/css/navbar.css';
-import PubSub from 'pubsub-js';
 import {Auth} from '../../login/auth.js';
 
 export default class CustomNavbar extends Component {
   state = {loggedIn: false, pubsubtoken: ''};
-
-  componentDidMount = () =>{
-    this.setState({pubsubtoken: PubSub.subscribe('LOGIN', (topic, status) => {
-      this.setState({loggedIn: status});
-    })});
-  }
-
-  componentWillUnmount = () =>{
-    PubSub.unsubscribe(this.state.pubsubtoken);
-  }
 
   render() {
     var logIn = (Auth.getToken() != null);

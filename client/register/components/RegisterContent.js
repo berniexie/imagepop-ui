@@ -22,7 +22,7 @@ export default class RegisterContent extends Component {
         .then((res) => {
           console.log(res);
           this.setState({failedText: ''});
-          browserHistory.push('/main');
+          browserHistory.push('/login');
         })
         .catch((error) => {
           console.log(error);
