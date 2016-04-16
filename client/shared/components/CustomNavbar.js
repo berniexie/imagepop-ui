@@ -7,8 +7,6 @@ import styles from '../../../public/css/navbar.css';
 import {Auth} from '../../login/auth.js';
 
 export default class CustomNavbar extends Component {
-  state = {loggedIn: false, pubsubtoken: ''};
-
   render() {
     var logIn = (Auth.getToken() != null);
     return (
