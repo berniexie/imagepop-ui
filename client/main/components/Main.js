@@ -9,6 +9,7 @@ import request from 'superagent-bluebird-promise';
 import Config from 'Config';
 import SplitPane from 'react-split-pane';
 import DrawableCanvas from 'react-drawable-canvas';
+import {Auth, AUTH_HEADER} from '../../login/auth';
 
 export class ImageControlArea extends Component {
   handleSlider = (value) => {
@@ -346,6 +347,7 @@ export class MainPageContent extends Component {
       let promise = request
         .post(Config.apiHost + '/com/imagepop/fileupload/start')
         .set('Accept', 'application/json')
+        .set(AUTH_HEADER, Auth.getToken())
         .promise()
         .then((res) => {
           let resJson = JSON.parse(res.text);
@@ -356,6 +358,7 @@ export class MainPageContent extends Component {
           let promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
+            .set(AUTH_HEADER, Auth.getToken())
             .field('fileId', file.fileId)
             .attach('image', raw_file)
             .on('progress', (p) => {

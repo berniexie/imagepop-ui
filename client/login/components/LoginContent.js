@@ -9,6 +9,7 @@ import PubSub from 'pubsub-js';
 import {browserHistory} from 'react-router';
 import SocialLogins from '../../shared/components/SocialLogins.js';
 import Config from 'Config';
+import {Auth} from '../auth';
 
 export default class LoginContent extends Component {
   state = {email: '', password: '', failedAttempt: false};
@@ -22,12 +23,15 @@ export default class LoginContent extends Component {
       .promise()
       .then((res) =>{
         console.log(res);
+        let resJson = JSON.parse(res.text);
+        Auth.setToken(resJson.token);
         PubSub.publish('LOGIN', true);
         this.setState({failedAttempt: false});
         browserHistory.push('/main');
       })
       .catch((error) =>{
         console.log(error);
+        Auth.setToken(null);
         this.setState({failedAttempt: true});
       });
   }

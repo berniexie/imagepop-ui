@@ -5,6 +5,7 @@ import { Link } from 'react-router'
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import styles from '../../../public/css/navbar.css';
 import PubSub from 'pubsub-js';
+import {Auth} from '../../login/auth.js';
 
 export default class CustomNavbar extends Component {
   state = {loggedIn: false, pubsubtoken: ''};
@@ -20,6 +21,7 @@ export default class CustomNavbar extends Component {
   }
 
   render() {
+    var logIn = (Auth.getToken() != null);
     return (
       <Navbar inverse>
         <Navbar.Header>
@@ -33,7 +35,7 @@ export default class CustomNavbar extends Component {
             <li><Link to="/about">about</Link></li>
             <li><Link to="/demo">gallery</Link></li>
             <li><Link to="/main">upload</Link></li>
-            { !this.state.loggedIn ? <li><Link to="/login">login</Link></li> : 
+            { !logIn ? <li><Link to="/login">login</Link></li> : 
                 <li><Link to="/logout">logout</Link></li> }
           </Nav>
         </Navbar.Collapse>
