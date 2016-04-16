@@ -4,7 +4,7 @@ import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import styles from '../../../public/css/socialLogins.css';
 
-export default class SocialLogins extends Component {
+export default class SocialLogins extends Component{
   responseFacebook = (response) => {
     console.log(response);
   }
