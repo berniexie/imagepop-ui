@@ -10,6 +10,7 @@ import Config from 'Config';
 import SplitPane from 'react-split-pane';
 import DrawableCanvas from 'react-drawable-canvas';
 import {Auth, AUTH_HEADER} from '../../login/auth';
+import {browserHistory} from 'react-router';
 
 export class ImageControlArea extends Component {
   handleSlider = (value) => {
@@ -339,6 +340,11 @@ export class MainPageContent extends Component {
   constructor(props) {
     super(props);
     this.state = {files: [], selectedFile: null}
+  }
+
+  componentDidMount = () => {
+    if (Auth.getToken() == null)
+      browserHistory.push('/login');
   }
 
   onDrop = (raw_files) => {
