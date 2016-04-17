@@ -63,15 +63,17 @@ export class ImageTableRow extends Component {
 
   render = () => {
     const { file } = this.props;
-    var size = file.size / 1024;
+    let size = file.size / 1024;
     if (size >= 1024) {
       size = (Math.round(size / 1024 * 100) / 100) + ' MB';
     } else {
       size = (Math.round(size * 100) / 100) + ' KB';
     }
 
+    let className = 'imageTableRow' + (this.props.selected ? ' selected' : '');
+    
     return (
-      <tr onClick={this.onListElementClick.bind(this, file)} className='imageTableRow'>
+      <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
         <td className='imageTableRowName'>
           <img className='imageTableRowIcon'
                src={(file instanceof UploadedFile ? 'data:image/jpeg;base64, ' : '') + file.preview}/>
@@ -247,7 +249,6 @@ export class MainPageContent extends Component {
         .then((res) => {
           let resJson = JSON.parse(res.text);
           let file = new UploadingFile(rawFile, resJson.imageId);
-          file.progress = 1;
           this.setState({files: this.state.files.concat([file])});
 
           let promise = request
@@ -257,10 +258,10 @@ export class MainPageContent extends Component {
             .field('imageId', file.imageId)
             .attach('image', rawFile)
             .on('progress', (p) => {
-              file.progress = p.loaded / p.total;
-              // this.setState(function(prevState, currProps) {
-              //   return {files: prevState.files};
-              // });
+              file.progress = p.percent / 100.0;
+              this.setState(function(prevState, currProps) {
+                return {files: prevState.files};
+              });
             })
             .promise()
             .then((res) => {

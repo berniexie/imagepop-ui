@@ -213,7 +213,7 @@ Resizer.disabled:hover {
 };
 
 .imageTableRow {
-  display: none;
+  display: block;
 }
 
 .imageTableRow:hover {
