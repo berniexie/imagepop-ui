@@ -14,12 +14,12 @@ export default class AppRouter extends Component{
 		return(
 			<Router history={browserHistory}>
 				<Route name="app" path="/" component={Landing}/>
-		    	<Route name="demo" path="/demo" component={Demo}/>
-		    	<Route name="main" path="/main" component={Main}/>
-		    	<Route name="login" path="/login" component={Login}/>
-		    	<Route name="logout" path="/logout" component={Logout}/>
-		    	<Route name="register" path="/register" component={Register}/>
-		    	<Route name="about" path="/about" component={About}/>
+	    	<Route name="demo" path="/demo" component={Demo}/>
+	    	<Route name="main" path="/main" component={Main}/>
+	    	<Route name="login" path="/login" component={Login}/>
+	    	<Route name="logout" path="/logout" component={Logout}/>
+	    	<Route name="register" path="/register" component={Register}/>
+	    	<Route name="about" path="/about" component={About}/>
 			</Router>
 		);
 	}
