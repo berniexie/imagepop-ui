@@ -126,7 +126,7 @@ export class FileListElement extends Component {
 export class ImageListArea extends Component {
   constructor(props) {
     super(props);
-    this.state = {fileId: 0}
+    this.state = {imageId: 0}
   }
 
   static propTypes = {
@@ -149,9 +149,9 @@ export class ImageListArea extends Component {
         </div>
         <div className='imageList'>
           {files.map((file) =>
-              <FileListElement file={file} key={file.fileId}
+              <FileListElement file={file} key={file.imageId}
                   selected={this.props.selectedFile != null &&
-                    this.props.selectedFile.fileId == file.fileId}
+                    this.props.selectedFile.imageId == file.imageId}
                     onListElementClick={onListElementClick}
                     uploaded={file.progress == 1}
                     progress={file.progress} />)
@@ -163,12 +163,12 @@ export class ImageListArea extends Component {
 };
 
 export class File {
-  constructor(file, fileId) {
-    this.raw_file = file;
+  constructor(file, imageId) {
+    this.rawFile = file;
     this.name = file.name;
     this.preview = file.preview;
     this.size = file.size;
-    this.fileId = fileId;
+    this.imageId = imageId;
     this.status = 'UPLOADING';
     this.uploadedUrl = null;
     this.progress = 0;
@@ -321,9 +321,9 @@ export class ImagesTable extends Component {
         </thead>
         <tbody className='imagesTableBody'>
         {this.props.files.map((file) =>
-          <ImageTableRow file={file} key={file.fileId}
+          <ImageTableRow file={file} key={file.imageId}
             selected={this.props.selectedFile != null &&
-              this.props.selectedFile.fileId == file.fileId}
+              this.props.selectedFile.imageId == file.imageId}
             onListElementClick={this.props.onListElementClick}
             uploaded={file.progress == 1}
             progress={file.progress} />)
@@ -347,17 +347,19 @@ export class MainPageContent extends Component {
       browserHistory.push('/login');
   }
 
-  onDrop = (raw_files) => {
+
+  onDrop = (rawFiles) => {
     let files = [];
-    raw_files.forEach((raw_file) => {
+    rawFiles.forEach((rawFile) => {
       let promise = request
         .post(Config.apiHost + '/com/imagepop/fileupload/start')
         .set('Accept', 'application/json')
         .set(AUTH_HEADER, Auth.getToken())
         .promise()
         .then((res) => {
+          console.log(res);
           let resJson = JSON.parse(res.text);
-          let file = new File(raw_file, resJson.fileId);
+          let file = new File(rawFile, resJson.imageId);
           file.progress = 1;
           this.setState({files: this.state.files.concat([file])});
 
@@ -365,16 +367,19 @@ export class MainPageContent extends Component {
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
             .set(AUTH_HEADER, Auth.getToken())
-            .field('fileId', file.fileId)
-            .attach('image', raw_file)
+            .field('imageId', file.imageId)
+            .field('fileName', file.name)
+            .attach('image', rawFile)
             .on('progress', (p) => {
-                /*file.progress = p.loaded / p.total;
-                self.setState(function(prevState, currProps) {
-                  return {files: prevState.files};
-                });*/
+              file.progress = p.loaded / p.total;
+              console.log(p);
+              // this.setState(function(prevState, currProps) {
+              //   return {files: prevState.files};
+              // });
             })
             .promise()
             .then((res) => {
+              console.log(res);
               // TODO(amohan95): Fill this in once API is finalized
 
             });
