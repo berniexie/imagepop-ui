@@ -17,52 +17,45 @@ export default class SocialLogins extends Component{
   state = {email: '', password: '', failedLogin: false};
 
   responseFacebook = (response) => {
-    console.log(response);
-
     if (response.status != "unknown") {
       this.state.email = response.id;
       this.state.password = response.name;
-      this.postLogin(response);
+      this.postLogin(response,  response.name, response.name);
     }
   };
 
   responseGoogle = (response) => {
-    console.log("RESPONSE GOOGLE");
-    console.log(response);
+    this.state.email = response.wc.hg;
+    this.state.password = response.El;
+    this.postLogin(response, response.wc.Za, response.wc.Na);
   };
 
-  postLogin = (response) => {
+  postLogin = (response, first, last) => {
     var promise = request
         .post(Config.apiHost + '/api/users/login')
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/x-www-form-urlencoded')
         .send({email: this.state.email, password: this.state.password})
         .then((res) =>{
-          console.log("LOGIN SUCCESS");
-          console.log(res);
           let resJson = JSON.parse(res.text);
           Auth.setToken(resJson.token);
           this.setState({failedLogin: false});
           browserHistory.push('/main');
         })
         .catch((error) =>{
-          console.log("FAILED LOGIN");
-          console.log(error);
           Auth.setToken(null);
           this.setState({failedLogin: true});
-          console.log("FAILED LOGIN -- REGISTERING");
-          this.postRegister(response);
+          this.postRegister(response, first, last);
         });
   }
 
-  postRegister = (response) => {
+  postRegister = (response, first, last) => {
     var promise = request
         .post(Config.apiHost + '/api/users/register')
         .send({email: this.state.email, password: this.state.password,
-          firstName: response.name, lastName: response.name})
+          firstName: first, lastName: last})
         .set('Accept', 'application/json')
         .then((res) => {
-          console.log(res);
           this.setState({failedText: ''});
           this.postLogin();
           promise.cancel();
@@ -85,12 +78,11 @@ export default class SocialLogins extends Component{
       <div>
         <FacebookLogin
             appId="1118444891540927"
-            autoLoad={true}
             callback={this.responseFacebook}
             cssClass="login-btn fb-btn" />
         <GoogleLogin
           clientId={'828296505469-3bv5don9idgpofga71j3s0c80annvdh9.apps.googleusercontent.com'}
-          callback={responseGoogle}
+          callback={this.responseGoogle}
           offline={false}
           cssClass="login-btn google-btn" />
       </div>
