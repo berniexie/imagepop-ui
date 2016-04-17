@@ -172,6 +172,10 @@ export class File {
     this.status = 'UPLOADING';
     this.uploadedUrl = null;
     this.progress = 0;
+    this.thumbnail = '';
+    this.original = '';
+    this.popped = [];
+    this.enhancement = '';
   }
 }
 
@@ -211,7 +215,7 @@ export class ImageTableRow extends Component {
     return (
       <tr onClick={this.onListElementClick.bind(this, file)} className='imageTableRow'>
         <td className='imageTableRowName'>
-          <img className='imageTableRowIcon' src={file.preview}/>{file.name}
+          <img className='imageTableRowIcon' src={'data:image/jpeg;charset=utf-8;base64,' + file.thumbnail}/>{file.name}
         </td>
         <td className='imageTableRowSize'>{size}</td>
       </tr>
@@ -269,7 +273,7 @@ export class Editor extends Component {
       <div className='editor'>
         <div className='editorContainer'>
           <div className='editorImageContainer'>
-            <img src={file.preview} className='editorImage'/>
+            <img src={'data:image/jpeg;charset=utf-8;base64,' + file.original} className='editorImage'/>
           </div>
           <div className='canvasContainer'>
             <DrawableCanvas {...this.state}/>
@@ -357,10 +361,7 @@ export class MainPageContent extends Component {
         .promise()
         .then((res) => {
           let resJson = JSON.parse(res.text);
-          let file = new File(raw_file, resJson.fileId);
-          file.progress = 1;
-          this.setState({files: this.state.files.concat([file])});
-
+          let file = new File(raw_file, resJson.imageId);
           let promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
@@ -376,6 +377,13 @@ export class MainPageContent extends Component {
             .promise()
             .then((res) => {
               // TODO(amohan95): Fill this in once API is finalized
+              let resJson = JSON.parse(res.text);
+              file.thumbnail = resJson.preview;
+              file.original = resJson.original;
+              file.popped = resJson.popped;
+              file.enhancement = resJson.enhancement;
+              file.progress = 1;
+              this.setState({files: this.state.files.concat([file])});
 
             });
         });
@@ -402,11 +410,14 @@ export class MainPageContent extends Component {
             Drop File to Upload!
           </h1>
         </div>
-        <SplitPane split='vertical' defaultSize={'30%'}>
+          <div style={{width: '30%', 'float': 'left'}}>
           <ImagesTable selectedFile={this.state.selectedFile} files={this.state.files}
             onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
+          </div>
+          <div style={{width: '70%', 'float': 'left'}}>
           <Editor file={this.state.selectedFile}/>
-        </SplitPane>
+          </div>
+          <div style={{clear: 'both'}}></div>
       </Dropzone>
     );
   };
