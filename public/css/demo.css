@@ -164,3 +164,7 @@ img {
   text-align: right;
   font-size: 14px;
 }
+
+.demoPageGrid {
+  max-width: 1000px;
+}

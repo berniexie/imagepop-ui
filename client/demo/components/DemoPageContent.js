@@ -89,7 +89,7 @@ export default class DemoPageContent extends Component {
     });
     return(
       <div>
-        <Grid fluid={true}>
+        <Grid className="demoPageGrid" fluid={true}>
               {rows}
         </Grid>
         <Modal className="demoModalWrapper" show={this.state.showModal} onHide={this.close}>

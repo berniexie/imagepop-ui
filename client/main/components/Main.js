@@ -10,164 +10,26 @@ import Config from 'Config';
 import SplitPane from 'react-split-pane';
 import DrawableCanvas from 'react-drawable-canvas';
 import {Auth, AUTH_HEADER} from '../../login/auth';
+import {browserHistory} from 'react-router';
 
-export class ImageControlArea extends Component {
-  handleSlider = (value) => {
-    console.log(value);
-  };
-
-  handleDownload = () => {
-
-  };
-
-  static propTypes = {
-    file: PropTypes.object
-  };
-
-  render = () => {
-    const {file} = this.props;
-    return file == undefined ? (
-      <div className='imageControlArea'>
-      </div>
-    ) : (
-      <div className='imageControlArea'>
-        <img className='fullImageView' src={file.preview} />
-        <div className='sliderWrapper'>
-          <Slider defaultValue={2} min={1} max={3} step={1} withBars
-              onChange={this.handleSlider}>
-            <div className='handle'/>
-          </Slider>
-          <div className='label labelLeft'>low</div>
-          <div className='label'>med</div>
-          <div className='label labelRight'>high</div>
-        </div>
-        <Button onClick={this.handleDownload}>Download</Button>
-      </div>
-    );
-  };
+export class UploadedFile {
+  constructor(original, name, preview, size, imageId) {
+    this.original = original;
+    this.name = name;
+    this.preview = preview;
+    this.size = size;
+    this.imageId = imageId;
+    this.status = 'UPLOADED';
+    this.progress = 1;
+  }
 }
 
-export class SelectedImageArea extends Component {
-  static propTypes = {
-    file: PropTypes.object,
-  };
-
-  render = () => {
-    const {file} = this.props;
-    return (
-      <div className='selectedImageArea'>
-        <div className='centered selectedImageAreaHeader'>
-        {file == undefined ?
-          <h3>Upload images to view more options!</h3> :
-          <h3>{file.name}</h3>
-        }
-        </div>
-        <ImageControlArea file={file}/>
-      </div>
-    );
-  };
-};
-
-export class FileListElement extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: false,
-    };
-  }
-
-  static propTypes = {
-    file: PropTypes.object,
-    selected: PropTypes.bool,
-    uploaded: PropTypes.bool,
-    progress: PropTypes.number,
-  };
-
-
-  onListElementClick = (file) => {
-    if (this.props.uploaded) {
-      this.props.onListElementClick(file);
-      this.setState({
-        selected: true
-      });
-    }
-  };
-
-  render = () => {
-    const {file, selected} = this.props;
-    var className = 'fileListElement';
-    if (selected) {
-      className += ' selected';
-    }
-    if (!this.props.uploaded) {
-      className += ' uploading';
-    }
-    return (
-      <Row>
-        <Col sm={12}>
-          <div className={className}
-               onClick={() => this.onListElementClick(file)}>
-            {!this.props.uploaded ?
-            <div className='uploadingOverlay' style={{opacity: 0.5 * (1 - this.props.progress)}}>
-            </div> : null }
-            <img className='listElementIcon' src={file.preview} />
-            <div className='listElementInfo'>
-              <div className='listElementName'>{file.name}</div>
-            </div>
-            <div className='listElementOptions'></div>
-          </div>
-        </Col>
-      </Row>
-    );
-  };
-};
-
-export class ImageListArea extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {fileId: 0}
-  }
-
-  static propTypes = {
-    files: React.PropTypes.array,
-    onOpenClick: React.PropTypes.func,
-    onListElementClick: React.PropTypes.func
-  };
-
-  render = () => {
-    const {files, onOpenClick, onListElementClick} = this.props;
-
-    return (
-      <div className='imageListArea'>
-        <div className='centered imageListAreaHeader'>
-          <h1 className='centered'>My Images</h1>
-          Drag and drop images anywhere to upload or <br />
-          <Button onClick={onOpenClick}>
-            Click Here!
-          </Button>
-        </div>
-        <div className='imageList'>
-          {files.map((file) =>
-              <FileListElement file={file} key={file.fileId}
-                  selected={this.props.selectedFile != null &&
-                    this.props.selectedFile.fileId == file.fileId}
-                    onListElementClick={onListElementClick}
-                    uploaded={file.progress == 1}
-                    progress={file.progress} />)
-          }
-        </div>
-      </div>
-    );
-  };
-};
-
-export class File {
-  constructor(file, fileId) {
-    this.raw_file = file;
+export class UploadingFile {
+  constructor(file, imageId) {
     this.name = file.name;
     this.preview = file.preview;
     this.size = file.size;
-    this.fileId = fileId;
+    this.imageId = imageId;
     this.status = 'UPLOADING';
     this.uploadedUrl = null;
     this.progress = 0;
@@ -201,16 +63,21 @@ export class ImageTableRow extends Component {
 
   render = () => {
     const { file } = this.props;
-    var size = file.size / 1024;
+    let size = file.size / 1024;
     if (size >= 1024) {
       size = (Math.round(size / 1024 * 100) / 100) + ' MB';
     } else {
       size = (Math.round(size * 100) / 100) + ' KB';
     }
+
+    let className = 'imageTableRow' + (this.props.selected ? ' selected' : '');
+    
     return (
-      <tr onClick={this.onListElementClick.bind(this, file)} className='imageTableRow'>
+      <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
         <td className='imageTableRowName'>
-          <img className='imageTableRowIcon' src={file.preview}/>{file.name}
+          <img className='imageTableRowIcon'
+               src={(file instanceof UploadedFile ? 'data:image/jpeg;base64, ' : '') + file.preview}/>
+          {file.name}
         </td>
         <td className='imageTableRowSize'>{size}</td>
       </tr>
@@ -264,31 +131,38 @@ export class Editor extends Component {
 
   render = () => {
     const {file} = this.props;
-    return file == undefined ? (<div className='editor'>Select an image</div>) : (
-      <div className='editor'>
-        <div className='editorContainer'>
-          <div className='editorImageContainer'>
-            <img src={file.preview} className='editorImage'/>
+    if (file == undefined) {
+      return (<div className='editor'>Select an image</div>);
+    } else if (file instanceof UploadingFile) {
+      return (<div className='editor'>File is uploading...</div>);
+    } else {
+      return (
+        <div className='editor'>
+          <div className='editorContainer'>
+            <div className='editorImageContainer'>
+              <img src={'data:image/jpeg;base64, ' + file.original}className='editorImage'/>
+            </div>
+            <div className='canvasContainer'>
+              <DrawableCanvas {...this.state}/>
+            </div>
           </div>
-          <div className='canvasContainer'>
-            <DrawableCanvas {...this.state}/>
+          <div className='toolbox'>
+            <Button onClick={this.handleOnClickTouchUp}>Touch Up</Button>
+            <Button onClick={this.handleOnClickReset}>Reset</Button>
+            <div className='sliderWrapper'>
+              <Slider defaultValue={2} min={1} max={3} step={1} withBars
+                onChange={this.handleSlider}>
+                <div className='handle'/>
+              </Slider>
+              <div className='label labelLeft'>low</div>
+              <div className='label'>med</div>
+              <div className='label labelRight'>high</div>
+            </div>
           </div>
         </div>
-        <div className='toolbox'>
-          <Button onClick={this.handleOnClickTouchUp}>Touch Up</Button>
-          <Button onClick={this.handleOnClickReset}>Reset</Button>
-          <div className='sliderWrapper'>
-            <Slider defaultValue={2} min={1} max={3} step={1} withBars
-              onChange={this.handleSlider}>
-              <div className='handle'/>
-            </Slider>
-            <div className='label labelLeft'>low</div>
-            <div className='label'>med</div>
-            <div className='label labelRight'>high</div>
-          </div>
-        </div>
-      </div>
-    );
+      );
+
+    }
   };
 ti
 };
@@ -320,11 +194,11 @@ export class ImagesTable extends Component {
         </thead>
         <tbody className='imagesTableBody'>
         {this.props.files.map((file) =>
-          <ImageTableRow file={file} key={file.fileId}
+          <ImageTableRow file={file} key={file.imageId}
             selected={this.props.selectedFile != null &&
-              this.props.selectedFile.fileId == file.fileId}
+              this.props.selectedFile.imageId == file.imageId}
             onListElementClick={this.props.onListElementClick}
-            uploaded={file.progress == 1}
+            uploaded={file.status == 'UPLOADED'}
             progress={file.progress} />)
         }
         </tbody>
@@ -332,7 +206,6 @@ export class ImagesTable extends Component {
     </div>
       );
   };
-
 };
 
 export class MainPageContent extends Component {
@@ -341,36 +214,70 @@ export class MainPageContent extends Component {
     this.state = {files: [], selectedFile: null}
   }
 
-  onDrop = (raw_files) => {
-    let files = [];
-    raw_files.forEach((raw_file) => {
+  componentDidMount = () => {
+    if (Auth.getToken() == null) {
+      browserHistory.push('/login');
+    } else {
       let promise = request
-        .post(Config.apiHost + '/com/imagepop/fileupload/start')
+        .post(Config.apiHost + '/com/imagepop/fileupload/get_images')
         .set('Accept', 'application/json')
         .set(AUTH_HEADER, Auth.getToken())
         .promise()
         .then((res) => {
+          let files = [];
+          let uploadedFiles = JSON.parse(res.text);
+          for (let i = 0; i < uploadedFiles.length; ++i) {
+            let f = uploadedFiles[i];
+            files.push(new UploadedFile(f.original, f.name, f.preview, f.size,
+                                        f.imageId));
+          }
+          this.setState({files: files, selectedFile: files[0]});
+        });
+    }
+  }
+
+
+  onDrop = (rawFiles) => {
+    let files = [];
+    rawFiles.forEach((rawFile) => {
+      let promise = request
+        .post(Config.apiHost + '/com/imagepop/fileupload/start')
+        .set('Accept', 'application/json')
+        .set(AUTH_HEADER, Auth.getToken())
+        .field('name', rawFile.name)
+        .promise()
+        .then((res) => {
           let resJson = JSON.parse(res.text);
-          let file = new File(raw_file, resJson.fileId);
-          file.progress = 1;
+          let file = new UploadingFile(rawFile, resJson.imageId);
           this.setState({files: this.state.files.concat([file])});
 
           let promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
             .set('Accept', 'application/json')
             .set(AUTH_HEADER, Auth.getToken())
-            .field('fileId', file.fileId)
-            .attach('image', raw_file)
+            .field('imageId', file.imageId)
+            .attach('image', rawFile)
             .on('progress', (p) => {
-                /*file.progress = p.loaded / p.total;
-                self.setState(function(prevState, currProps) {
-                  return {files: prevState.files};
-                });*/
+              file.progress = p.percent / 100.0;
+              this.setState(function(prevState, currProps) {
+                return {files: prevState.files};
+              });
             })
             .promise()
             .then((res) => {
-              // TODO(amohan95): Fill this in once API is finalized
-
+              let f = JSON.parse(res.text);
+              let pos = 0;
+              for (let i = 0; i < this.state.files.length; ++i) {
+                if (this.state.files[i].imageId == f.imageId) {
+                  let newFiles = this.state.files.slice()
+                  newFiles[i] = new UploadedFile(f.original, f.name, f.preview,
+                                                 f.size, f.imageId);
+                  this.setState((prevState, currProps) => {
+                    return {files: newFiles};
+                  });
+                  break;
+                }
+              }
             });
         });
     }, this);
