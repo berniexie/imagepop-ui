@@ -212,6 +212,10 @@ Resizer.disabled:hover {
   border-right: 1px solid rgba(0, 0, 0, 0.5);
 };
 
+.imageTableRow {
+  display: none;
+}
+
 .imageTableRow:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.8);
