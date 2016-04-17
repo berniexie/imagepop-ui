@@ -8,15 +8,15 @@ import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
 import Config from 'Config';
 import SplitPane from 'react-split-pane';
-import DrawableCanvas from 'react-drawable-canvas';
+
 import {Auth, AUTH_HEADER} from '../../login/auth';
 import {browserHistory} from 'react-router';
 
 export class UploadedFile {
   constructor(original, name, preview, size, imageId) {
-    this.original = original;
+    this.original = 'data:image/png;base64,' + original;
     this.name = name;
-    this.preview = preview;
+    this.preview = 'data:image/png;base64,' + preview;
     this.size = size;
     this.imageId = imageId;
     this.status = 'UPLOADED';
@@ -31,7 +31,6 @@ export class UploadingFile {
     this.size = file.size;
     this.imageId = imageId;
     this.status = 'UPLOADING';
-    this.uploadedUrl = null;
     this.progress = 0;
     this.thumbnail = '';
     this.original = '';
@@ -80,14 +79,62 @@ export class ImageTableRow extends Component {
       <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
         <td className='imageTableRowName'>
           <img className='imageTableRowIcon'
-               src={(file instanceof UploadedFile ? 'data:image/jpeg;base64, ' : '') + file.preview}/>
+               src={file.preview}/>
           {file.name}
         </td>
         <td className='imageTableRowSize'>{size}</td>
       </tr>
     );
   };
+};
 
+export class EditorCanvas extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
+    file: PropTypes.object,
+  };
+
+  componentDidMount = () => {
+    let drawableCanvas = document.getElementById('drawableCanvas');
+    drawableCanvas.style.width = '100%';
+    drawableCanvas.style.height = '100%';
+    drawableCanvas.width = drawableCanvas.offsetWidth;
+    drawableCanvas.height = drawableCanvas.offsetHeight;
+    let drawableContext = drawableCanvas.getContext('2d');
+
+    let imageCanvas = document.getElementById('imageCanvas');
+    imageCanvas.style.width = '100%';
+    imageCanvas.style.height = '100%';
+    imageCanvas.width = imageCanvas.offsetWidth;
+    imageCanvas.height = imageCanvas.offsetHeight;
+    let imageContext = imageCanvas.getContext('2d');
+
+    let originalImg = new Image();
+    originalImg.src = this.props.file.original;
+
+    imageContext.drawImage(originalImg, 0, 0);
+
+    this.setState({
+      drawableCanvas: drawableCanvas,
+      drawableContext: drawableContext,
+      imageCanvas: imageCanvas,
+      imageContext: imageContext,
+      originalImg: originalImg
+    });
+  };
+
+  render = () => {
+    const { file } = this.props;
+    return (
+      <div className={'editorCanvas'}>
+        <canvas id={'drawableCanvas'}></canvas>
+        <canvas id={'imageCanvas'}></canvas>
+      </div>
+    );
+  };
 };
 
 export class Editor extends Component {
@@ -142,14 +189,7 @@ export class Editor extends Component {
     } else {
       return (
         <div className='editor'>
-          <div className='editorContainer'>
-            <div className='editorImageContainer'>
-              <img src={'data:image/jpeg;base64, ' + file.original}className='editorImage'/>
-            </div>
-            <div className='canvasContainer'>
-              <DrawableCanvas {...this.state}/>
-            </div>
-          </div>
+          <EditorCanvas {...this.state} file={file}/>
           <div className='toolbox'>
             <Button onClick={this.handleOnClickTouchUp}>Touch Up</Button>
             <Button onClick={this.handleOnClickReset}>Reset</Button>
@@ -165,10 +205,8 @@ export class Editor extends Component {
           </div>
         </div>
       );
-
     }
   };
-ti
 };
 
 export class ImagesTable extends Component {
