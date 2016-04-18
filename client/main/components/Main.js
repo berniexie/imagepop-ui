@@ -142,8 +142,9 @@ export class ImageCanvas extends Component {
     ctx.webkitImageSmoothingEnabled = true;
     ctx.msImageSmoothingEnabled = true;
     ctx.imageSmoothingEnabled = true;
-
+try {
     ctx.drawImage(this.props.image, 0, 0, domNode.width, domNode.height);
+  } catch (err) { }
   };
 
   componentDidUpdate = () => {
@@ -242,7 +243,7 @@ export class Editor extends Component {
   };
 
   componentWillReceiveProps = (nextProps) => {
-    if (this.state.lastImageId != nextProps.file.imageId) {
+    if (nextProps.file != undefined && this.state.lastImageId != nextProps.file.imageId) {
       let currentImages = {
         original: new Image(),
         popped: [new Image(), new Image(), new Image()],
