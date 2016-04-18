@@ -283,7 +283,7 @@ export class ImagesTable extends Component {
             selected={this.props.selectedFile != null &&
               this.props.selectedFile.imageId == file.imageId}
             onListElementClick={this.props.onListElementClick}
-            uploaded={file.status == 'UPLOADED'}
+            uploaded={file.status == 'UPLOADED' || file.status == 'POPPED'}
             progress={file.progress} />)
         }
         </tbody>
@@ -333,7 +333,8 @@ export class MainPageContent extends Component {
         .promise()
         .then((res) => {
           let resJson = JSON.parse(res.text);
-          let file = new UploadingFile(rawFile, resJson.imageId);
+          let file = new File(resJson.imageId, rawFile.name, 'UPLOADING', rawFile.preview,
+                    rawFile.preview, null, null, rawFile.size);
           this.setState({files: this.state.files.concat([file])});
           let promise = request
             .post(Config.apiHost + '/com/imagepop/fileupload/upload')
@@ -354,8 +355,8 @@ export class MainPageContent extends Component {
               for (let i = 0; i < this.state.files.length; ++i) {
                 if (this.state.files[i].imageId == f.imageId) {
                   let newFiles = this.state.files.slice()
-                  newFiles[i] = new UploadedFile(f.original, f.name, f.preview,
-                                                 f.size, f.imageId);
+                  newFiles[i] = new File(f.imageId, f.name, f.status, f.preview,
+                    f.original, f.popped, f.enhancement, f.size);
                   this.setState((prevState, currProps) => {
                     return {files: newFiles};
                   });
