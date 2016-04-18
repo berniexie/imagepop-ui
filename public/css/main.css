@@ -213,16 +213,18 @@ Resizer.disabled:hover {
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 };
 
-.imageTableRow:nth-child(odd) {
-  background-color: #EEEEEE;
-}
 
-.imageTableRow:nth-child(even) {
-  background-color: #B1D1E7;
+.imageTableRow {
+  display: block;
 }
 
 .imageTableRow.selected {
-  background-color: #AAAAAA;
+  background-color: #CCCCCC !important;
+}
+
+.imageTableRow:hover {
+  cursor: pointer;
+  background-color: #CCCCCC;
 }
 
 .imagesTable td {
