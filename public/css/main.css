@@ -259,11 +259,6 @@ Resizer.disabled:hover {
   z-index: 1;
 }
 
-#editorImage {
-  width: 100%;
-  height: 100%;
-}
-
 .editorContainer {
   position: relative;
   z-index: 0;
@@ -281,9 +276,21 @@ Resizer.disabled:hover {
 }
 
 .toolbox {
-  width: 150px;
+  width: 180px;
 }
 
 .toolbox .btn {
   margin: 5px;
+}
+
+.toolbox .btn-group > .btn:first-child {
+  margin-left: 5px;
+}
+
+.toolbox .toggleBtnClicked {
+  background-color: #549ACB;
+}
+
+.toolbox .toggleBtn {
+
 }

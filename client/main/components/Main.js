@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import styles from '../../../public/css/main.css';
 import Slider from 'react-slider';
 import PageTemplate from '../../shared/components/PageTemplate.js';
-import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
+import {ButtonGroup, Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
 import Config from 'Config';
 import SplitPane from 'react-split-pane';
@@ -133,8 +133,10 @@ export class ImageCanvas extends Component {
     id: PropTypes.string
   };
 
-  componentDidMount = () => {
+  draw = () => {
     let domNode = ReactDOM.findDOMNode(this);
+    domNode.width = domNode.parentNode.offsetWidth;
+    domNode.height = domNode.parentNode.offsetHeight;
     let ctx = domNode.getContext('2d');
 
     ctx.mozImageSmoothingEnabled = true;
@@ -144,11 +146,17 @@ export class ImageCanvas extends Component {
 
     let img = new Image();
     img.onload = () => {
-      img.width = domNode.width;
-      img.height = domNode.height;
       ctx.drawImage(img, 0, 0, domNode.width, domNode.height);
     };
     img.src = 'data:image/png;base64,' + this.props.imageData;
+  };
+
+  componentDidUpdate = () => {
+    this.draw();
+  };
+
+  componentDidMount = () => {
+    this.draw();
   };
 
   render = () => {
@@ -215,6 +223,40 @@ export class Editor extends Component {
     });
   };
 
+  showOriginal = () => {
+    this.setState({showOriginal: true});
+  };
+
+  showPopped = () => {
+    this.setState({showOriginal: false});
+  };
+
+  showEnhancement = () => {
+    this.setState({showEnhancement: !this.state.showEnhancement});
+  };
+
+  handleKeydown = (e) => {
+    if (e.keyCode == 17) { // CTRL
+      this.setState({showEnhancement: true});
+    }
+  };
+
+  handleKeyup = (e) => {
+    if (e.keyCode == 17) {
+      this.setState({showEnhancement: false});
+    }
+  };
+
+  componentDidMount = () => {
+    window.document.addEventListener('keydown', this.handleKeydown);
+    window.document.addEventListener('keyup', this.handleKeyup);
+  };
+
+  componentWillUnmount = () => {
+    window.document.removeEventListener('keydown', this.handleKeydown);
+    window.document.removeEventListener('keyup', this.handleKeyup);
+  };
+
   render = () => {
     const {file} = this.props;
     if (file == undefined) {
@@ -223,6 +265,12 @@ export class Editor extends Component {
       return (<div className='editor'>File is uploading...</div>);
     } else {
       let currentImage = this.getCurrentImage();
+      let origBtnClass = !this.state.showOriginal ? 'toggleBtn' :
+        'toggleBtnClicked';
+      let popBtnClass = this.state.showOriginal ? 'toggleBtn' :
+        'toggleBtnClicked';
+      let enhBtnClass = !this.state.showEnhancement ? 'toggleBtn' :
+        'toggleBtnClicked';
       return (
         <div className='editor'>
         <div className='editorContainer'>
@@ -234,17 +282,28 @@ export class Editor extends Component {
             </div>
           </div>
           <div className='toolbox'>
-            <Button onClick={this.handleOnClickTouchUp}>Touch Up</Button>
-            <Button onClick={this.handleOnClickReset}>Reset</Button>
+            <Button onClick={this.handleOnClickTouchUp}
+              disabled={this.state.showOriginal}>Touch Up</Button>
+            <br/>
+            <Button onClick={this.handleOnClickReset}
+              disabled={this.state.showOriginal}>Reset</Button>
             <div className='sliderWrapper'>
               <Slider defaultValue={2} min={1} max={3} step={1} withBars
-                onChange={this.handleSlider}>
+                onChange={this.handleSlider} disabled={this.state.showOriginal}>
                 <div className='handle'/>
               </Slider>
               <div className='label labelLeft'>low</div>
               <div className='label'>med</div>
               <div className='label labelRight'>high</div>
             </div>
+            <ButtonGroup>
+              <Button className={origBtnClass} onClick={this.showOriginal}>Original</Button>
+              <Button className={popBtnClass} onClick={this.showPopped}>Popped</Button>
+            </ButtonGroup>
+            <Button className={enhBtnClass} onClick={this.showEnhancement}
+              disabled={this.state.showOriginal}>
+              Show Enhancement
+            </Button>
           </div>
         </div>
       );
