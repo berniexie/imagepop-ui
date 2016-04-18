@@ -129,7 +129,6 @@ export class ImageCanvas extends Component {
   }
 
   static propTypes = {
-    imageData: PropTypes.string,
     id: PropTypes.string
   };
 
@@ -144,11 +143,7 @@ export class ImageCanvas extends Component {
     ctx.msImageSmoothingEnabled = true;
     ctx.imageSmoothingEnabled = true;
 
-    let img = new Image();
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, domNode.width, domNode.height);
-    };
-    img.src = 'data:image/png;base64,' + this.props.imageData;
+    ctx.drawImage(this.props.image, 0, 0, domNode.width, domNode.height);
   };
 
   componentDidUpdate = () => {
@@ -171,7 +166,7 @@ export class Editor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      brushColor: '#800909',
+      brushColor: 'rgba(128, 128, 128, 1)',
       lineWidth: 4,
       canvasStyle: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -190,11 +185,11 @@ export class Editor extends Component {
 
   getCurrentImage = () => {
     if (this.state.showOriginal) {
-      return this.props.file.original;
+      return this.state.currentImages.original;
     } else if (this.state.showEnhancement) {
-      return this.props.file.enhancement;
+      return this.state.currentImages.enhancement;
     } else {
-      return this.props.file.popped[this.state.poppedSlider];
+      return this.state.currentImages.popped[this.state.poppedSlider];
     }
   };
 
@@ -247,6 +242,27 @@ export class Editor extends Component {
     }
   };
 
+  componentWillReceiveProps = (nextProps) => {
+    if (this.state.lastImageId != nextProps.file.imageId) {
+      let currentImages = {
+        original: new Image(),
+        popped: [new Image(), new Image(), new Image()],
+        enhancement: new Image(),
+      };
+      currentImages.original.src = 'data:image/png;base64,' + nextProps.file.original;
+      currentImages.popped[0].src = 'data:image/png;base64,' + nextProps.file.popped[0];
+      currentImages.popped[1].src = 'data:image/png;base64,' + nextProps.file.popped[1];
+      currentImages.popped[2].src = 'data:image/png;base64,' + nextProps.file.popped[2];
+      currentImages.enhancement.src = 'data:image/png;base64,' + nextProps.file.enhancement;
+      this.setState({lastImageId: nextProps.file.imageId, currentImages: currentImages});
+    }
+  };
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return true;
+    //return nextState.lastImageId == nextProps.file.imageId;
+  };
+
   componentDidMount = () => {
     window.document.addEventListener('keydown', this.handleKeydown);
     window.document.addEventListener('keyup', this.handleKeyup);
@@ -275,7 +291,7 @@ export class Editor extends Component {
         <div className='editor'>
         <div className='editorContainer'>
             <div className='editorImageContainer'>
-              <ImageCanvas id='editorImage' imageData={currentImage}/>
+              <ImageCanvas id='editorImage' image={currentImage}/>
             </div>
             <div className='canvasContainer'>
               <DrawableCanvas {...this.state}/>
