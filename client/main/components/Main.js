@@ -448,7 +448,7 @@ export class MainPageContent extends Component {
           </h1>
         </div>
         <div style={{width: '30%', 'float': 'left'}}>
-          <h3>Drag Images to Upload or <Button onClick={this.onOpenClick}>Click Here</Button></h3>
+          <h3><Button onClick={this.onOpenClick}>Upload</Button></h3>
           <ImagesTable selectedFile={this.state.selectedFile} files={this.state.files}
             onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
         </div>

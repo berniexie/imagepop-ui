@@ -208,27 +208,32 @@ Resizer.disabled:hover {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 5px;
 }
+.imagesTable th {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 5px;
+}
 
 .imagesTable th:not(:last-child) {
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 };
 
+/**
+ * Let's do alternating row colors to imitate Finder.
+ */
+.imageTableRow:nth-child(odd) {
+  background-color: #EEEEEE;
+}
 
-.imageTableRow {
-  display: block;
+.imageTableRow:nth-child(even) {
+  background-color: #B1D1E7;
 }
 
 .imageTableRow.selected {
-  background-color: #CCCCCC !important;
+  background-color: #AAAAAA !important;
 }
 
 .imageTableRow:hover {
-  cursor: pointer;
-  background-color: #CCCCCC;
-}
-
-.imagesTable td {
-  padding: 5px;
+  background-color: #BBBBBB;
 }
 
 .imageTableRowIcon {
