@@ -304,8 +304,11 @@ export class MainPageContent extends Component {
           </h1>
         </div>
         <SplitPane split='vertical' defaultSize={'30%'}>
-          <ImagesTable selectedFile={this.state.selectedFile} files={this.state.files}
-            onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
+          <div>
+            <h3>Drag Images to Upload or <Button onClick={this.onOpenClick}>Click Here</Button></h3>
+            <ImagesTable selectedFile={this.state.selectedFile} files={this.state.files}
+              onOpenClick={this.onOpenClick} onListElementClick={this.onListElementClick} />
+          </div>
           <Editor file={this.state.selectedFile}/>
         </SplitPane>
       </Dropzone>
