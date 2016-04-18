@@ -8,36 +8,23 @@ import { Modal, Grid, Row, Col, Button } from 'react-bootstrap';
 import request from 'superagent-bluebird-promise';
 import Config from 'Config';
 import SplitPane from 'react-split-pane';
-
+import DrawableCanvas from 'react-drawable-canvas';
 import {Auth, AUTH_HEADER} from '../../login/auth';
 import {browserHistory} from 'react-router';
 
-export class UploadedFile {
-  constructor(original, name, preview, size, imageId) {
-    this.original = 'data:image/png;base64,' + original;
+export class File {
+  constructor(imageId, name, status, preview, original, popped, enhancement,
+      size) {
+    this.imageId = imageId;
     this.name = name;
-    this.preview = 'data:image/png;base64,' + preview;
+    this.status = status;
+    this.preview = preview;
+    this.original = original;
+    this.popped = popped;
+    this.enhancement = enhancement;
     this.size = size;
-    this.imageId = imageId;
-    this.status = 'UPLOADED';
-    this.progress = 1;
   }
-}
-
-export class UploadingFile {
-  constructor(file, imageId) {
-    this.name = file.name;
-    this.preview = file.preview;
-    this.size = file.size;
-    this.imageId = imageId;
-    this.status = 'UPLOADING';
-    this.progress = 0;
-    this.thumbnail = '';
-    this.original = '';
-    this.popped = [];
-    this.enhancement = '';
-  }
-}
+};
 
 export class ImageTableRow extends Component {
   constructor(props) {
@@ -74,12 +61,11 @@ export class ImageTableRow extends Component {
     }
 
     let className = 'imageTableRow' + (this.props.selected ? ' selected' : '');
-    
     return (
       <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
         <td className='imageTableRowName'>
           <img className='imageTableRowIcon'
-               src={file.preview}/>
+               src={'data:image/png;base64,'+file.preview}/>
           {file.name}
         </td>
         <td className='imageTableRowSize'>{size}</td>
@@ -137,6 +123,42 @@ export class EditorCanvas extends Component {
   };
 };
 
+export class ImageCanvas extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  static propTypes = {
+    imageData: PropTypes.string,
+    id: PropTypes.string
+  };
+
+  componentDidMount = () => {
+    let domNode = ReactDOM.findDOMNode(this);
+    let ctx = domNode.getContext('2d');
+
+    ctx.mozImageSmoothingEnabled = true;
+    ctx.webkitImageSmoothingEnabled = true;
+    ctx.msImageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true;
+
+    let img = new Image();
+    img.onload = () => {
+      img.width = domNode.width;
+      img.height = domNode.height;
+      ctx.drawImage(img, 0, 0, domNode.width, domNode.height);
+    };
+    img.src = 'data:image/png;base64,' + this.props.imageData;
+  };
+
+  render = () => {
+    return (
+        <canvas id={this.props.id} />
+        );
+  };
+
+};
+
 export class Editor extends Component {
   constructor(props) {
     super(props);
@@ -147,7 +169,10 @@ export class Editor extends Component {
         backgroundColor: 'rgba(0, 0, 0, 0)',
         pointerEvents: 'none',
       },
-      clear: false
+      clear: false,
+      poppedSlider: 1,
+      showOriginal: false,
+      showEnhancement: false,
     };
   }
 
@@ -155,8 +180,18 @@ export class Editor extends Component {
     file: PropTypes.object,
   };
 
+  getCurrentImage = () => {
+    if (this.state.showOriginal) {
+      return this.props.file.original;
+    } else if (this.state.showEnhancement) {
+      return this.props.file.enhancement;
+    } else {
+      return this.props.file.popped[this.state.poppedSlider];
+    }
+  };
+
   handleSlider = (value) => {
-    console.log(value);
+    this.setState({poppedSlider: value - 1});
   };
 
   handleOnClickReset = () => {
@@ -184,12 +219,20 @@ export class Editor extends Component {
     const {file} = this.props;
     if (file == undefined) {
       return (<div className='editor'>Select an image</div>);
-    } else if (file instanceof UploadingFile) {
+    } else if (file.status == 'UPLOADING') {
       return (<div className='editor'>File is uploading...</div>);
     } else {
+      let currentImage = this.getCurrentImage();
       return (
         <div className='editor'>
-          <EditorCanvas {...this.state} file={file}/>
+        <div className='editorContainer'>
+            <div className='editorImageContainer'>
+              <ImageCanvas id='editorImage' imageData={currentImage}/>
+            </div>
+            <div className='canvasContainer'>
+              <DrawableCanvas {...this.state}/>
+            </div>
+          </div>
           <div className='toolbox'>
             <Button onClick={this.handleOnClickTouchUp}>Touch Up</Button>
             <Button onClick={this.handleOnClickReset}>Reset</Button>
@@ -270,8 +313,8 @@ export class MainPageContent extends Component {
           let uploadedFiles = JSON.parse(res.text);
           for (let i = 0; i < uploadedFiles.length; ++i) {
             let f = uploadedFiles[i];
-            files.push(new UploadedFile(f.original, f.name, f.preview, f.size,
-                                        f.imageId));
+            files.push(new File(f.imageId, f.name, f.status, f.preview,
+                  f.original, f.popped, f.enhancement, f.size));
           }
           this.setState({files: files, selectedFile: files[0]});
         });
