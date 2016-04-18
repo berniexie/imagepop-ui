@@ -26,101 +26,159 @@ export class File {
   }
 };
 
-export class ImageTableRow extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: false,
-    };
-  }
-
+// Edit class from
+// https://github.com/jonhni/react-drawable-canvas/blob/master/lib/index.jsx
+export class NewDrawableCanvas extends Component {
   static propTypes = {
-    file: PropTypes.object,
-    selected: PropTypes.bool,
-    uploaded: PropTypes.bool,
-    progress: PropTypes.number,
+    brushColor: PropTypes.string,
+    lineWidth: PropTypes.number,
+    canvasStyle: PropTypes.shape({
+      backgroundColor: PropTypes.string,
+      cursor: PropTypes.string
+    }),
+    clear: PropTypes.bool,
+    getCanvas: PropTypes.func
   };
 
+  static defaultProps = {
+    brushColor: '#000000',
+    lineWidth: 4,
+    canvasStyle: {
+      backgroundColor: '#FFFFFF',
+      cursor: 'pointer'
+    },
+    clear: false
+  };
 
-  onListElementClick = (file) => {
-    if (this.props.uploaded) {
-      this.props.onListElementClick(file);
+  static initialState = {
+    canvas: null,
+    context: null,
+    drawing: false,
+    lastX: 0,
+    lastY: 0,
+    history: []
+  };
+
+  componentDidMount = () => {
+    let canvas = ReactDOM.findDOMNode(this);
+
+    canvas.width = canvas.parentNode.offsetWidth * .98;
+    canvas.height = canvas.parentNode.offsetHeight * .98;
+
+    let ctx = canvas.getContext('2d');
+
+    this.setState({
+      canvas: canvas,
+      context: ctx
+    });
+    this.props.getCanvas(canvas, ctx);
+  };
+  
+  componentWillReceiveProps = (nextProps) => {
+    if(nextProps.clear){
+      this.resetCanvas();
+    }
+  };
+
+  handleOnMouseDown = (e) => {
+    let rect = this.state.canvas.getBoundingClientRect();
+    this.state.context.beginPath();
+    if(this.isMobile()){
       this.setState({
-        selected: true
+        lastX: e.targetTouches[0].pageX - rect.left,
+        lastY: e.targetTouches[0].pageY - rect.top
+      });
+    }
+    else{
+      this.setState({
+        lastX: e.clientX - rect.left,
+        lastY: e.clientY - rect.top
+      });
+    }
+
+    this.setState({
+      drawing: true
+    });
+  };
+
+  handleOnMouseMove = (e) => {
+    if(this.state.drawing){
+      let rect = this.state.canvas.getBoundingClientRect();
+      let lastX = this.state.lastX;
+      let lastY = this.state.lastY;
+      let currentX;
+      let currentY;
+      if(this.isMobile()){
+        currentX =  e.targetTouches[0].pageX - rect.left;
+        currentY = e.targetTouches[0].pageY - rect.top;
+      }
+      else{
+        currentX = e.clientX - rect.left;
+        currentY = e.clientY - rect.top;
+      }
+
+
+      this.draw(lastX, lastY, currentX, currentY);
+      this.setState({
+        lastX: currentX,
+        lastY: currentY
       });
     }
   };
 
-  render = () => {
-    const { file } = this.props;
-    let size = file.size / 1024;
-    if (size >= 1024) {
-      size = (Math.round(size / 1024 * 100) / 100) + ' MB';
-    } else {
-      size = (Math.round(size * 100) / 100) + ' KB';
-    }
-
-    let className = 'imageTableRow' + (this.props.selected ? ' selected' : '');
-    return (
-      <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
-        <td className='imageTableRowName'>
-          <img className='imageTableRowIcon'
-               src={'data:image/png;base64,'+file.preview}/>
-          {file.name}
-        </td>
-        <td className='imageTableRowSize'>{size}</td>
-      </tr>
-    );
-  };
-};
-
-export class EditorCanvas extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  static propTypes = {
-    file: PropTypes.object,
-  };
-
-  componentDidMount = () => {
-    let drawableCanvas = document.getElementById('drawableCanvas');
-    drawableCanvas.style.width = '100%';
-    drawableCanvas.style.height = '100%';
-    drawableCanvas.width = drawableCanvas.offsetWidth;
-    drawableCanvas.height = drawableCanvas.offsetHeight;
-    let drawableContext = drawableCanvas.getContext('2d');
-
-    let imageCanvas = document.getElementById('imageCanvas');
-    imageCanvas.style.width = '100%';
-    imageCanvas.style.height = '100%';
-    imageCanvas.width = imageCanvas.offsetWidth;
-    imageCanvas.height = imageCanvas.offsetHeight;
-    let imageContext = imageCanvas.getContext('2d');
-
-    let originalImg = new Image();
-    originalImg.src = this.props.file.original;
-
-    imageContext.drawImage(originalImg, 0, 0);
-
+  handleonMouseUp = () => {
     this.setState({
-      drawableCanvas: drawableCanvas,
-      drawableContext: drawableContext,
-      imageCanvas: imageCanvas,
-      imageContext: imageContext,
-      originalImg: originalImg
+      drawing: false
     });
   };
 
-  render = () => {
-    const { file } = this.props;
-    return (
-      <div className={'editorCanvas'}>
-        <canvas id={'drawableCanvas'}></canvas>
-        <canvas id={'imageCanvas'}></canvas>
-      </div>
-    );
+  draw = (lX, lY, cX, cY) => {
+    this.state.context.strokeStyle = this.props.brushColor;
+    this.state.context.lineWidth = this.props.lineWidth;
+    this.state.context.moveTo(lX,lY);
+    this.state.context.lineTo(cX,cY);
+    this.state.context.stroke();
   };
+
+  resetCanvas = () => {
+    let width = this.state.context.canvas.width;
+    let height = this.state.context.canvas.height;
+    this.state.context.clearRect(0, 0, width, height);
+  };
+
+  getDefaultStyle = () => {
+    return {
+      backgroundColor: '#FFFFFF',
+      cursor: 'url(./img/eraser-cursor.png), auto'
+    };
+  };
+
+  canvasStyle = () => {
+    let defaults =  this.getDefaultStyle();
+    let custom = this.props.canvasStyle;
+    return Object.assign({}, defaults, custom);
+  };
+
+  isMobile = () => {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+      return true;
+    }
+    return false;
+  };
+
+  render = () => {
+    return (
+      <canvas style = {this.canvasStyle()}
+        onMouseDown = {this.handleOnMouseDown}
+        onTouchStart = {this.handleOnMouseDown}
+        onMouseMove = {this.handleOnMouseMove}
+        onTouchMove = {this.handleOnMouseMove}
+        onMouseUp = {this.handleonMouseUp}
+        onTouchEnd = {this.handleonMouseUp}
+      >
+      </canvas>
+    );
+  }
 };
 
 export class ImageCanvas extends Component {
@@ -129,22 +187,18 @@ export class ImageCanvas extends Component {
   }
 
   static propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    getCanvas: PropTypes.func
   };
 
   draw = () => {
-    let domNode = ReactDOM.findDOMNode(this);
-    domNode.width = domNode.parentNode.offsetWidth;
-    domNode.height = domNode.parentNode.offsetHeight;
-    let ctx = domNode.getContext('2d');
-
-    ctx.mozImageSmoothingEnabled = true;
-    ctx.webkitImageSmoothingEnabled = true;
-    ctx.msImageSmoothingEnabled = true;
-    ctx.imageSmoothingEnabled = true;
-try {
-    ctx.drawImage(this.props.image, 0, 0, domNode.width, domNode.height);
-  } catch (err) { }
+    let canvas = this.state.canvas;
+    let ctx = this.state.ctx;
+    canvas.width = canvas.parentNode.offsetWidth * .98;
+    canvas.height = canvas.parentNode.offsetHeight * .98;
+    try {
+      ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
+    } catch (err) { }
   };
 
   componentDidUpdate = () => {
@@ -152,13 +206,25 @@ try {
   };
 
   componentDidMount = () => {
-    this.draw();
+    let canvas = ReactDOM.findDOMNode(this);
+    let ctx = canvas.getContext('2d');
+
+    ctx.mozImageSmoothingEnabled = true;
+    ctx.webkitImageSmoothingEnabled = true;
+    ctx.msImageSmoothingEnabled = true;
+    ctx.imageSmoothingEnabled = true;
+
+    this.props.getCanvas(canvas, ctx);
+    this.setState({canvas: canvas, ctx: ctx});
+    this.forceUpdate(() => {
+      this.draw();
+    });
   };
 
   render = () => {
     return (
-        <canvas id={this.props.id} />
-        );
+      <canvas id={this.props.id} />
+    );
   };
 
 };
@@ -168,7 +234,7 @@ export class Editor extends Component {
     super(props);
     this.state = {
       brushColor: 'rgba(128, 128, 128, 1)',
-      lineWidth: 4,
+      lineWidth: 8,
       canvasStyle: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
         pointerEvents: 'none',
@@ -181,7 +247,7 @@ export class Editor extends Component {
   }
 
   static propTypes = {
-    file: PropTypes.object,
+    file: PropTypes.object
   };
 
   getCurrentImage = () => {
@@ -273,12 +339,27 @@ export class Editor extends Component {
     window.document.removeEventListener('keyup', this.handleKeyup);
   };
 
+  getDrawableCanvas = (canvas, ctx) => {
+    this.setState({drawableCanvas: canvas, drawableContext: ctx});
+    console.log([canvas, ctx]);
+  };
+
+  getImageCanvas = (canvas, ctx) => {
+    this.setState({imageCanvas: canvas, imageContext: ctx});
+    console.log([canvas, ctx]);
+  };
+
   render = () => {
     const {file} = this.props;
     if (file == undefined) {
       return (<div className='editor'>Select an image</div>);
     } else if (file.status == 'UPLOADING') {
-      return (<div className='editor'>File is uploading...</div>);
+      return (
+        <div className='editor'>
+          <img src='./img/loading.gif' />
+          File is uploading...
+        </div>
+      );
     } else {
       let currentImage = this.getCurrentImage();
       let origBtnClass = !this.state.showOriginal ? 'toggleBtn' :
@@ -291,10 +372,10 @@ export class Editor extends Component {
         <div className='editor'>
         <div className='editorContainer'>
             <div className='editorImageContainer'>
-              <ImageCanvas id='editorImage' image={currentImage}/>
+              <ImageCanvas id='editorImage' image={currentImage} getCanvas={this.getImageCanvas}/>
             </div>
             <div className='canvasContainer'>
-              <DrawableCanvas {...this.state}/>
+              <NewDrawableCanvas {...this.state} getCanvas={this.getDrawableCanvas}/>
             </div>
           </div>
           <div className='toolbox'>
@@ -303,7 +384,7 @@ export class Editor extends Component {
             <br/>
             <Button onClick={this.handleOnClickReset}
               disabled={this.state.showOriginal}>Reset</Button>
-            <div className='sliderWrapper'>
+            <div className='sliderWrapper'> 
               <Slider defaultValue={2} min={1} max={3} step={1} withBars
                 onChange={this.handleSlider} disabled={this.state.showOriginal}>
                 <div className='handle'/>
@@ -324,6 +405,63 @@ export class Editor extends Component {
         </div>
       );
     }
+  };
+};
+
+export class ImageTableRow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+    };
+  }
+
+  static propTypes = {
+    file: PropTypes.object,
+    selected: PropTypes.bool,
+    uploaded: PropTypes.bool,
+    progress: PropTypes.number,
+  };
+
+
+  onListElementClick = (file) => {
+    if (this.props.uploaded) {
+      this.props.onListElementClick(file);
+      this.setState({
+        selected: true
+      });
+    }
+  };
+
+  render = () => {
+    const { file } = this.props;
+    let size = file.size / 1024;
+    if (size >= 1024) {
+      size = (Math.round(size / 1024 * 100) / 100) + ' MB';
+    } else {
+      size = (Math.round(size * 100) / 100) + ' KB';
+    }
+
+    let className = 'imageTableRow' + (this.props.selected ? ' selected' : '');
+    return (
+      <tr onClick={this.onListElementClick.bind(this, file)} className={className}>
+        <td className='imageTableRowName'>
+          {
+            file.status !== 'UPLOADING' ? (
+            <img className='imageTableRowIcon'
+                 src={'data:image/png;base64,'+ file.preview}
+                 style={{opacity: file.progress}}/>
+            ) : (
+              <img className='imageTableRowIcon'
+                 src={'./img/loading.gif'}
+                 style={{opacity: file.progress}}/>
+            )
+          }
+          {file.name}
+        </td>
+        <td className='imageTableRowSize'>{size}</td>
+      </tr>
+    );
   };
 };
 
