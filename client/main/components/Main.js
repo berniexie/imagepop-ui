@@ -284,7 +284,7 @@ export class Editor extends Component {
         'toggleBtnClicked';
       let popBtnClass = this.state.showOriginal ? 'toggleBtn' :
         'toggleBtnClicked';
-      let enhBtnClass = !this.state.showOriginal && !this.state.showEnhancement ? 'toggleBtn' :
+      let enhBtnClass = this.state.showOriginal || !this.state.showEnhancement ? 'toggleBtn' :
         'toggleBtnClicked';
       return (
         <div className='editor'>
