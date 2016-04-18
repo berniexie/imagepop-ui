@@ -204,28 +204,27 @@ Resizer.disabled:hover {
 }
 
 .imagesTable th {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 5px;
 }
 
 .imagesTable th:not(:last-child) {
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 };
 
-.imageTableRow {
-  display: block;
+.imageTableRow:nth-child(odd) {
+  background-color: #EEEEEE;
 }
 
-.imageTableRow:hover {
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 0.8);
+.imageTableRow:nth-child(even) {
+  background-color: #B1D1E7;
 }
 
 .imageTableRow.selected {
-  background-color: rgba(255, 255, 255, 0.8)
+  background-color: #AAAAAA;
 }
 
-.imageTableRow td {
+.imagesTable td {
   padding: 5px;
 }
 
@@ -260,27 +259,38 @@ Resizer.disabled:hover {
   z-index: 1;
 }
 
-.editorImage {
-  max-width: 980px;
-  max-height: 675px;
-}
-
 .editorContainer {
   position: relative;
   z-index: 0;
-  max-width: 75%;
-  max-height: 75%;
+  width: 75%;
+  height: 75%;
 }
 
 .editorImageContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .toolbox {
-  width: 150px;
+  width: 180px;
 }
 
 .toolbox .btn {
   margin: 5px;
+}
+
+.toolbox .btn-group > .btn:first-child {
+  margin-left: 5px;
+}
+
+.toolbox .toggleBtnClicked {
+  background-color: #549ACB;
+}
+
+.toolbox .toggleBtn {
+
 }
