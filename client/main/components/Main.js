@@ -196,8 +196,13 @@ export class ImageCanvas extends Component {
   draw = () => {
     let canvas = this.state.canvas;
     let ctx = this.state.ctx;
-    canvas.width = canvas.parentNode.offsetWidth * .98;
-    canvas.height = canvas.parentNode.offsetHeight * .98;
+    if (this.props.image.naturalWidth > this.props.image.naturalHeight && this.props.image.naturalHeight / this.props.image.naturalWidth * canvas.parentNode.offsetWidth <= canvas.parentNode.offsetHeight) {
+      canvas.height = this.props.image.naturalHeight / this.props.image.naturalWidth * canvas.parentNode.offsetWidth * .98;
+      canvas.width = canvas.parentNode.offsetWidth * .98;
+    } else {
+      canvas.width = this.props.image.naturalWidth / this.props.image.naturalHeight * canvas.parentNode.offsetHeight * .98;
+      canvas.height = canvas.parentNode.offsetHeight * .98;
+    }
     try {
       ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
     } catch (err) { }
