@@ -189,6 +189,7 @@ export class ImageCanvas extends Component {
 
   static propTypes = {
     id: PropTypes.string,
+    isDirty: PropTypes.bool
   };
 
   draw = () => {
@@ -196,9 +197,11 @@ export class ImageCanvas extends Component {
     let ctx = this.state.ctx;
     canvas.width = canvas.parentNode.offsetWidth * .98;
     canvas.height = canvas.parentNode.offsetHeight * .98;
-    try {
-      ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
-    } catch (err) { }
+    if (!this.props.isDirty) {
+      try {
+        ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
+      } catch (err) { }
+    }
   };
 
   componentDidUpdate = () => {
@@ -313,6 +316,9 @@ export class Editor extends Component {
         popped: [new Image(), new Image(), new Image()],
         enhancement: new Image(),
       };
+      this.setState({
+        isDirty: false
+      });
       currentImages.original.src = 'data:image/png;base64,' + nextProps.file.original;
       currentImages.popped[0].src = 'data:image/png;base64,' + nextProps.file.popped[0];
       currentImages.popped[1].src = 'data:image/png;base64,' + nextProps.file.popped[1];
@@ -346,11 +352,20 @@ export class Editor extends Component {
   updateImageEnhancement = () => {
     let imageCanvas = document.getElementById('imageCanvas');
     let drawableCanvas = document.getElementById('drawableCanvas');
-    
+    let enhCanvas = document.getElementById('enhancementCanvas');
+  
     let imageContext = imageCanvas.getContext('2d');
     let drawableContext = drawableCanvas.getContext('2d');
-  
-    this.setState({ clear: true });
+    let enhContext = enhCanvas.getContext('2d');
+    
+    // Try to modify the data of imageContext -- not currently working.
+    var imageData = imageContext.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+    for (let i = 0; i < imageData.data.length; ++i) {
+      imageData.data[i] = 255 - imageData.data[i];
+    }
+    imageContext.putImageData(imageData, 0, 0);
+
+    this.setState({ clear: true, isDirty: true });
   };
 
   render = () => {
@@ -374,7 +389,7 @@ export class Editor extends Component {
         'toggleBtnClicked';
 
       let imgZIndex = (this.state.showOriginal || this.state.showPopped) ? 1 : 0;
-      let enhZIndex = this.state.showEnhancement ? 1 : 0;
+      let enhZIndex = (!this.state.showOriginal && this.state.showEnhancement) ? 1 : 0;
       return (
         <div className='editor'>
           <div className='editorContainer'>
