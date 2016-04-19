@@ -188,6 +188,7 @@ export class ImageCanvas extends Component {
   }
 
   static propTypes = {
+    image: PropTypes.object,
     id: PropTypes.string,
     isDirty: PropTypes.bool
   };
@@ -197,11 +198,9 @@ export class ImageCanvas extends Component {
     let ctx = this.state.ctx;
     canvas.width = canvas.parentNode.offsetWidth * .98;
     canvas.height = canvas.parentNode.offsetHeight * .98;
-    if (!this.props.isDirty) {
-      try {
-        ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
-      } catch (err) { }
-    }
+    try {
+      ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
+    } catch (err) { }
   };
 
   componentDidUpdate = () => {
@@ -346,7 +345,7 @@ export class Editor extends Component {
   downloadImage = () => {
     let imageCanvas = document.getElementById('imageCanvas');
     let downloadBtn = document.querySelector('.downloadBtn');
-    downloadBtn.href = (imageCanvas ? imageCanvas.toDataURL("image/png") : '');
+    downloadBtn.href = (imageCanvas ? imageCanvas.toDataURL('image/png') : '');
   };
 
   updateImageEnhancement = () => {
@@ -358,14 +357,32 @@ export class Editor extends Component {
     let drawableContext = drawableCanvas.getContext('2d');
     let enhContext = enhCanvas.getContext('2d');
     
-    // Try to modify the data of imageContext -- not currently working.
-    var imageData = imageContext.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
-    for (let i = 0; i < imageData.data.length; ++i) {
-      imageData.data[i] = 255 - imageData.data[i];
-    }
-    imageContext.putImageData(imageData, 0, 0);
+    let imageData = imageContext.getImageData(0, 0, imageCanvas.width, imageCanvas.height);
+    let drawData = drawableContext.getImageData(0, 0, drawableCanvas.width, drawableCanvas.height);
+    let enhData = enhContext.getImageData(0, 0, drawableCanvas.width, drawableCanvas.height);
 
-    this.setState({ clear: true, isDirty: true });
+    for (let i = 3; i < drawData.data.length; i += 4) {
+      if (drawData.data[i] != 0) {
+        let avg = (enhData.data[i - 1] + enhData.data[i - 2] + enhData.data[i - 3]) / 3.0;
+        imageData.data[i - 1] += 128 - enhData.data[i - 1];
+        imageData.data[i - 2] += 128 - enhData.data[i - 2];
+        imageData.data[i - 3] += 128 - enhData.data[i - 3];
+
+        enhData.data[i - 1] = 128;
+        enhData.data[i - 2] = 128;
+        enhData.data[i - 3] = 128;
+      }
+    }
+
+    imageContext.putImageData(imageData, 0, 0);
+    enhContext.putImageData(enhData, 0, 0);
+
+    // let currentImages = JSON.parse(JSON.stringify(this.state.currentImages));
+    let currentImages = Object.assign({}, this.state.currentImages);
+    currentImages.popped[this.state.poppedSlider].src = imageCanvas.toDataURL('image/png');
+    currentImages.enhancement.src = enhCanvas.toDataURL('image/png');
+
+    this.setState({ clear: true });
   };
 
   render = () => {
@@ -394,7 +411,7 @@ export class Editor extends Component {
         <div className='editor'>
           <div className='editorContainer'>
             <div className='editorImageContainer' style={{zIndex: imgZIndex}}>
-              <ImageCanvas id='imageCanvas' image={currentImage} />
+              <ImageCanvas id='imageCanvas' image={currentImage} isDirty={this.state.isDirty} />
             </div>
             <div className='enhancementImageContainer' style={{zIndex: enhZIndex}}>
               <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement} />
@@ -622,7 +639,7 @@ export class MainPageContent extends Component {
     return (
       <Dropzone className='container-fluid' activeClassName='dropzoneArea dropzoneAreaActive'
                 ref='dropzone' onDrop={this.onDrop} disableClick={true}
-                accept={"image/gif,image/jpeg,image/png"}>
+                accept={'image/gif,image/jpeg,image/png'}>
         <div className='dropzoneOverlay'>
           <h1 className='dropzoneOverlayText'>
             Drop File to Upload!
