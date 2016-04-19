@@ -258,7 +258,6 @@ Resizer.disabled:hover {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
   z-index: 2;
   border: 3px solid rgba(0, 0, 0, 0.75);
 }
@@ -275,7 +274,6 @@ Resizer.disabled:hover {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
   padding: 5px;
 }
 
@@ -297,4 +295,8 @@ Resizer.disabled:hover {
 
 .toolbox .toggleBtn {
 
+}
+
+canvas {
+  width: 100%;
 }
