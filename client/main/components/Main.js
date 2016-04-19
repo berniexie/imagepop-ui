@@ -291,12 +291,8 @@ export class Editor extends Component {
     });
   };
 
-  showOriginal = () => {
-    this.setState({showOriginal: true});
-  };
-
-  showPopped = () => {
-    this.setState({showOriginal: false});
+  toggleOriginal = () => {
+    this.setState({showOriginal: !this.state.showOriginal});
   };
 
   showEnhancement = () => {
@@ -400,10 +396,10 @@ export class Editor extends Component {
       );
     } else {
       let currentImage = this.getCurrentImage();
-      let origBtnClass = !this.state.showOriginal ? 'toggleBtn' :
+      let origBtnClass = this.state.showOriginal ? 'toggleBtn' :
         'toggleBtnClicked';
-      let popBtnClass = this.state.showOriginal ? 'toggleBtn' :
-        'toggleBtnClicked';
+      let origBtnLabel = this.state.showOriginal ? 'Original' :
+        'Popped';
       let enhBtnClass = this.state.showOriginal || !this.state.showEnhancement ? 'toggleBtn' :
         'toggleBtnClicked';
 
@@ -455,10 +451,9 @@ export class Editor extends Component {
               <div className='label labelRight'>high</div>
             </div>
             <ButtonGroup>
-              <Button className={origBtnClass} onClick={this.showOriginal}>Original</Button>
-              <Button className={popBtnClass} onClick={this.showPopped}>Popped</Button>
+              <Button className={'toggleBtn'} onClick={this.toggleOriginal} active={!this.state.showOriginal} bsStyle={!this.state.showOriginal ? 'success' : 'default'}>{origBtnLabel}</Button>
             </ButtonGroup>
-            <Button className={enhBtnClass} onClick={this.showEnhancement}
+            <Button className={'toggleBtn'} onClick={this.showEnhancement} active={this.state.showEnhancement} bsStyle={this.state.showEnhancement ? 'primary' : 'default'}
               disabled={this.state.showOriginal}>
               Show Enhancement
             </Button>

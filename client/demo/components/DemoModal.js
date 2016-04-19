@@ -23,7 +23,7 @@ export default class DemoModal extends React.Component{
     beforeImageSrc: '',
   };
 
-  state = {pressed:true, after:this.props.medImageSrc, available:true, sliderValue:2};
+  state = {showPopped:true, after:this.props.medImageSrc, available:true, sliderValue:2};
 
   componentWillReceiveProps = (nextProps) => {
     if (nextProps.medImageSrc == '') {
@@ -45,52 +45,38 @@ export default class DemoModal extends React.Component{
     switch (value) {
       case 1:
         if (this.props.lowImageSrc == '') { 
-          this.setState({available: false, pressed:true, sliderValue: 1}); 
+          this.setState({available: false, showPopped:true, sliderValue: 1}); 
         } else {
           this.setState({after: this.props.lowImageSrc, available: true, 
-            pressed:true, sliderValue: 1}); 
+            showPopped:true, sliderValue: 1}); 
         }
         break;
       case 2:
         if (this.props.medImageSrc == '') {
-          this.setState({available: false, pressed:true, sliderValue: 2}); 
+          this.setState({available: false, showPopped:true, sliderValue: 2}); 
         } else {
           this.setState({after: this.props.medImageSrc, available: true, 
-            pressed:true, sliderValue: 2});
+            showPopped:true, sliderValue: 2});
         }
         break;
       default:
         if (this.props.highImageSrc == '') {
-          this.setState({available: false, pressed:true, sliderValue: 3}); 
+          this.setState({available: false, showPopped:true, sliderValue: 3}); 
         } else {
           this.setState({after: this.props.highImageSrc, available: true, 
-            pressed:true, sliderValue: 3});
+            showPopped:true, sliderValue: 3});
         }
         break;
     }
   };
 
-  showOriginal = () => {
-    this.setState({pressed: false});
-  };
-
-  showPopped = () => {
-    this.setState({pressed: true});
+  toggleOriginal = () => {
+    this.setState({showPopped: !this.state.showPopped});
   };
 
   render() {
     const {beforeImageSrc} = this.props;
-    var pic = this.state.pressed ? this.state.after : beforeImageSrc;
-    var origBtnClass = classNames({
-      'disabled': !this.state.available,
-      'toggleButton': this.state.available && this.state.pressed,
-      'toggleButtonClicked': this.state.available && !this.state.pressed
-    });
-    var popBtnClass = classNames({
-      'disabled': !this.state.available,
-      'toggleButton': this.state.available && !this.state.pressed,
-      'toggleButtonClicked': this.state.available && this.state.pressed
-    });
+    var pic = this.state.showPopped ? this.state.after : beforeImageSrc;
     return (
       <div className='demoModal'>
         {this.state.available ? '' : <div className='notAvailable'>Image Not Available</div>}
@@ -106,10 +92,10 @@ export default class DemoModal extends React.Component{
           <div className='label'>med</div>
           <div className='label labelRight'>high</div>
         </div>
-        <ButtonGroup>
-          <Button className={origBtnClass} onClick={this.showOriginal} bsSize='large'>Original</Button>
-          <Button className={popBtnClass} onClick={this.showPopped} bsSize='large'>Popped</Button>
-        </ButtonGroup>
+          <Button className={'toggleButton'} disabled={!this.state.available} active={this.state.available && this.state.showPopped}
+                  onClick={this.toggleOriginal} bsSize='large' bsStyle={this.state.showPopped ? 'success' : 'default'}>
+            {this.state.showPopped ? 'Popped' : 'Original'}
+          </Button>
       </div>
     );
   }

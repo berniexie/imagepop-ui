@@ -191,11 +191,11 @@
   border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
-Resizer.disabled {
+.Resizer.disabled {
   cursor: not-allowed;
 }
 
-Resizer.disabled:hover {
+.Resizer.disabled:hover {
   border-color: transparent;
 }
 
@@ -211,7 +211,7 @@ Resizer.disabled:hover {
 
 .imagesTable th:not(:last-child) {
   border-right: 1px solid rgba(0, 0, 0, 0.2);
-};
+}
 
 
 .imageTableRow {
@@ -287,14 +287,6 @@ Resizer.disabled:hover {
 
 .toolbox .btn-group > .btn:first-child {
   margin-left: 5px;
-}
-
-.toolbox .toggleBtnClicked {
-  background-color: #549ACB;
-}
-
-.toolbox .toggleBtn {
-
 }
 
 canvas {
