@@ -57,7 +57,7 @@ export default class Demo extends Component {
         <PageTemplate title="Gallery" 
             subtitle="Select an image below to see what image|pop can do." >
           <DemoPageContent demoImages={images}/>
-        </PageTemplate>,
+        </PageTemplate>
     );
   }
 }
