@@ -66,8 +66,8 @@ export class NewDrawableCanvas extends Component {
   componentDidMount = () => {
     let canvas = ReactDOM.findDOMNode(this);
 
-    canvas.width = this.props.width * .98;
-    canvas.height = this.props.height * .98;
+    canvas.width = this.props.width;
+    canvas.height = this.props.height;
 
     let ctx = canvas.getContext('2d');
 
@@ -410,12 +410,14 @@ export class Editor extends Component {
       
       let width, height = 0;
       let parentNode = document.querySelector('.editorImageContainer');
-      if (currentImage.naturalWidth > currentImage.naturalHeight && currentImage.naturalHeight / currentImage.naturalWidth * canvas.parentNode.offsetWidth <= canvas.parentNode.offsetHeight) {
-        height = currentImage.naturalHeight / currentImage.naturalWidth * parentNode.offsetWidth * .98;
-        width = parentNode.offsetWidth * .98;
-      } else {
-        width = currentImage.naturalWidth / currentImage.naturalHeight * parentNode.offsetHeight * .98;
-        height = parentNode.offsetHeight * .98;
+      if ( parentNode != undefined ) {
+        if (currentImage.naturalWidth > currentImage.naturalHeight && currentImage.naturalHeight / currentImage.naturalWidth * parentNode.offsetWidth <= parentNode.offsetHeight) {
+          height = currentImage.naturalHeight / currentImage.naturalWidth * parentNode.offsetWidth * .98;
+          width = parentNode.offsetWidth * .98;
+        } else {
+          width = currentImage.naturalWidth / currentImage.naturalHeight * parentNode.offsetHeight * .98;
+          height = parentNode.offsetHeight * .98;
+        }
       }
 
       return (
