@@ -26,8 +26,9 @@ export class File {
   }
 };
 
-// Edit class from
+// Edited class from
 // https://github.com/jonhni/react-drawable-canvas/blob/master/lib/index.jsx
+// to allow us to call function when the user stops drawing.
 export class NewDrawableCanvas extends Component {
   static propTypes = {
     brushColor: PropTypes.string,
@@ -189,8 +190,7 @@ export class ImageCanvas extends Component {
 
   static propTypes = {
     image: PropTypes.object,
-    id: PropTypes.string,
-    isDirty: PropTypes.bool
+    id: PropTypes.string
   };
 
   draw = () => {
@@ -315,9 +315,7 @@ export class Editor extends Component {
         popped: [new Image(), new Image(), new Image()],
         enhancement: new Image(),
       };
-      this.setState({
-        isDirty: false
-      });
+
       currentImages.original.src = 'data:image/png;base64,' + nextProps.file.original;
       currentImages.popped[0].src = 'data:image/png;base64,' + nextProps.file.popped[0];
       currentImages.popped[1].src = 'data:image/png;base64,' + nextProps.file.popped[1];
@@ -329,7 +327,6 @@ export class Editor extends Component {
 
   shouldComponentUpdate = (nextProps, nextState) => {
     return true;
-    //return nextState.lastImageId == nextProps.file.imageId;
   };
 
   componentDidMount = () => {
@@ -363,7 +360,6 @@ export class Editor extends Component {
 
     for (let i = 3; i < drawData.data.length; i += 4) {
       if (drawData.data[i] != 0) {
-        let avg = (enhData.data[i - 1] + enhData.data[i - 2] + enhData.data[i - 3]) / 3.0;
         imageData.data[i - 1] += 128 - enhData.data[i - 1];
         imageData.data[i - 2] += 128 - enhData.data[i - 2];
         imageData.data[i - 3] += 128 - enhData.data[i - 3];
@@ -377,7 +373,6 @@ export class Editor extends Component {
     imageContext.putImageData(imageData, 0, 0);
     enhContext.putImageData(enhData, 0, 0);
 
-    // let currentImages = JSON.parse(JSON.stringify(this.state.currentImages));
     let currentImages = Object.assign({}, this.state.currentImages);
     currentImages.popped[this.state.poppedSlider].src = imageCanvas.toDataURL('image/png');
     currentImages.enhancement.src = enhCanvas.toDataURL('image/png');
@@ -411,7 +406,7 @@ export class Editor extends Component {
         <div className='editor'>
           <div className='editorContainer'>
             <div className='editorImageContainer' style={{zIndex: imgZIndex}}>
-              <ImageCanvas id='imageCanvas' image={currentImage} isDirty={this.state.isDirty} />
+              <ImageCanvas id='imageCanvas' image={currentImage} />
             </div>
             <div className='enhancementImageContainer' style={{zIndex: enhZIndex}}>
               <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement} />
