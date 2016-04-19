@@ -178,6 +178,8 @@ export class NewDrawableCanvas extends Component {
         onTouchMove = {this.handleOnMouseMove}
         onMouseUp = {this.handleonMouseUp}
         onTouchEnd = {this.handleonMouseUp}
+        width = {Math.floor(this.props.width)}
+        height = {Math.floor(this.props.height)}
       >
       </canvas>
     );
@@ -424,11 +426,12 @@ export class Editor extends Component {
         <div className='editor'>
           <div className='editorContainer'>
             <div className='editorImageContainer' style={{zIndex: imgZIndex}}>
-              <ImageCanvas id='imageCanvas' image={currentImage} />
+              <ImageCanvas id='imageCanvas' image={currentImage} 
+                  width={width} height={height}/>
             </div>
             <div className='enhancementImageContainer' style={{zIndex: enhZIndex}}>
               <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement}
-                           width={width} height={height}/>
+                  width={width} height={height}/>
             </div>
             <div className='drawableImageContainer'>
               <NewDrawableCanvas {...this.state} id='drawableCanvas'
