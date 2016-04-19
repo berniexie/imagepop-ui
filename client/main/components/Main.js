@@ -39,7 +39,9 @@ export class NewDrawableCanvas extends Component {
     }),
     clear: PropTypes.bool,
     id: PropTypes.string,
-    updateImageEnhancement: PropTypes.func
+    updateImageEnhancement: PropTypes.func,
+    width: PropTypes.number,
+    height: PropTypes.number
   };
 
   static defaultProps = {
@@ -64,8 +66,8 @@ export class NewDrawableCanvas extends Component {
   componentDidMount = () => {
     let canvas = ReactDOM.findDOMNode(this);
 
-    canvas.width = canvas.parentNode.offsetWidth * .98;
-    canvas.height = canvas.parentNode.offsetHeight * .98;
+    canvas.width = this.props.width * .98;
+    canvas.height = this.props.height * .98;
 
     let ctx = canvas.getContext('2d');
 
@@ -117,7 +119,6 @@ export class NewDrawableCanvas extends Component {
         currentX = e.clientX - rect.left;
         currentY = e.clientY - rect.top;
       }
-
 
       this.draw(lastX, lastY, currentX, currentY);
       this.setState({
@@ -190,19 +191,18 @@ export class ImageCanvas extends Component {
 
   static propTypes = {
     image: PropTypes.object,
-    id: PropTypes.string
+    id: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number
   };
 
   draw = () => {
     let canvas = this.state.canvas;
     let ctx = this.state.ctx;
-    if (this.props.image.naturalWidth > this.props.image.naturalHeight && this.props.image.naturalHeight / this.props.image.naturalWidth * canvas.parentNode.offsetWidth <= canvas.parentNode.offsetHeight) {
-      canvas.height = this.props.image.naturalHeight / this.props.image.naturalWidth * canvas.parentNode.offsetWidth * .98;
-      canvas.width = canvas.parentNode.offsetWidth * .98;
-    } else {
-      canvas.width = this.props.image.naturalWidth / this.props.image.naturalHeight * canvas.parentNode.offsetHeight * .98;
-      canvas.height = canvas.parentNode.offsetHeight * .98;
-    }
+    
+    canvas.width = this.props.width;
+    canvas.height = this.props.height;
+
     try {
       ctx.drawImage(this.props.image, 0, 0, canvas.width, canvas.height);
     } catch (err) { }
@@ -407,6 +407,17 @@ export class Editor extends Component {
 
       let imgZIndex = (this.state.showOriginal || this.state.showPopped) ? 1 : 0;
       let enhZIndex = (!this.state.showOriginal && this.state.showEnhancement) ? 1 : 0;
+      
+      let width, height = 0;
+      let parentNode = document.querySelector('.editorImageContainer');
+      if (currentImage.naturalWidth > currentImage.naturalHeight && currentImage.naturalHeight / currentImage.naturalWidth * canvas.parentNode.offsetWidth <= canvas.parentNode.offsetHeight) {
+        height = currentImage.naturalHeight / currentImage.naturalWidth * parentNode.offsetWidth * .98;
+        width = parentNode.offsetWidth * .98;
+      } else {
+        width = currentImage.naturalWidth / currentImage.naturalHeight * parentNode.offsetHeight * .98;
+        height = parentNode.offsetHeight * .98;
+      }
+
       return (
         <div className='editor'>
           <div className='editorContainer'>
@@ -414,11 +425,13 @@ export class Editor extends Component {
               <ImageCanvas id='imageCanvas' image={currentImage} />
             </div>
             <div className='enhancementImageContainer' style={{zIndex: enhZIndex}}>
-              <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement} />
+              <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement}
+                           width={width} height={height}/>
             </div>
             <div className='drawableImageContainer'>
               <NewDrawableCanvas {...this.state} id='drawableCanvas'
-                  updateImageEnhancement={this.updateImageEnhancement}/>
+                  updateImageEnhancement={this.updateImageEnhancement} 
+                  width={width} height={height}/>
             </div>
           </div>
           <div className='toolbox'>
