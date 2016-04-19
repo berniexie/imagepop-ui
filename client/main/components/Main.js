@@ -37,7 +37,8 @@ export class NewDrawableCanvas extends Component {
       cursor: PropTypes.string
     }),
     clear: PropTypes.bool,
-    getCanvas: PropTypes.func
+    id: PropTypes.string,
+    updateImageEnhancement: PropTypes.func
   };
 
   static defaultProps = {
@@ -71,7 +72,6 @@ export class NewDrawableCanvas extends Component {
       canvas: canvas,
       context: ctx
     });
-    this.props.getCanvas(canvas, ctx);
   };
   
   componentWillReceiveProps = (nextProps) => {
@@ -89,7 +89,7 @@ export class NewDrawableCanvas extends Component {
         lastY: e.targetTouches[0].pageY - rect.top
       });
     }
-    else{
+    else {
       this.setState({
         lastX: e.clientX - rect.left,
         lastY: e.clientY - rect.top
@@ -130,6 +130,7 @@ export class NewDrawableCanvas extends Component {
     this.setState({
       drawing: false
     });
+    this.props.updateImageEnhancement();
   };
 
   draw = (lX, lY, cX, cY) => {
@@ -168,7 +169,7 @@ export class NewDrawableCanvas extends Component {
 
   render = () => {
     return (
-      <canvas style = {this.canvasStyle()}
+      <canvas id={this.props.id} style = {this.canvasStyle()}
         onMouseDown = {this.handleOnMouseDown}
         onTouchStart = {this.handleOnMouseDown}
         onMouseMove = {this.handleOnMouseMove}
@@ -188,7 +189,6 @@ export class ImageCanvas extends Component {
 
   static propTypes = {
     id: PropTypes.string,
-    getCanvas: PropTypes.func
   };
 
   draw = () => {
@@ -214,7 +214,6 @@ export class ImageCanvas extends Component {
     ctx.msImageSmoothingEnabled = true;
     ctx.imageSmoothingEnabled = true;
 
-    this.props.getCanvas(canvas, ctx);
     this.setState({canvas: canvas, ctx: ctx});
     this.forceUpdate(() => {
       this.draw();
@@ -242,6 +241,7 @@ export class Editor extends Component {
       clear: false,
       poppedSlider: 1,
       showOriginal: false,
+      showPopped: true,
       showEnhancement: false,
     };
   }
@@ -253,8 +253,6 @@ export class Editor extends Component {
   getCurrentImage = () => {
     if (this.state.showOriginal) {
       return this.state.currentImages.original;
-    } else if (this.state.showEnhancement) {
-      return this.state.currentImages.enhancement;
     } else {
       return this.state.currentImages.popped[this.state.poppedSlider];
     }
@@ -339,14 +337,20 @@ export class Editor extends Component {
     window.document.removeEventListener('keyup', this.handleKeyup);
   };
 
-  getDrawableCanvas = (canvas, ctx) => {
-    this.setState({drawableCanvas: canvas, drawableContext: ctx});
-    console.log([canvas, ctx]);
+  downloadImage = () => {
+    let imageCanvas = document.getElementById('imageCanvas');
+    let downloadBtn = document.querySelector('.downloadBtn');
+    downloadBtn.href = (imageCanvas ? imageCanvas.toDataURL("image/png") : '');
   };
 
-  getImageCanvas = (canvas, ctx) => {
-    this.setState({imageCanvas: canvas, imageContext: ctx});
-    console.log([canvas, ctx]);
+  updateImageEnhancement = () => {
+    let imageCanvas = document.getElementById('imageCanvas');
+    let drawableCanvas = document.getElementById('drawableCanvas');
+    
+    let imageContext = imageCanvas.getContext('2d');
+    let drawableContext = drawableCanvas.getContext('2d');
+  
+    this.setState({ clear: true });
   };
 
   render = () => {
@@ -368,14 +372,21 @@ export class Editor extends Component {
         'toggleBtnClicked';
       let enhBtnClass = this.state.showOriginal || !this.state.showEnhancement ? 'toggleBtn' :
         'toggleBtnClicked';
+
+      let imgZIndex = (this.state.showOriginal || this.state.showPopped) ? 1 : 0;
+      let enhZIndex = this.state.showEnhancement ? 1 : 0;
       return (
         <div className='editor'>
-        <div className='editorContainer'>
-            <div className='editorImageContainer'>
-              <ImageCanvas id='editorImage' image={currentImage} getCanvas={this.getImageCanvas}/>
+          <div className='editorContainer'>
+            <div className='editorImageContainer' style={{zIndex: imgZIndex}}>
+              <ImageCanvas id='imageCanvas' image={currentImage} />
             </div>
-            <div className='canvasContainer'>
-              <NewDrawableCanvas {...this.state} getCanvas={this.getDrawableCanvas}/>
+            <div className='enhancementImageContainer' style={{zIndex: enhZIndex}}>
+              <ImageCanvas id='enhancementCanvas' image={this.state.currentImages.enhancement} />
+            </div>
+            <div className='drawableImageContainer'>
+              <NewDrawableCanvas {...this.state} id='drawableCanvas'
+                  updateImageEnhancement={this.updateImageEnhancement}/>
             </div>
           </div>
           <div className='toolbox'>
@@ -401,6 +412,7 @@ export class Editor extends Component {
               disabled={this.state.showOriginal}>
               Show Enhancement
             </Button>
+            <Button href='#' className='downloadBtn' onClick={this.downloadImage} download={file.name}>Download!</Button>
           </div>
         </div>
       );
