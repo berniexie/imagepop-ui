@@ -249,8 +249,8 @@ export class Editor extends Component {
       },
       clear: false,
       poppedSlider: 1,
-      showOriginal: false,
-      showPopped: true,
+      showOriginal: true,
+      showPopped: false,
       showEnhancement: false,
     };
   }
