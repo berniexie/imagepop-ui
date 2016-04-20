@@ -272,12 +272,18 @@ export class Editor extends Component {
   };
 
   handleOnClickReset = () => {
+    let currentImages = Object.assign({}, this.state.currentImages);
+    currentImages.enhancement.src = currentImages.enhancementBlank.src;
+    currentImages.popped[0].src = currentImages.poppedBlank[0].src;
+    currentImages.popped[1].src = currentImages.poppedBlank[1].src;
+    currentImages.popped[2].src = currentImages.poppedBlank[2].src;
     this.setState({
       canvasStyle: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
         pointerEvents: 'none',
       },
-      clear: true
+      clear: true,
+      currentImages: currentImages,
     });
   };
 
@@ -316,14 +322,20 @@ export class Editor extends Component {
       let currentImages = {
         original: new Image(),
         popped: [new Image(), new Image(), new Image()],
+        poppedBlank: [new Image(), new Image(), new Image()],
         enhancement: new Image(),
+        enhancementBlank: new Image(),
       };
 
       currentImages.original.src = 'data:image/png;base64,' + nextProps.file.original;
       currentImages.popped[0].src = 'data:image/png;base64,' + nextProps.file.popped[0];
       currentImages.popped[1].src = 'data:image/png;base64,' + nextProps.file.popped[1];
       currentImages.popped[2].src = 'data:image/png;base64,' + nextProps.file.popped[2];
+      currentImages.poppedBlank[0].src = 'data:image/png;base64,' + nextProps.file.popped[0];
+      currentImages.poppedBlank[1].src = 'data:image/png;base64,' + nextProps.file.popped[1];
+      currentImages.poppedBlank[2].src = 'data:image/png;base64,' + nextProps.file.popped[2];
       currentImages.enhancement.src = 'data:image/png;base64,' + nextProps.file.enhancement;
+      currentImages.enhancementBlank.src = currentImages.enhancement.src;
       this.setState({lastImageId: nextProps.file.imageId, currentImages: currentImages});
     }
   };
