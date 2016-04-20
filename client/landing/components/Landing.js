@@ -22,7 +22,7 @@ export default class Landing extends Component {
                   A photo enhancer that will make your images pop! 
                 </p>
                 <Link to="/demo"><Button bsStyle="primary">VIEW OUR GALLERY</Button></Link>
-                <Link to="/main"><Button>UPLOAD NOW</Button></Link>
+                <Link to="/main"><Button>EDITOR</Button></Link>
             </div>
         </div>
       </div>

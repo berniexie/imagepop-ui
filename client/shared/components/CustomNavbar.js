@@ -21,7 +21,7 @@ export default class CustomNavbar extends Component {
           <Nav pullRight>
             <li><Link to="/about">about</Link></li>
             <li><Link to="/demo">gallery</Link></li>
-            <li><Link to="/main">upload</Link></li>
+            <li><Link to="/main">editor</Link></li>
             { !logIn ? <li><Link to="/login">login</Link></li> : 
                 <li><Link to="/logout">logout</Link></li> }
           </Nav>

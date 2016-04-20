@@ -89,14 +89,7 @@ img {
 }
 
 .disabled{
-  border-radius: 3px;
-  font-size: 18px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-bottom: 20px;
-  padding: 5px;
-  position: absolute;
-  width: 100px;
+  
 }
 
 .demoModal > .notAvailable {
