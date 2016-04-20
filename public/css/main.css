@@ -213,11 +213,6 @@
   border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-
-.imageTableRow {
-  display: block;
-}
-
 .imageTableRow.selected {
   background-color: #CCCCCC !important;
 }
@@ -258,6 +253,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  min-height: inherit;
   z-index: 2;
   border: 3px solid rgba(0, 0, 0, 0.75);
 }
@@ -267,6 +263,7 @@
   z-index: 0;
   width: 75%;
   height: 75%;
+  min-height: 500px;
 }
 
 .editorContainer > div {
